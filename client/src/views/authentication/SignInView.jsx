@@ -43,7 +43,7 @@ class AuthenticationSignInView extends Component {
           <input id="input-email" type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleInputChange} required />
 
           <label htmlFor="input-password">Password</label>
-          <input id="input-password" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleInputChange} required minLength="8" />
+          <input id="input-password" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleInputChange} required minLength="6" />
 
           {this.state.error && (
             <div className="error-block">

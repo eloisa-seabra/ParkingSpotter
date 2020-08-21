@@ -17,7 +17,7 @@ const schema = new mongoose.Schema(
       lowercase: true,
       trim: true
     },
-    passwordHash: {
+    passwordHashAndSalt: {
       type: String,
       required: [true, 'Password is required.'],
       minlength: 6
