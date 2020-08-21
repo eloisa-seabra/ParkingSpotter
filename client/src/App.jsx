@@ -8,7 +8,8 @@ import AuthenticationSignUpView from './views/authentication/SignUpView';
 import AuthenticationSignInView from './views/authentication/SignInView';
 import ProfileView from './views/profile/ProfileView';
 import EditProfileView from './views/profile/EditProfileView';
-import ParkingListView from './views/ParkingListView';
+import ParkingListView from './views/parking/ParkingListView';
+import ParkingCreateView from './views/parking/ParkingCreateView';
 import ErrorView from './views/ErrorView';
 
 import ProtectedRoute from './components/ProtectedRoute';
