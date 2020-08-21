@@ -40,29 +40,24 @@ parkingRouter.get('/:id', async (request, response, next) => {
   }
 });
 
-parkingRouter.post(
-  '/create',
-  routeAuthenticationGuard,
-  upload.single('photo'),
-  (request, response, next) => {
-    /*  let url;
-    if (request.file) {
-      url = request.file.path;
-    } */
-
-    Parking.create({
-      adress: request.body.adress,
-      description: request.body.description,
-      hourlyPrice: request.body.hourlyPrice
+parkingRouter.post('/create', (req, res, next) => {
+  // let url;
+  // if (request.file) {
+  //   url = request.file.path;
+  // }
+  const { address, description, hourlyPrice } = req.body;
+  Parking.create({
+    address: address,
+    description: description,
+    hourlyPrice: hourlyPrice
+  })
+    .then(spot => {
+      res.json({ spot });
     })
-      .then(spot => {
-        response.json({ spot });
-      })
-      .catch(error => {
-        next(error);
-      });
-  }
-);
+    .catch(error => {
+      next(error);
+    });
+});
 
 parkingRouter.delete(
   '/:id',
