@@ -7,6 +7,7 @@ import "./App.css";
 import AuthenticationSignUpView from "./views/authentication/SignUpView";
 import AuthenticationSignInView from "./views/authentication/SignInView";
 import ParkingListView from "./views/parking/ParkingListView";
+import ParkingCreateView from "./views/parking/ParkingCreateView";
 import ErrorView from "./views/ErrorView";
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -72,6 +73,7 @@ class App extends Component {
                 redirect="/"
               />
               <Route path="/parking/list" component={ParkingListView} />
+              <Route path="/parking/create" component={ParkingCreateView} />
               <Route path="/error" component={ErrorView} />
               <Redirect from="/" to="/error" />
               {/* <Route path="/authentication/sign-in" component={AuthenticationSignInView} /> */}
