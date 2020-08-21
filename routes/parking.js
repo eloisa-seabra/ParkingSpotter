@@ -52,7 +52,7 @@ parkingRouter.post(
 
     Parking.create({
       user: request.user._id,
-      description: request.body.content,
+      description: request.body.description,
       photo: url
     })
       .then(spot => {
