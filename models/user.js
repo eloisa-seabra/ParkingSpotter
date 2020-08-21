@@ -1,16 +1,31 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const schema = new mongoose.Schema({
-  name: {
-    type: String,
-    trim: true
+const schema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      lowercase: true,
+      trim: true,
+    },
+    confirmationToken: {
+      type: String,
+    },
+    confirmedStatus: {
+      type: Boolean,
+      default: false,
+    },
+    stripeToken: {
+      type: String,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    lowercase: true,
-    trim: true
+  {
+    timeStamps: true,
   }
-});
+);
 
-module.exports = mongoose.model('User', schema);
+module.exports = mongoose.model("User", schema);
