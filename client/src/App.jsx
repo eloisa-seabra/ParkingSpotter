@@ -1,52 +1,43 @@
-import React, { Component } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { loadMe, signOut } from "./services/authentication";
+import React, { Component } from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { loadMe, signOut } from './services/authentication';
 
-import "./App.css";
+import './App.css';
 
-import AuthenticationSignUpView from "./views/authentication/SignUpView";
-import AuthenticationSignInView from "./views/authentication/SignInView";
-import ParkingListView from "./views/ParkingListView";
-import ErrorView from "./views/ErrorView";
+import AuthenticationSignUpView from './views/authentication/SignUpView';
+import AuthenticationSignInView from './views/authentication/SignInView';
+import ParkingListView from './views/ParkingListView';
+import ErrorView from './views/ErrorView';
 
-<<<<<<< HEAD
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
-=======
-import ProtectedRoute from "./components/ProtectedRoute";
->>>>>>> 33dc9e3ab4c9be435634936ff79eb1e6e8b40b2b
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-<<<<<<< HEAD
       loaded: true,
       user: null
-=======
-      loaded: false,
-      user: null,
->>>>>>> 33dc9e3ab4c9be435634936ff79eb1e6e8b40b2b
     };
   }
 
   componentDidMount() {
     loadMe()
-      .then((data) => {
+      .then(data => {
         const user = data.user;
         this.handleUserUpdate(user);
         this.setState({
-          loaded: true,
+          loaded: true
         });
       })
-      .then((error) => {
+      .then(error => {
         console.log(error);
       });
   }
 
-  handleUserUpdate = (user) => {
+  handleUserUpdate = user => {
     this.setState({
-      user,
+      user
     });
   };
 
@@ -55,7 +46,7 @@ class App extends Component {
       .then(() => {
         this.handleUserUpdate(null);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -70,13 +61,13 @@ class App extends Component {
               <Route path="/" exact />
               <ProtectedRoute
                 path="/authentication/sign-up"
-                render={(props) => <AuthenticationSignUpView {...props} onUserUpdate={this.handleUserUpdate} />}
+                render={props => <AuthenticationSignUpView {...props} onUserUpdate={this.handleUserUpdate} />}
                 authorized={!this.state.user}
                 redirect="/"
               />
               <ProtectedRoute
                 path="/authentication/sign-in"
-                render={(props) => <AuthenticationSignInView {...props} onUserUpdate={this.handleUserUpdate} />}
+                render={props => <AuthenticationSignInView {...props} onUserUpdate={this.handleUserUpdate} />}
                 authorized={!this.state.user}
                 redirect="/"
               />
