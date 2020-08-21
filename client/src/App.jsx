@@ -1,57 +1,45 @@
-import React, { Component } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { loadMe, signOut } from "./services/authentication";
+import React, { Component } from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { loadMe, signOut } from './services/authentication';
 
-import "./App.css";
+import './App.css';
 
-<<<<<<< HEAD
 import AuthenticationSignUpView from './views/authentication/SignUpView';
 import AuthenticationSignInView from './views/authentication/SignInView';
 import ProfileView from './views/profile/ProfileView';
 import EditProfileView from './views/profile/EditProfileView';
 import ParkingListView from './views/ParkingListView';
 import ErrorView from './views/ErrorView';
-=======
-import AuthenticationSignUpView from "./views/authentication/SignUpView";
-import AuthenticationSignInView from "./views/authentication/SignInView";
-import ParkingListView from "./views/parking/ParkingListView";
-import ParkingCreateView from "./views/parking/ParkingCreateView";
-import ErrorView from "./views/ErrorView";
->>>>>>> fce9e3444ce52a329023adbc6ccd3a3236e2f19d
 
-import ProtectedRoute from "./components/ProtectedRoute";
-import Navbar from "./components/Navbar";
+import ProtectedRoute from './components/ProtectedRoute';
+import Navbar from './components/Navbar';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       loaded: true,
-      user: null,
+      user: null
     };
   }
 
   componentDidMount() {
     loadMe()
-      .then((data) => {
+      .then(data => {
         const user = data.user;
         this.handleUserUpdate(user);
         this.setState({
-          loaded: true,
+          loaded: true
         });
       })
-<<<<<<< HEAD
       .catch(error => {
-=======
-      .then((error) => {
->>>>>>> fce9e3444ce52a329023adbc6ccd3a3236e2f19d
         console.log(error);
       });
   }
 
-  handleUserUpdate = (user) => {
+  handleUserUpdate = user => {
     this.setState({
-      user,
+      user
     });
   };
 
@@ -60,7 +48,7 @@ class App extends Component {
       .then(() => {
         this.handleUserUpdate(null);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -77,13 +65,13 @@ class App extends Component {
               <Route path="/profile/edit" component={EditProfileView} />
               <ProtectedRoute
                 path="/authentication/sign-up"
-                render={(props) => <AuthenticationSignUpView {...props} onUserUpdate={this.handleUserUpdate} />}
+                render={props => <AuthenticationSignUpView {...props} onUserUpdate={this.handleUserUpdate} />}
                 authorized={!this.state.user}
                 redirect="/"
               />
               <ProtectedRoute
                 path="/authentication/sign-in"
-                render={(props) => <AuthenticationSignInView {...props} onUserUpdate={this.handleUserUpdate} />}
+                render={props => <AuthenticationSignInView {...props} onUserUpdate={this.handleUserUpdate} />}
                 authorized={!this.state.user}
                 redirect="/"
               />
