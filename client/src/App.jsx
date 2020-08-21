@@ -9,12 +9,13 @@ import AuthenticationSignInView from './views/authentication/SignInView';
 import ErrorView from './views/ErrorView';
 
 import ProtectedRoute from './components/ProtectedRoute';
+import Navbar from './components/Navbar';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      loaded: false,
+      loaded: true,
       user: null
     };
   }
@@ -53,6 +54,7 @@ class App extends Component {
     return (
       <div className="App">
         <BrowserRouter>
+          <Navbar user={this.state.user} onSignOut={this.handleSignOut} />
           {(this.state.loaded && (
             <Switch>
               <Route path="/" exact />
