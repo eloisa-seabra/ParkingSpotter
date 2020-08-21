@@ -10,5 +10,5 @@ export const loadParking = () => {
 };
 
 export const uploadParking = (body) => {
-  api.post("/create", { body }).then((response) => response.data);
+  api.post("/create", body).then((response) => response.data);
 };

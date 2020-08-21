@@ -12,13 +12,12 @@ export class ParkingCreateView extends Component {
       hourlyPrice: 0,
     };
   }
-  handlePostCreation = () => {
+  handleSubmit = () => {
     const address = this.state.address;
     const description = this.state.description;
-    const lat = this.state.lat;
-    const lon = this.state.lon;
+    const hourlyPrice = Number(this.state.hourlyPrice);
 
-    const body = { address, description, lat, lon };
+    const body = { address, description, hourlyPrice };
     uploadParking(body)
       .then((data) => {
         console.log(data);
@@ -39,7 +38,7 @@ export class ParkingCreateView extends Component {
   render() {
     return (
       <div>
-        <form method="POST" onSubmit>
+        <form method="POST" onSubmit={this.handleSubmit}>
           <label htmlFor="address">Address</label>
           <input
             id="address-input"
