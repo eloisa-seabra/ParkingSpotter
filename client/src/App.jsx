@@ -6,6 +6,8 @@ import './App.css';
 
 import AuthenticationSignUpView from './views/authentication/SignUpView';
 import AuthenticationSignInView from './views/authentication/SignInView';
+import ProfileView from './views/profile/ProfileView';
+import EditProfileView from './views/profile/EditProfileView';
 import ParkingListView from './views/ParkingListView';
 import ErrorView from './views/ErrorView';
 
@@ -30,7 +32,7 @@ class App extends Component {
           loaded: true
         });
       })
-      .then(error => {
+      .catch(error => {
         console.log(error);
       });
   }
@@ -59,6 +61,8 @@ class App extends Component {
           {(this.state.loaded && (
             <Switch>
               <Route path="/" exact />
+              <Route path="/profile" component={ProfileView} exact />
+              <Route path="/profile/edit" component={EditProfileView} />
               <ProtectedRoute
                 path="/authentication/sign-up"
                 render={props => <AuthenticationSignUpView {...props} onUserUpdate={this.handleUserUpdate} />}
