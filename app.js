@@ -11,7 +11,7 @@ const serveFavicon = require('serve-favicon');
 const deserializeUser = require('./middleware/deserialize-user');
 
 const authenticationRouter = require('./routes/authentication');
-
+const parkingRouter = require('./routes/parking');
 const mongoStore = connectMongo(expressSession);
 
 const app = express();
@@ -49,6 +49,7 @@ app.use(deserializeUser);
 // Route Handlers
 
 app.use('/authentication', authenticationRouter);
+app.use('/parking', parkingRouter);
 
 // If no route handler is matched above,
 // this will run

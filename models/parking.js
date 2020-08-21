@@ -14,7 +14,7 @@ const schema = new mongoose.Schema(
     },
     photo: {
       type: String,
-      default: ''
+      required: true
     },
     location: {
       type: {
@@ -39,7 +39,7 @@ const schema = new mongoose.Schema(
       ]
     },
     availability: {
-      type: new Date()
+      type: Date
     },
     isRented: {
       type: Boolean,
@@ -52,7 +52,7 @@ const schema = new mongoose.Schema(
     //  type: Number
     //},
     user: {
-      type: mongoose.types.id,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     }
   },
@@ -61,4 +61,4 @@ const schema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Spot', schema);
+module.exports = mongoose.model('Parking', schema);
