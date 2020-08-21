@@ -1,43 +1,43 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { loadMe, signOut } from './services/authentication';
+import React, { Component } from "react";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { loadMe, signOut } from "./services/authentication";
 
-import './App.css';
+import "./App.css";
 
-import AuthenticationSignUpView from './views/authentication/SignUpView';
-import AuthenticationSignInView from './views/authentication/SignInView';
-import ParkingListView from './views/ParkingListView';
-import ErrorView from './views/ErrorView';
+import AuthenticationSignUpView from "./views/authentication/SignUpView";
+import AuthenticationSignInView from "./views/authentication/SignInView";
+import ParkingListView from "./views/parking/ParkingListView";
+import ErrorView from "./views/ErrorView";
 
-import ProtectedRoute from './components/ProtectedRoute';
-import Navbar from './components/Navbar';
+import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/Navbar";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       loaded: true,
-      user: null
+      user: null,
     };
   }
 
   componentDidMount() {
     loadMe()
-      .then(data => {
+      .then((data) => {
         const user = data.user;
         this.handleUserUpdate(user);
         this.setState({
-          loaded: true
+          loaded: true,
         });
       })
-      .then(error => {
+      .then((error) => {
         console.log(error);
       });
   }
 
-  handleUserUpdate = user => {
+  handleUserUpdate = (user) => {
     this.setState({
-      user
+      user,
     });
   };
 
@@ -46,7 +46,7 @@ class App extends Component {
       .then(() => {
         this.handleUserUpdate(null);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -61,17 +61,17 @@ class App extends Component {
               <Route path="/" exact />
               <ProtectedRoute
                 path="/authentication/sign-up"
-                render={props => <AuthenticationSignUpView {...props} onUserUpdate={this.handleUserUpdate} />}
+                render={(props) => <AuthenticationSignUpView {...props} onUserUpdate={this.handleUserUpdate} />}
                 authorized={!this.state.user}
                 redirect="/"
               />
               <ProtectedRoute
                 path="/authentication/sign-in"
-                render={props => <AuthenticationSignInView {...props} onUserUpdate={this.handleUserUpdate} />}
+                render={(props) => <AuthenticationSignInView {...props} onUserUpdate={this.handleUserUpdate} />}
                 authorized={!this.state.user}
                 redirect="/"
               />
-              <Route path="/list" component={ParkingListView} />
+              <Route path="/parking/list" component={ParkingListView} />
               <Route path="/error" component={ErrorView} />
               <Redirect from="/" to="/error" />
               {/* <Route path="/authentication/sign-in" component={AuthenticationSignInView} /> */}
