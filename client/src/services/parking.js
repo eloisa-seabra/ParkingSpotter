@@ -8,3 +8,7 @@ const api = axios.create({
 export const loadParking = () => {
   api.get("/list").then((response) => response.data);
 };
+
+export const uploadParking = (body) => {
+  api.post("/create", body).then((response) => response.data);
+};
