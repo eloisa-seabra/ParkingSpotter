@@ -4,6 +4,7 @@ import { loadMe, signOut } from './services/authentication';
 
 import './App.css';
 
+import HomeView from './views/HomeView';
 import AuthenticationSignUpView from './views/authentication/SignUpView';
 import AuthenticationSignInView from './views/authentication/SignInView';
 import ProfileView from './views/profile/ProfileView';
@@ -61,7 +62,7 @@ class App extends Component {
           <Navbar user={this.state.user} onSignOut={this.handleSignOut} />
           {(this.state.loaded && (
             <Switch>
-              <Route path="/" exact />
+              <Route path="/" component={HomeView} exact />
               <Route path="/profile" component={ProfileView} exact />
               <Route path="/profile/edit" component={EditProfileView} />
               <ProtectedRoute

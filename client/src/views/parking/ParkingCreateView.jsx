@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { uploadParking } from "../../services/parking";
+import { getCoordinates } from "../../services/geocoder";
 
 export class ParkingCreateView extends Component {
   constructor() {
@@ -12,16 +13,18 @@ export class ParkingCreateView extends Component {
       hourlyPrice: 0,
     };
   }
-  handleSubmit = () => {
+  handleSubmit = (event) => {
+    event.preventDefault();
     const address = this.state.address;
     const description = this.state.description;
     const hourlyPrice = Number(this.state.hourlyPrice);
-
     const body = { address, description, hourlyPrice };
-    uploadParking(body)
+    getCoordinates(address)
       .then((data) => {
         console.log(data);
+        return uploadParking(body);
       })
+      .then((response) => console.log(response))
       .catch((error) => {
         console.log(error);
       });
@@ -38,7 +41,7 @@ export class ParkingCreateView extends Component {
   render() {
     return (
       <div>
-        <form method="POST" onSubmit={this.handleSubmit}>
+        <form method="POST" onSubmit={(event) => this.handleSubmit(event)}>
           <label htmlFor="address">Address</label>
           <input
             id="address-input"

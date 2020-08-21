@@ -51,15 +51,19 @@ class EditProfileView extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleProfileEditing} onChange={this.handleInputChange}>
-          <label htmlFor="input-name">Full Name</label>
-          <input id="input-name" type="text" name="name" placeholder="Full Name" value={this.state.name} onChange={this.handleInputChange} />
+        {this.state.loaded && (
+          <>
+            <form onSubmit={this.handleProfileEditing} onChange={this.handleInputChange}>
+              <label htmlFor="input-name">Full Name</label>
+              <input id="input-name" type="text" name="name" placeholder="Full Name" value={this.state.name} onChange={this.handleInputChange} />
 
-          <label htmlFor="input-email">Email</label>
-          <input id="input-email" type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleInputChange} />
+              <label htmlFor="input-email">Email</label>
+              <input id="input-email" type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleInputChange} />
 
-          <button>Update Profile</button>
-        </form>
+              <button>Update Profile</button>
+            </form>
+          </>
+        )}
       </div>
     );
   }
