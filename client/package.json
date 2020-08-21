@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.20.0",
     "cloudinary": "^1.22.0",
+    "google-map-react": "^2.0.8",
     "multer": "^1.4.2",
     "multer-storage-cloudinary": "^4.0.0",
     "node-sass": "^4.14.1",
