@@ -11,11 +11,11 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
       minLenth: 6
-    },
+    } /* 
     photo: {
       type: String,
-      default: ''
-    },
+      required: true
+    }, 
     location: {
       type: {
         type: String,
@@ -38,27 +38,27 @@ const schema = new mongoose.Schema(
         }
       ]
     },
-    availability: {
-      type: new Date()
+    /*  availability: {
+      type: Date
     },
     isRented: {
       type: Boolean,
       default: false
-    },
+    }, */,
     hourlyPrice: {
       type: Number
-    },
+    }
     //dailyPrice: {
     //  type: Number
     //},
-    user: {
-      type: mongoose.types.id,
+    /*  user: {
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
-    }
+    }  */
   },
   {
     timeStamps: true
   }
 );
 
-module.exports = mongoose.model('Spot', schema);
+module.exports = mongoose.model('Parking', schema);

@@ -1,12 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './style.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./style.scss";
 
-const Navbar = props => {
+const Navbar = (props) => {
   return (
     <nav>
       <Link to="/">ParkingSpotter</Link>
-      <Link to="/post/create">Add a new slot</Link>
+      <Link to="/parking/create">Add a new slot</Link>
       {(props.user && (
         <>
           <Link to="/profile">{props.user.name}</Link>

@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.css";
+import "./style.scss";
 
 export const Marker = (props) => {
   return <div className="marker">{props.text}</div>;

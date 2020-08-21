@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 import Marker from "../Marker/Index";
-import "./style.css";
+import "./style.scss";
 
 class Map extends Component {
   static defaultProps = {
     center: {
-      lat: 41.2,
-      lng: -8.6,
+      lat: 38.717393,
+      lng: -9.140821,
     },
-    zoom: 3,
+    zoom: 12,
   };
   render() {
     return (
       // Important! Always set the container height explicitly
-      <div style={{ height: "50vh", width: "50%" }}>
+      <div style={{ height: "60vh", width: "60vh" }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
           defaultCenter={this.props.center}
