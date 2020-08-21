@@ -1,13 +1,86 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { loadMe, signOut } from './services/authentication';
 
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <h1> Welcome to ParkingSpotter</h1>
-    </div>
-  );
+import AuthenticationSignUpView from './views/authentication/SignUpView';
+import AuthenticationSignInView from './views/authentication/SignInView';
+import ErrorView from './views/ErrorView';
+
+import ProtectedRoute from './components/ProtectedRoute';
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      loaded: false,
+      user: null
+    };
+  }
+
+  componentDidMount() {
+    loadMe()
+      .then(data => {
+        const user = data.user;
+        this.handleUserUpdate(user);
+        this.setState({
+          loaded: true
+        });
+      })
+      .then(error => {
+        console.log(error);
+      });
+  }
+
+  handleUserUpdate = user => {
+    this.setState({
+      user
+    });
+  };
+
+  handleSignOut = () => {
+    signOut()
+      .then(() => {
+        this.handleUserUpdate(null);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <BrowserRouter>
+          {(this.state.loaded && (
+            <Switch>
+              <Route path="/" exact />
+              <ProtectedRoute
+                path="/authentication/sign-up"
+                render={props => <AuthenticationSignUpView {...props} onUserUpdate={this.handleUserUpdate} />}
+                authorized={!this.state.user}
+                redirect="/"
+              />
+              <ProtectedRoute
+                path="/authentication/sign-in"
+                render={props => <AuthenticationSignInView {...props} onUserUpdate={this.handleUserUpdate} />}
+                authorized={!this.state.user}
+                redirect="/"
+              />
+              <Route path="/error" component={ErrorView} />
+              <Redirect from="/" to="/error" />
+              {/* <Route path="/authentication/sign-in" component={AuthenticationSignInView} /> */}
+            </Switch>
+          )) || (
+            <div>
+              <h1>Loading...</h1>
+            </div>
+          )}
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
 export default App;
