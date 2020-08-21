@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema(
   {
     address: {
-      type: String,
-      required: true,
-      minLenth: 6
+      type: String
+      /*  required: true,
+      minLenth: 6 */
     },
     description: {
       type: String,

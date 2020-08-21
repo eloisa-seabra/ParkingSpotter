@@ -45,15 +45,15 @@ parkingRouter.post(
   routeAuthenticationGuard,
   upload.single('photo'),
   (request, response, next) => {
-    let url;
+    /*  let url;
     if (request.file) {
       url = request.file.path;
-    }
+    } */
 
     Parking.create({
-      user: request.user._id,
+      adress: request.body.adress,
       description: request.body.description,
-      photo: url
+      hourlyPrice: request.body.hourlyPrice
     })
       .then(spot => {
         response.json({ spot });
