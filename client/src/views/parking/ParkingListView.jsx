@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-import Map from "../../components/Map/Index";
-import List from "../../components/List/Index";
-import markers from "./markers.json";
-import { loadParking } from "../../services/parking";
+import React, { Component } from 'react';
+import Map from '../../components/Map/Index';
+import List from '../../components/List/Index';
+import markers from './markers.json';
 
 export class ParkingListView extends Component {
   constructor() {
     super();
     this.state = {
       loaded: false,
-      parking: [],
+      parking: []
     };
   }
   componentDidMount() {
@@ -23,12 +22,12 @@ export class ParkingListView extends Component {
     this.setState({
       loaded: true,
       mapView: true,
-      parking: markers,
+      parking: markers
     });
   }
   toggleView = () => {
     this.setState({
-      mapView: !this.state.mapView,
+      mapView: !this.state.mapView
     });
   };
   render() {
