@@ -26,7 +26,9 @@ class EditProfileView extends Component {
       });
   }
 
-  handleProfileEditing = () => {
+  handleProfileEditing = event => {
+    event.preventDefault();
+
     const { name, email } = this.state;
     const body = { name, email };
 
