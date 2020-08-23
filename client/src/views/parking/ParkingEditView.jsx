@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { createParking } from '../../services/parking';
-import { getCoordinates } from '../../services/geocoder';
+import { editSingleParking, loadSingleParking } from '../../services/parking';
+/* import { getCoordinates } from '../../services/geocoder'; */
+/* import PostForm from './../components/PostForm'; */
 
-export class ParkingCreateView extends Component {
+export class ParkingEditView extends Component {
   constructor() {
     super();
     this.state = {
+      loaded: false,
+      spot: null,
       location: '',
       description: '',
       price: 0
@@ -13,19 +16,38 @@ export class ParkingCreateView extends Component {
       //lon: 9,
     };
   }
-  handleSubmit = event => {
-    event.preventDefault();
+
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    loadSingleParking(id)
+      .then(data => {
+        const spot = data.spot;
+        this.setState({
+          location: spot.location,
+          description: spot.description,
+          price: spot.price,
+          loaded: true
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  handlePostEdition = event => {
+    const id = this.props.match.params.id;
     const { location, description } = this.state;
     const price = Number(this.state.price);
     const body = { location, description, price };
     //const coordinates = await getCoordinates(location);
-    createParking(body);
-    // .then((data) => {
-    //   console.log(data);
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
+    editSingleParking(id, body)
+      .then(data => {
+        console.log(body);
+        this.props.history.push(`/parking/${id}`);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   handleChange = event => {
@@ -39,14 +61,14 @@ export class ParkingCreateView extends Component {
   render() {
     return (
       <div>
-        <form method="POST" onSubmit={event => this.handleSubmit(event)}>
+        <form onSubmit={this.handlePostEdition}>
           <label htmlFor="location">Location</label>
           <input
             id="location-input"
             type="text"
             name="location"
             value={this.state.location}
-            onChange={event => this.handleChange(event)}
+            onChange={this.handleChange}
           />
           <label htmlFor="description-input">Description</label>
           <input
@@ -54,7 +76,7 @@ export class ParkingCreateView extends Component {
             type="text"
             name="description"
             value={this.state.description}
-            onChange={event => this.handleChange(event)}
+            onChange={this.handleChange}
           />
           <label htmlFor="price-input">Price</label>
           <input
@@ -62,13 +84,13 @@ export class ParkingCreateView extends Component {
             type="number"
             name="price"
             value={this.state.price}
-            onChange={event => this.handleChange(event)}
+            onChange={this.handleChange}
           />
-          <button>Create Parking</button>
+          <button>Edit Parking</button>
         </form>
       </div>
     );
   }
 }
 
-export default ParkingCreateView;
+export default ParkingEditView;
