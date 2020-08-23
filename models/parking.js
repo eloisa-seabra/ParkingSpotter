@@ -22,6 +22,7 @@ const schema = new mongoose.Schema(
     price: {
       type: Number
     },
+
     isRented: {
       type: Boolean,
       default: false
