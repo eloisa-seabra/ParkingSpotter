@@ -1,33 +1,31 @@
 import React, { Component } from "react";
-import { uploadParking } from "../../services/parking";
+import { createParking } from "../../services/parking";
 import { getCoordinates } from "../../services/geocoder";
 
 export class ParkingCreateView extends Component {
   constructor() {
     super();
     this.state = {
-      address: "",
+      location: "",
       description: "",
+      price: 0,
       //lat: 41,
       //lon: 9,
-      hourlyPrice: 0,
     };
   }
   handleSubmit = (event) => {
     event.preventDefault();
-    const address = this.state.address;
-    const description = this.state.description;
-    const hourlyPrice = Number(this.state.hourlyPrice);
-    const body = { address, description, hourlyPrice };
-    getCoordinates(address)
-      .then((data) => {
-        console.log(data);
-        return uploadParking(body);
-      })
-      .then((response) => console.log(response))
-      .catch((error) => {
-        console.log(error);
-      });
+    const { location, description } = this.state;
+    const price = Number(this.state.price);
+    const body = { location, description, price };
+    //const coordinates = await getCoordinates(location);
+    createParking(body);
+    // .then((data) => {
+    //   console.log(data);
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
   };
 
   handleChange = (event) => {
@@ -42,12 +40,12 @@ export class ParkingCreateView extends Component {
     return (
       <div>
         <form method="POST" onSubmit={(event) => this.handleSubmit(event)}>
-          <label htmlFor="address">Address</label>
+          <label htmlFor="location">Location</label>
           <input
-            id="address-input"
+            id="location-input"
             type="text"
-            name="address"
-            value={this.state.address}
+            name="location"
+            value={this.state.location}
             onChange={(event) => this.handleChange(event)}
           />
           <label htmlFor="description-input">Description</label>
@@ -62,8 +60,8 @@ export class ParkingCreateView extends Component {
           <input
             id="price-input"
             type="number"
-            name="hourlyPrice"
-            value={this.state.hourlyPrice}
+            name="price"
+            value={this.state.price}
             onChange={(event) => this.handleChange(event)}
           />
           <button>Create Parking</button>

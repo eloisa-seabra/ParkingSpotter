@@ -9,6 +9,6 @@ export const loadParking = () => {
   api.get("/list").then((response) => response.data);
 };
 
-export const uploadParking = (body) => {
+export const createParking = (body) => {
   api.post("/create", body).then((response) => response.data);
 };

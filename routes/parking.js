@@ -45,11 +45,12 @@ parkingRouter.post("/create", (req, res, next) => {
   // if (request.file) {
   //   url = request.file.path;
   // }
-  const { address, description, hourlyPrice } = req.body;
+  const { location, description, price } = req.body;
   Parking.create({
-    address: address,
+    location: location,
     description: description,
-    hourlyPrice: hourlyPrice,
+    price: price,
+    user: req.user._id,
   })
     .then((spot) => {
       res.json({ spot });

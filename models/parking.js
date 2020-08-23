@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema(
   {
-    address: {
+    location: {
       type: String,
       required: true,
       minLenth: 6,
@@ -14,47 +14,22 @@ const schema = new mongoose.Schema(
     },
     // photo: {
     //   type: String,
-    //   required: true
-    // },
-    // location: {
-    //   type: {
-    //     type: String,
-    //     default: 'point'
-    //   },
-    //   coordinates: [
-    //     {
-    //       lon: {
-    //         type: Number,
-    //         max: 180,
-    //         min: -180
-    //       }
-    //     },
-    //     {
-    //       lat: {
-    //         type: Number,
-    //         max: 180,
-    //         min: -180
-    //       }
-    //     }
-    //   ]
+    //   required: true,
     // },
     // availability: {
-    //   type: Date
+    //   type: Date,
     // },
-    // isRented: {
-    //   type: Boolean,
-    //   default: false
-    // },
-    hourlyPrice: {
+    price: {
       type: Number,
     },
-    //dailyPrice: {
-    //  type: Number
-    //},
-    // user: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'User'
-    // }
+    isRented: {
+      type: Boolean,
+      default: false,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   {
     timeStamps: true,
