@@ -1,10 +1,7 @@
 const express = require('express');
 
 const Parking = require('../models/parking');
-<<<<<<< HEAD
 const User = require('../models/user');
-=======
->>>>>>> 65029b5004ec7d63e48879e537fd0a0b7f8985a9
 
 const routeAuthenticationGuard = require('./../middleware/route-authentication-guard');
 
@@ -58,14 +55,11 @@ parkingRouter.post('/create', (req, res, next) => {
     price: price,
     user: req.user._id
   })
-<<<<<<< HEAD
     .then(parking => {
       return User.findByIdAndUpdate(id, {
         $push: { parkings: parking._id }
       });
     })
-=======
->>>>>>> 65029b5004ec7d63e48879e537fd0a0b7f8985a9
     .then(spot => {
       res.json({ spot });
     })
@@ -74,7 +68,6 @@ parkingRouter.post('/create', (req, res, next) => {
     });
 });
 
-<<<<<<< HEAD
 parkingRouter.delete('/:id', routeAuthenticationGuard, async (request, response, next) => {
   const id = request.params.id;
 
@@ -98,43 +91,5 @@ parkingRouter.patch('/:id', routeAuthenticationGuard, (request, response, next) 
       next(error);
     });
 });
-=======
-parkingRouter.delete(
-  '/:id',
-  routeAuthenticationGuard,
-  async (request, response, next) => {
-    const id = request.params.id;
-
-    Parking.findOneAndDelete({ _id: id, user: request.user._id })
-      .then(() => {
-        response.json({});
-      })
-      .catch(error => {
-        next(error);
-      });
-  }
-);
-
-parkingRouter.patch(
-  '/:id',
-  routeAuthenticationGuard,
-  (request, response, next) => {
-    const id = request.params.id;
-
-    Parking.findOneAndUpdate(
-      { _id: id, user: request.user._id },
-      { description: request.body.description },
-      { price: request.body.price },
-      { new: true }
-    )
-      .then(spot => {
-        response.json({ spot });
-      })
-      .catch(error => {
-        next(error);
-      });
-  }
-);
->>>>>>> 65029b5004ec7d63e48879e537fd0a0b7f8985a9
 
 module.exports = parkingRouter;

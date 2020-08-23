@@ -50,7 +50,11 @@ class ProfileView extends Component {
                   <h5>Location: {parking.location}</h5>
                   <small>{parking.description}</small>
                   <p>Price: {parking.price}$/hr</p>
-                  <button>Reserve Spot</button>
+                  <Link to={`/parking/${parking._id}`}>Details </Link>
+                  <Link to={`/parking/${parking._id}/edit`}> Edit Parking </Link>
+                  <form onSubmit={this.handlePostDeletion}>
+                    <button>Delete</button>
+                  </form>
                 </div>
               ))}
               <Link to="/">View list of spots</Link>
