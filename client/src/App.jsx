@@ -67,13 +67,23 @@ class App extends Component {
               <Route path="/profile/edit" component={EditProfileView} />
               <ProtectedRoute
                 path="/authentication/sign-up"
-                render={props => <AuthenticationSignUpView {...props} onUserUpdate={this.handleUserUpdate} />}
+                render={props => (
+                  <AuthenticationSignUpView
+                    {...props}
+                    onUserUpdate={this.handleUserUpdate}
+                  />
+                )}
                 authorized={!this.state.user}
                 redirect="/"
               />
               <ProtectedRoute
                 path="/authentication/sign-in"
-                render={props => <AuthenticationSignInView {...props} onUserUpdate={this.handleUserUpdate} />}
+                render={props => (
+                  <AuthenticationSignInView
+                    {...props}
+                    onUserUpdate={this.handleUserUpdate}
+                  />
+                )}
                 authorized={!this.state.user}
                 redirect="/"
               />

@@ -16,6 +16,7 @@ const storage = new multerStorageCloudinary.CloudinaryStorage({
 const upload = multer({ storage });
 
 parkingRouter.get("/list", (request, response, next) => {
+  const { city, time, day } = request.body;
   Parking.find()
     .populate("user")
     .then((spots) => {

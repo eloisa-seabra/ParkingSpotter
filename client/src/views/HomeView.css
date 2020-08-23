@@ -1,0 +1,14 @@
+.about {
+  background-color: #0bc4ff;
+  display: flex;
+
+  height: 300px;
+  margin: 50px auto;
+  max-width: 1300px;
+  border-radius: 30px;
+}
+
+.about-list {
+  display: flex;
+  flex-direction: column;
+}
