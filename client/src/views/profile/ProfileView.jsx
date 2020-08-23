@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { loadProfile } from '../../services/authentication';
+import { loadProfile } from '../../services/profile';
 
 class ProfileView extends Component {
   constructor() {
@@ -42,10 +42,19 @@ class ProfileView extends Component {
             <hr />
             <h4>My last rentals:</h4>
             <p>array.map of past rentals</p>
-            <hr />
-            <h4>My spots:</h4>
-            <p>array.map of my spots</p>
-            <Link to="/">View list of spots</Link>
+            <div className="own-parkings">
+              <hr />
+              <h4>My spots:</h4>
+              {user.parkings.map(parking => (
+                <div key={parking._id}>
+                  <h5>Location: {parking.location}</h5>
+                  <small>{parking.description}</small>
+                  <p>Price: {parking.price}$/hr</p>
+                  <button>Reserve Spot</button>
+                </div>
+              ))}
+              <Link to="/">View list of spots</Link>
+            </div>
           </>
         )}
       </div>

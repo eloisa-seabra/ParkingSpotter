@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { loadProfile, editProfile } from '../../services/authentication';
+import { loadProfile, editProfile } from '../../services/profile';
 
 class EditProfileView extends Component {
   constructor() {

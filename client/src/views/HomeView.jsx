@@ -83,55 +83,22 @@ class HomeView extends Component {
 
         <form onSubmit={this.handleParkSearch}>
           <label htmlFor="city-input">City</label>
-          <input
-            type="text"
-            name="city"
-            placeholder="Park here..."
-            id="city-input"
-            onChange={this.handleInputChange}
-          />
+          <input type="text" name="city" placeholder="Park here..." id="city-input" onChange={this.handleInputChange} />
           <label htmlFor="date-input">Date:</label>
-          <input
-            type="date"
-            name="day"
-            id="date-input"
-            value={this.state.day}
-            onChange={this.handleInputChange}
-          />
+          <input type="date" name="day" id="date-input" value={this.state.day} onChange={this.handleInputChange} />
           <label htmlFor="time-input">Starting Time:</label>
-          <input
-            type="time"
-            name="time"
-            id="time-input"
-            value={this.state.time}
-            onChange={this.handleInputChange}
-          />
+          <input type="time" name="time" id="time-input" value={this.state.time} onChange={this.handleInputChange} />
           <button>Search</button>
         </form>
         <button onClick={this.triggerMyLocation}>Spots Near Me</button>
         <div>
-          <img
-            style={{ width: '1300px' }}
-            src="https://res.cloudinary.com/isaseabra/image/upload/v1598193410/252430-P4G84R-789__hc4lsf.jpg"
-          />
+          <img style={{ width: '1300px' }} src="https://res.cloudinary.com/isaseabra/image/upload/v1598193410/252430-P4G84R-789__hc4lsf.jpg" />
         </div>
         <div className="about">
-          <div classNme="about-list">
-            <p>
-              {' '}
-              Tired of spending time searching for a parking spot in the big
-              city or of expensive private parking lot fees?
-            </p>
-            <p>
-              {' '}
-              With ParkingSpotter you can save time and money and reserve your
-              spot from someone's available private parking spot{' '}
-            </p>
-            <p>
-              {' '}
-              Choose your starting time and pay the time spent only when you
-              leave the parking spot{' '}
-            </p>
+          <div className="about-list">
+            <p> Tired of spending time searching for a parking spot in the big city or of expensive private parking lot fees?</p>
+            <p> With ParkingSpotter you can save time and money and reserve your spot from someone's available private parking spot </p>
+            <p> Choose your starting time and pay the time spent only when you leave the parking spot </p>
           </div>
         </div>
       </div>

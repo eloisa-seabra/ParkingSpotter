@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Map from '../../components/Map/Index';
-import List from '../../components/List/Index';
+import Map from '../../components/Map';
+import List from '../../components/List';
 import markers from './markers.json';
 
 export class ParkingListView extends Component {
