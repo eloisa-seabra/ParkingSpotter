@@ -49,7 +49,6 @@ parkingRouter.post('/create', (req, res, next) => {
   // }
   const { location, description, price } = req.body;
   const id = req.user._id;
-  console.log('user id: ', id);
   Parking.create({
     location: location,
     description: description,
