@@ -11,6 +11,8 @@ import ProfileView from './views/profile/ProfileView';
 import EditProfileView from './views/profile/EditProfileView';
 import ParkingListView from './views/parking/ParkingListView';
 import ParkingCreateView from './views/parking/ParkingCreateView';
+import ParkingIdView from './views/parking/ParkingIdView';
+import ParkingEditView from './views/parking/ParkingEditView';
 import ErrorView from './views/ErrorView';
 
 import ProtectedRoute from './components/ProtectedRoute';
@@ -89,6 +91,9 @@ class App extends Component {
               />
               <Route path="/parking/list" component={ParkingListView} />
               <Route path="/parking/create" component={ParkingCreateView} />
+              <Route path="/parking/:id/edit" component={ParkingEditView} />
+              <Route path="/parking/:id" component={ParkingIdView} />
+
               <Route path="/error" component={ErrorView} />
               <Redirect from="/" to="/error" />
               {/* <Route path="/authentication/sign-in" component={AuthenticationSignInView} /> */}

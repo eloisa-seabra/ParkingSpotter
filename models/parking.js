@@ -22,6 +22,7 @@ const schema = new mongoose.Schema(
     price: {
       type: Number
     },
+
     isRented: {
       type: Boolean,
       default: false
@@ -29,6 +30,7 @@ const schema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
+<<<<<<< HEAD
     },
     hourlyPrice: {
       type: Number
@@ -40,6 +42,9 @@ const schema = new mongoose.Schema(
     //   type: mongoose.Schema.Types.ObjectId,
     //   ref: 'User'
     // }
+=======
+    }
+>>>>>>> 65029b5004ec7d63e48879e537fd0a0b7f8985a9
   },
   {
     timeStamps: true
