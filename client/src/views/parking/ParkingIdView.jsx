@@ -15,11 +15,11 @@ export class ParkingIdView extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
+    console.log(this.props.user);
     loadSingleParking(id)
       .then(data => {
-        console.log(data);
         const spot = data.spot;
-        if (data.spot.user.parkings.includes(data.spot._id)) {
+        if (spot.user._id === this.props.user._id) {
           this.setState({
             spot,
             ownSpot: true,

@@ -83,7 +83,7 @@ class App extends Component {
               <Route path="/parking/list" component={ParkingListView} />
               <Route path="/parking/create" component={ParkingCreateView} />
               <Route path="/parking/:id/edit" component={ParkingEditView} />
-              <Route path="/parking/:id" component={ParkingIdView} />
+              <Route path="/parking/:id" render={props => <ParkingIdView {...props} user={this.state.user} />} />
 
               <Route path="/rental" component={RentalView} />
 
