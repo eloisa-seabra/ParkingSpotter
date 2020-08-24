@@ -70,60 +70,38 @@ parkingRouter.post('/create', upload.single('photo'), (req, res, next) => {
     });
 });
 
-<<<<<<< HEAD
 parkingRouter.delete('/:id', routeAuthenticationGuard, async (request, response, next) => {
   const id = request.params.id;
-  const userId = request.user._id;
 
-  User.findByIdAndUpdate({ _id: userId }, { $pull: { parkings: id } }, { safe: true, upsert: true }).then(() => {
-=======
-parkingRouter.delete(
-  '/:id',
-  routeAuthenticationGuard,
-  async (request, response, next) => {
-    const id = request.params.id;
-
->>>>>>> ee6052bd375ac57167ca555a9a43ddc846803bbb
-    Parking.findOneAndDelete({ _id: id, user: request.user._id })
-      .then(() => {
-        response.json({});
-      })
-      .catch(error => {
-        console.log(error);
-        next(error);
-      });
-<<<<<<< HEAD
-  });
+  Parking.findOneAndDelete({ _id: id, user: request.user._id })
+    .then(() => {
+      response.json({});
+    })
+    .catch(error => {
+      console.log(error);
+      next(error);
+    });
 });
-=======
+
+parkingRouter.patch('/:id', routeAuthenticationGuard, upload.single('photo'), (request, response, next) => {
+  const id = request.params.id;
+  const { location, description, price } = request.body;
+  let data;
+
+  if (request.file) {
+    const photo = request.file.path;
+    data = { location, description, price, photo };
+  } else {
+    data = { location, description, price };
   }
-);
->>>>>>> ee6052bd375ac57167ca555a9a43ddc846803bbb
 
-parkingRouter.patch(
-  '/:id',
-  routeAuthenticationGuard,
-  upload.single('photo'),
-  (request, response, next) => {
-    const id = request.params.id;
-    const { location, description, price } = request.body;
-    let data;
-
-    if (request.file) {
-      const photo = request.file.path;
-      data = { location, description, price, photo };
-    } else {
-      data = { location, description, price };
-    }
-
-    Parking.findByIdAndUpdate(id, data)
-      .then(spot => {
-        response.json({ spot });
-      })
-      .catch(error => {
-        next(error);
-      });
-  }
-);
+  Parking.findByIdAndUpdate(id, data)
+    .then(spot => {
+      response.json({ spot });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
 
 module.exports = parkingRouter;
