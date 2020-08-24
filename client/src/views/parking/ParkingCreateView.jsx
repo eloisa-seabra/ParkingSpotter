@@ -17,6 +17,7 @@ export class ParkingCreateView extends Component {
     event.preventDefault();
     const { location, description } = this.state;
     const price = Number(this.state.price);
+<<<<<<< HEAD
     let body;
     getCoordinates(location)
       .then((data) => {
@@ -31,6 +32,23 @@ export class ParkingCreateView extends Component {
       .catch((error) => {
         console.log(error);
       });
+=======
+    const body = { location, description, price };
+    //const coordinates = await getCoordinates(location);
+    createParking(body);
+    // .then(() => {
+    //   this.props.history.push('/parking');
+    // console.log('ok - then working');
+    // })
+    // .then(data => {
+    //   const id = data;
+    //   console.log(id);
+    //   this.props.history.push('/parking');
+    // })
+    // .catch(error => {
+    //   console.log(error);
+    // });
+>>>>>>> 147716a38e79d593e9dc6cd0539050df94168331
   };
 
   handleChange = (event) => {
@@ -46,6 +64,7 @@ export class ParkingCreateView extends Component {
       <div>
         <form method="POST" onSubmit={(event) => this.handleSubmit(event)}>
           <label htmlFor="location">Location</label>
+<<<<<<< HEAD
           <input
             id="location-input"
             type="text"
@@ -69,6 +88,13 @@ export class ParkingCreateView extends Component {
             value={this.state.price}
             onChange={(event) => this.handleChange(event)}
           />
+=======
+          <input id="location-input" type="text" name="location" value={this.state.location} onChange={event => this.handleChange(event)} />
+          <label htmlFor="description-input">Description</label>
+          <input id="description-input" type="text" name="description" value={this.state.description} onChange={event => this.handleChange(event)} />
+          <label htmlFor="price-input">Price</label>
+          <input id="price-input" type="number" name="price" value={this.state.price} onChange={event => this.handleChange(event)} />
+>>>>>>> 147716a38e79d593e9dc6cd0539050df94168331
           <button>Create Parking</button>
         </form>
       </div>

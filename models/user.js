@@ -22,6 +22,7 @@ const schema = new mongoose.Schema(
       required: [true, 'Password is required.'],
       minlength: 6
     },
+    parkings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Parking' }],
     status: {
       type: String,
       enum: ['pending_confirmation', 'active'],

@@ -92,6 +92,7 @@ class HomeView extends Component {
         </form>
         <button onClick={this.triggerMyLocation}>Spots Near Me</button>
         <div>
+<<<<<<< HEAD
           <img
             style={{ width: "1300px" }}
             src="https://res.cloudinary.com/isaseabra/image/upload/v1598193410/252430-P4G84R-789__hc4lsf.jpg"
@@ -109,6 +110,14 @@ class HomeView extends Component {
               With ParkingSpotter you can save time and money and reserve your spot from someone's available private
               parking spot{" "}
             </p>
+=======
+          <img style={{ width: '1300px' }} src="https://res.cloudinary.com/isaseabra/image/upload/v1598193410/252430-P4G84R-789__hc4lsf.jpg" />
+        </div>
+        <div className="about">
+          <div className="about-list">
+            <p> Tired of spending time searching for a parking spot in the big city or of expensive private parking lot fees?</p>
+            <p> With ParkingSpotter you can save time and money and reserve your spot from someone's available private parking spot </p>
+>>>>>>> 147716a38e79d593e9dc6cd0539050df94168331
             <p> Choose your starting time and pay the time spent only when you leave the parking spot </p>
           </div>
         </div>

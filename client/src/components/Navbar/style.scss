@@ -1,12 +1,17 @@
 nav {
   display: flex;
+  border-bottom: 5px solid #00d9e7;
+  box-shadow: 3px 5px 5px 2px #36c8f8;
   // justify-content: space-between;
   a,
   button,
   span {
+    color: #0bc4ff;
+    font-size: 1.1em;
+    line-height: 2em;
     display: flex;
     padding: 1em 0;
-    margin-right: 1em;
+    margin: 0 1.5em;
     &:first-child {
       margin-right: auto;
     }
@@ -14,4 +19,8 @@ nav {
   button {
     border: 0;
   }
+}
+
+img {
+  margin: 0.1em;
 }

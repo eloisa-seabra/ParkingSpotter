@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { loadProfile, editProfile } from '../../services/authentication';
+import { loadProfile, editProfile } from '../../services/profile';
 
 class EditProfileView extends Component {
   constructor() {
@@ -14,6 +14,7 @@ class EditProfileView extends Component {
   componentDidMount() {
     loadProfile()
       .then(data => {
+        console.log(data.user);
         const user = data.user;
         this.setState({
           loaded: true,
@@ -30,6 +31,7 @@ class EditProfileView extends Component {
     event.preventDefault();
 
     const { name, email } = this.state;
+
     const body = { name, email };
 
     editProfile(body)

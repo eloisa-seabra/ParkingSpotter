@@ -35,6 +35,7 @@ export class ParkingEditView extends Component {
   }
 
   handlePostEdition = event => {
+    event.preventDefault();
     const id = this.props.match.params.id;
     const { location, description } = this.state;
     const price = Number(this.state.price);
@@ -63,29 +64,11 @@ export class ParkingEditView extends Component {
       <div>
         <form onSubmit={this.handlePostEdition}>
           <label htmlFor="location">Location</label>
-          <input
-            id="location-input"
-            type="text"
-            name="location"
-            value={this.state.location}
-            onChange={this.handleChange}
-          />
+          <input id="location-input" type="text" name="location" value={this.state.location} onChange={this.handleChange} />
           <label htmlFor="description-input">Description</label>
-          <input
-            id="description-input"
-            type="text"
-            name="description"
-            value={this.state.description}
-            onChange={this.handleChange}
-          />
+          <input id="description-input" type="text" name="description" value={this.state.description} onChange={this.handleChange} />
           <label htmlFor="price-input">Price</label>
-          <input
-            id="price-input"
-            type="number"
-            name="price"
-            value={this.state.price}
-            onChange={this.handleChange}
-          />
+          <input id="price-input" type="number" name="price" value={this.state.price} onChange={this.handleChange} />
           <button>Edit Parking</button>
         </form>
       </div>

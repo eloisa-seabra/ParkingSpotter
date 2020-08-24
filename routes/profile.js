@@ -7,8 +7,17 @@ const routeAuthenticationGuard = require('./../middleware/route-authentication-g
 const profileRouter = new express.Router();
 
 profileRouter.get('/profile', routeAuthenticationGuard, (request, response) => {
-  const user = request.user;
-  response.json({ user });
+  // const user = request.user;
+  const userId = request.user._id;
+  console.log(request.user);
+  User.find({ _id: userId })
+    .populate('parkings')
+    .then(user => {
+      return user[0];
+    })
+    .then(user => {
+      response.json({ user });
+    });
 });
 
 profileRouter.patch('/profile/edit', routeAuthenticationGuard, (request, response, next) => {
