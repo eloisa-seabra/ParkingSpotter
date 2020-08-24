@@ -17,7 +17,6 @@ export class ParkingCreateView extends Component {
     event.preventDefault();
     const { location, description } = this.state;
     const price = Number(this.state.price);
-<<<<<<< HEAD
     let body;
     getCoordinates(location)
       .then((data) => {
@@ -32,23 +31,6 @@ export class ParkingCreateView extends Component {
       .catch((error) => {
         console.log(error);
       });
-=======
-    const body = { location, description, price };
-    //const coordinates = await getCoordinates(location);
-    createParking(body);
-    // .then(() => {
-    //   this.props.history.push('/parking');
-    // console.log('ok - then working');
-    // })
-    // .then(data => {
-    //   const id = data;
-    //   console.log(id);
-    //   this.props.history.push('/parking');
-    // })
-    // .catch(error => {
-    //   console.log(error);
-    // });
->>>>>>> 147716a38e79d593e9dc6cd0539050df94168331
   };
 
   handleChange = (event) => {

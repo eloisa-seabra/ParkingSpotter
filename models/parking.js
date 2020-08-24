@@ -36,23 +36,8 @@ const schema = new mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-<<<<<<< HEAD
       ref: "User",
     },
-=======
-      ref: 'User'
-    },
-    hourlyPrice: {
-      type: Number
-    }
-    //dailyPrice: {
-    //  type: Number
-    //},
-    // user: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'User'
-    // }
->>>>>>> 147716a38e79d593e9dc6cd0539050df94168331
   },
   {
     timeStamps: true,

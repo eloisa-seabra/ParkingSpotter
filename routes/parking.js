@@ -59,45 +59,26 @@ parkingRouter.post("/create", (req, res, next) => {
     price: price,
     user: req.user._id,
   })
-<<<<<<< HEAD
     .then((document) => {
       res.json(document);
-=======
-    .then(parking => {
-      return User.findByIdAndUpdate(id, {
-        $push: { parkings: parking._id }
-      });
-    })
-    .then(spot => {
-      res.json({ spot });
->>>>>>> 147716a38e79d593e9dc6cd0539050df94168331
     })
     .catch((error) => {
       next(error);
     });
 });
 
-<<<<<<< HEAD
 parkingRouter.delete("/:id", routeAuthenticationGuard, async (request, response, next) => {
-=======
-parkingRouter.delete('/:id', routeAuthenticationGuard, async (request, response, next) => {
->>>>>>> 147716a38e79d593e9dc6cd0539050df94168331
   const id = request.params.id;
 
   Parking.findOneAndDelete({ _id: id, user: request.user._id })
     .then(() => {
       response.json({});
     })
-<<<<<<< HEAD
     .catch((error) => {
-=======
-    .catch(error => {
->>>>>>> 147716a38e79d593e9dc6cd0539050df94168331
       next(error);
     });
 });
 
-<<<<<<< HEAD
 parkingRouter.patch("/:id", routeAuthenticationGuard, (request, response, next) => {
   const id = request.params.id;
 
@@ -111,18 +92,6 @@ parkingRouter.patch("/:id", routeAuthenticationGuard, (request, response, next) 
       response.json({ spot });
     })
     .catch((error) => {
-=======
-parkingRouter.patch('/:id', routeAuthenticationGuard, (request, response, next) => {
-  const id = request.params.id;
-  const { location, description, price } = request.body;
-  const data = { location, description, price };
-
-  Parking.findByIdAndUpdate(id, data)
-    .then(spot => {
-      response.json({ spot });
-    })
-    .catch(error => {
->>>>>>> 147716a38e79d593e9dc6cd0539050df94168331
       next(error);
     });
 });
