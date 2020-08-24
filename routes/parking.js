@@ -80,10 +80,12 @@ parkingRouter.delete('/:id', routeAuthenticationGuard, async (request, response,
     });
 });
 
-parkingRouter.patch('/:id', routeAuthenticationGuard, (request, response, next) => {
+parkingRouter.patch('/:id/edit', routeAuthenticationGuard, (request, response, next) => {
   const id = request.params.id;
+  const { location, description, price } = request.body;
+  const data = { location, description, price };
 
-  Parking.findOneAndUpdate({ _id: id, user: request.user._id }, { description: request.body.description }, { new: true })
+  Parking.findByIdAndUpdate(id, data)
     .then(spot => {
       response.json({ spot });
     })
