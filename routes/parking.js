@@ -47,12 +47,13 @@ parkingRouter.post("/create", (req, res, next) => {
   // if (request.file) {
   //   url = request.file.path;
   // }
-  const { location, description, price } = req.body;
+  const { location, description, price, coordinates } = req.body;
   const id = req.user._id;
   Parking.create({
-    location: location,
-    description: description,
-    price: price,
+    location,
+    description,
+    coordinates,
+    price,
     user: req.user._id,
   })
     .then((document) => {

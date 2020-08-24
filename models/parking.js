@@ -7,22 +7,14 @@ const schema = new mongoose.Schema(
       required: true,
       minLenth: 6,
     },
-    coordinates: [
-      {
-        type: Number,
-        max: 180,
-        min: -180,
-      },
-    ],
+    coordinates: [{ type: Number, max: 180, min: -180 }],
     description: {
       type: String,
-      required: true,
       minLenth: 6,
     },
-    // photo: {
-    //   type: String,
-    //   required: true,
-    // },
+    photo: {
+      type: String,
+    },
     // availability: {
     //   type: Date,
     // },

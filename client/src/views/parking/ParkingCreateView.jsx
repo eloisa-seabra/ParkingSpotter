@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Map from "../../components/Map/Index";
 import { createParking } from "../../services/parking";
 import { getCoordinates } from "../../services/geocoder";
 
@@ -9,22 +10,16 @@ export class ParkingCreateView extends Component {
       location: "",
       description: "",
       price: 0,
-      //lat: 41,
-      //lon: 9,
+      coordinates: [],
+      markers: [],
     };
   }
-  handleSubmit = (event) => {
+  handleFormSubmit = (event) => {
     event.preventDefault();
-    const { location, description } = this.state;
+    const { location, description, coordinates } = this.state;
     const price = Number(this.state.price);
-    let body;
-    getCoordinates(location)
-      .then((data) => {
-        const coordinates = data.features[0].geometry.coordinates;
-        console.log(coordinates);
-        body = { location, description, price, coordinates };
-        return createParking(body);
-      })
+    const body = { location, description, coordinates, price };
+    createParking(body)
       .then((response) => {
         console.log(response);
       })
@@ -32,26 +27,37 @@ export class ParkingCreateView extends Component {
         console.log(error);
       });
   };
-
-  handleChange = (event) => {
+  handleInputChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({
       [name]: value,
     });
   };
-
+  handleMapClick = (event) => {
+    const { lng, lat } = event;
+    const newCoordinates = [lng, lat];
+    const marker = {
+      lng: newCoordinates[0],
+      lat: newCoordinates[1],
+    };
+    this.setState({
+      coordinates: newCoordinates,
+      markers: [marker],
+    });
+  };
   render() {
     return (
       <div>
-        <form method="POST" onSubmit={(event) => this.handleSubmit(event)}>
+        <Map markers={this.state.markers} handleClick={this.handleMapClick} />
+        <form method="POST" onSubmit={this.handleFormSubmit}>
           <label htmlFor="location">Location</label>
           <input
             id="location-input"
             type="text"
             name="location"
             value={this.state.location}
-            onChange={(event) => this.handleChange(event)}
+            onChange={this.handleInputChange}
           />
           <label htmlFor="description-input">Description</label>
           <input
@@ -59,7 +65,7 @@ export class ParkingCreateView extends Component {
             type="text"
             name="description"
             value={this.state.description}
-            onChange={(event) => this.handleChange(event)}
+            onChange={this.handleInputChange}
           />
           <label htmlFor="price-input">Price</label>
           <input
@@ -67,7 +73,7 @@ export class ParkingCreateView extends Component {
             type="number"
             name="price"
             value={this.state.price}
-            onChange={(event) => this.handleChange(event)}
+            onChange={this.handleInputChange}
           />
           <button>Create Parking</button>
         </form>
