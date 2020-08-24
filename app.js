@@ -12,8 +12,8 @@ const deserializeUser = require('./middleware/deserialize-user');
 
 const authenticationRouter = require('./routes/authentication');
 const profileRouter = require('./routes/profile');
-const rentalRouter = require('./routes/rental');
 const parkingRouter = require('./routes/parking');
+const rentalRouter = require('./routes/rental');
 
 const mongoStore = connectMongo(expressSession);
 
@@ -54,7 +54,7 @@ app.use(deserializeUser);
 app.use('/authentication', authenticationRouter);
 app.use('/', profileRouter);
 app.use('/parking', parkingRouter);
-app.use('/rental', rentalRouter);
+app.use('/', rentalRouter);
 
 // If no route handler is matched above,
 // this will run
