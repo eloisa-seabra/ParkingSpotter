@@ -48,6 +48,7 @@ class ProfileView extends Component {
 
   render() {
     const user = this.state.user;
+    console.log(user);
     return (
       <div>
         {this.state.loaded && (
