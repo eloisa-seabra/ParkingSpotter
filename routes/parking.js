@@ -1,37 +1,37 @@
-const express = require('express');
+const express = require("express");
 
-const Parking = require('../models/parking');
-const User = require('../models/user');
+const Parking = require("../models/parking");
+const User = require("../models/user");
 
-const routeAuthenticationGuard = require('./../middleware/route-authentication-guard');
+const routeAuthenticationGuard = require("./../middleware/route-authentication-guard");
 
-const multer = require('multer');
-const cloudinary = require('cloudinary');
-const multerStorageCloudinary = require('multer-storage-cloudinary');
+const multer = require("multer");
+const cloudinary = require("cloudinary");
+const multerStorageCloudinary = require("multer-storage-cloudinary");
 
 const parkingRouter = new express.Router();
 
 const storage = new multerStorageCloudinary.CloudinaryStorage({
-  cloudinary: cloudinary.v2
+  cloudinary: cloudinary.v2,
 });
 const upload = multer({ storage });
 
-parkingRouter.get('/list', (request, response, next) => {
+parkingRouter.get("/list", (request, response, next) => {
   const { city, time, day } = request.body;
   Parking.find()
-    .populate('user')
-    .then(spots => {
+    .populate("user")
+    .then((spots) => {
       response.json({ spots });
     })
-    .catch(error => {
+    .catch((error) => {
       next(error);
     });
 });
 
-parkingRouter.get('/:id', async (request, response, next) => {
+parkingRouter.get("/:id", async (request, response, next) => {
   const id = request.params.id;
   try {
-    const spot = await Parking.findById(id).populate('user');
+    const spot = await Parking.findById(id).populate("user");
     if (spot) {
       response.json({ spot });
     } else {
@@ -42,88 +42,74 @@ parkingRouter.get('/:id', async (request, response, next) => {
   }
 });
 
-parkingRouter.post('/create', upload.single('photo'), (req, res, next) => {
+parkingRouter.post("/create", upload.single("photo"), (req, res, next) => {
+  console.log(req.body);
   let url;
   if (req.file) {
     url = req.file.path;
   }
   const { location, description, price, coordinates } = req.body;
-  const id = req.user._id;
+  const userId = req.user._id;
+  //let document;
   Parking.create({
     location,
     description,
     coordinates,
     price,
     user: req.user._id,
-    photo: url
+    photo: url,
   })
-    .then(parking => {
-      return User.findByIdAndUpdate(id, {
-        $push: { parkings: parking._id }
-      });
+    // .then((parking) => {
+    //   document = parking;
+    //   return User.findByIdAndUpdate(userId, {
+    //     $push: { parkings: parking._id },
+    //   });
+    // })
+    .then((document) => {
+      console.log("response");
+      res.json({ document });
     })
-    .then(document => {
-      res.json(document);
-    })
-    .catch(error => {
+    .catch((error) => {
+      console.log(error);
       next(error);
     });
 });
 
-<<<<<<< HEAD
-parkingRouter.delete('/:id', routeAuthenticationGuard, async (request, response, next) => {
+parkingRouter.delete("/:id", routeAuthenticationGuard, async (request, response, next) => {
   const id = request.params.id;
   const userId = request.user._id;
 
   User.findByIdAndUpdate({ _id: userId }, { $pull: { parkings: id } }, { safe: true, upsert: true }).then(() => {
-=======
-parkingRouter.delete(
-  '/:id',
-  routeAuthenticationGuard,
-  async (request, response, next) => {
-    const id = request.params.id;
-
->>>>>>> ee6052bd375ac57167ca555a9a43ddc846803bbb
     Parking.findOneAndDelete({ _id: id, user: request.user._id })
       .then(() => {
         response.json({});
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         next(error);
       });
-<<<<<<< HEAD
   });
 });
-=======
+
+parkingRouter.patch("/:id", routeAuthenticationGuard, upload.single("photo"), (request, response, next) => {
+  const id = request.params.id;
+  const { location, description, price } = request.body;
+  let data;
+
+  if (request.file) {
+    const photo = request.file.path;
+    data = { location, description, price, photo };
+  } else {
+    data = { location, description, price };
   }
-);
->>>>>>> ee6052bd375ac57167ca555a9a43ddc846803bbb
 
-parkingRouter.patch(
-  '/:id',
-  routeAuthenticationGuard,
-  upload.single('photo'),
-  (request, response, next) => {
-    const id = request.params.id;
-    const { location, description, price } = request.body;
-    let data;
-
-    if (request.file) {
-      const photo = request.file.path;
-      data = { location, description, price, photo };
-    } else {
-      data = { location, description, price };
-    }
-
-    Parking.findByIdAndUpdate(id, data)
-      .then(spot => {
-        response.json({ spot });
-      })
-      .catch(error => {
-        next(error);
-      });
-  }
-);
+  Parking.findByIdAndUpdate(id, data)
+    .then((spot) => {
+      response.json({ spot });
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
 
 module.exports = parkingRouter;

@@ -19,7 +19,9 @@ export class ParkingCreateView extends Component {
     const { location, description, coordinates, photo } = this.state;
     const price = Number(this.state.price);
     const body = { location, description, coordinates, price, photo };
-    createParking(body);
+    createParking(body).then((response) => {
+      const id = response.this.props.history.push("/parking/${}");
+    });
   };
   handleInputChange = (event) => {
     const name = event.target.name;
@@ -29,9 +31,9 @@ export class ParkingCreateView extends Component {
     });
   };
   handlePhotoChange = (event) => {
-    const file = event.target.files[0];
+    const photo = event.target.files[0];
     this.setState({
-      photo: file,
+      photo,
     });
   };
   handleMapClick = (event) => {
