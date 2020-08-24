@@ -1,11 +1,7 @@
 const express = require("express");
 
-<<<<<<< HEAD
 const Parking = require("../models/parking");
-=======
-const Parking = require('../models/parking');
-const User = require('../models/user');
->>>>>>> 147716a38e79d593e9dc6cd0539050df94168331
+const User = require("../models/user");
 
 const routeAuthenticationGuard = require("./../middleware/route-authentication-guard");
 
