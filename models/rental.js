@@ -4,7 +4,7 @@ const schema = new mongoose.Schema(
   {
     parking: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Space',
+      ref: 'Parking',
       required: true
     },
     owner: {
@@ -21,11 +21,11 @@ const schema = new mongoose.Schema(
       type: Number,
       required: true
     },
-    startDate: {
+    start: {
       type: Date,
       required: true
     },
-    endDate: {
+    end: {
       type: Date,
       required: true
     }
