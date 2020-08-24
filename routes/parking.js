@@ -76,6 +76,7 @@ parkingRouter.delete('/:id', routeAuthenticationGuard, async (request, response,
       response.json({});
     })
     .catch(error => {
+      console.log(error);
       next(error);
     });
 });
