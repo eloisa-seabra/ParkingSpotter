@@ -39,7 +39,6 @@ class ProfileView extends Component {
     deleteSingleParking(id)
       .then(() => {
         this.loadProfile();
-        //this.props.history.push('/');
       })
       .catch(error => {
         console.log(error);

@@ -70,15 +70,18 @@ parkingRouter.post('/create', (req, res, next) => {
 
 parkingRouter.delete('/:id', routeAuthenticationGuard, async (request, response, next) => {
   const id = request.params.id;
+  const userId = request.user._id;
 
-  Parking.findOneAndDelete({ _id: id, user: request.user._id })
-    .then(() => {
-      response.json({});
-    })
-    .catch(error => {
-      console.log(error);
-      next(error);
-    });
+  User.findByIdAndUpdate({ _id: userId }, { $pull: { parkings: id } }, { safe: true, upsert: true }).then(() => {
+    Parking.findOneAndDelete({ _id: id, user: request.user._id })
+      .then(() => {
+        response.json({});
+      })
+      .catch(error => {
+        console.log(error);
+        next(error);
+      });
+  });
 });
 
 parkingRouter.patch('/:id', routeAuthenticationGuard, (request, response, next) => {
