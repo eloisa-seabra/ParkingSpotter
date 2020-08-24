@@ -47,12 +47,13 @@ parkingRouter.post('/create', upload.single('photo'), (req, res, next) => {
   if (req.file) {
     url = req.file.path;
   }
-  const { location, description, price } = req.body;
+  const { location, description, price, coordinates } = req.body;
   const id = req.user._id;
   Parking.create({
-    location: location,
-    description: description,
-    price: price,
+    location,
+    description,
+    coordinates,
+    price,
     user: req.user._id,
     photo: url
   })
@@ -94,10 +95,10 @@ parkingRouter.patch(
     const id = request.params.id;
     const { location, description, price } = request.body;
     let data;
-    let url;
+
     if (request.file) {
-      url = request.file.path;
-      data = { location, description, price, url };
+      const photo = request.file.path;
+      data = { location, description, price, photo };
     } else {
       data = { location, description, price };
     }
