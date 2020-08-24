@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Map from "../../components/Map/Index";
 import { createParking } from "../../services/parking";
-import { getCoordinates } from "../../services/geocoder";
 
 export class ParkingCreateView extends Component {
   constructor() {
@@ -11,27 +10,28 @@ export class ParkingCreateView extends Component {
       description: "",
       price: 0,
       coordinates: [],
+      photo: null,
       markers: [],
     };
   }
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const { location, description, coordinates } = this.state;
+    const { location, description, coordinates, photo } = this.state;
     const price = Number(this.state.price);
-    const body = { location, description, coordinates, price };
-    createParking(body)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const body = { location, description, coordinates, price, photo };
+    createParking(body);
   };
   handleInputChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({
       [name]: value,
+    });
+  };
+  handlePhotoChange = (event) => {
+    const file = event.target.files[0];
+    this.setState({
+      photo: file,
     });
   };
   handleMapClick = (event) => {
@@ -49,9 +49,12 @@ export class ParkingCreateView extends Component {
   render() {
     return (
       <div>
-        <Map markers={this.state.markers} handleClick={this.handleMapClick} />
+        <label htmlFor="create-map">Click on the map to place a marker of your parking spot</label>
+        <div id="create-map">
+          <Map markers={this.state.markers} handleClick={this.handleMapClick} />
+        </div>
         <form method="POST" onSubmit={this.handleFormSubmit}>
-          <label htmlFor="location">Location</label>
+          <label htmlFor="location">Place name or nearest address to parking spot:</label>
           <input
             id="location-input"
             type="text"
@@ -59,7 +62,7 @@ export class ParkingCreateView extends Component {
             value={this.state.location}
             onChange={this.handleInputChange}
           />
-          <label htmlFor="description-input">Description</label>
+          <label htmlFor="description-input">Describe any details that customers may need to know:</label>
           <input
             id="description-input"
             type="text"
@@ -67,7 +70,7 @@ export class ParkingCreateView extends Component {
             value={this.state.description}
             onChange={this.handleInputChange}
           />
-          <label htmlFor="price-input">Price</label>
+          <label htmlFor="price-input">The hourly rate you want to charge for the parking spot:</label>
           <input
             id="price-input"
             type="number"
@@ -75,7 +78,9 @@ export class ParkingCreateView extends Component {
             value={this.state.price}
             onChange={this.handleInputChange}
           />
-          <button>Create Parking</button>
+          <label htmlFor="photo-input">Upload a photo so that customers can find your parking spot:</label>
+          <input id="photo-input" type="file" name="photo" onChange={this.handlePhotoChange} />
+          <button>Create your parking spot!</button>
         </form>
       </div>
     );
