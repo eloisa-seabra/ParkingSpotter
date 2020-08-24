@@ -14,6 +14,10 @@ class ProfileView extends Component {
   }
 
   componentDidMount() {
+    this.loadProfile();
+  }
+
+  loadProfile = () => {
     loadProfile()
       .then(data => {
         const user = data.user;
@@ -26,19 +30,15 @@ class ProfileView extends Component {
       .catch(error => {
         console.log(error);
       });
-  }
+  };
 
   handleParkingDeletion = index => {
     const id = this.state.user.parkings[index]._id;
-    const parkingList = [...this.state.user.parkings];
+    // const parkingList = [...this.state.user.parkings];
 
     deleteSingleParking(id)
       .then(() => {
-        parkingList.splice(index, 1);
-        console.log(parkingList);
-        this.setState({
-          ownParkings: parkingList
-        });
+        this.loadProfile();
         //this.props.history.push('/');
       })
       .catch(error => {
@@ -48,6 +48,7 @@ class ProfileView extends Component {
 
   render() {
     const user = this.state.user;
+    console.log(user);
     return (
       <div>
         {this.state.loaded && (
@@ -66,20 +67,23 @@ class ProfileView extends Component {
             <div className="own-parkings">
               <hr />
               <h4>My spots:</h4>
-              {user.parkings.map((parking, index) => (
-                <div key={parking._id}>
-                  <h5>Location: {parking.location}</h5>
-                  <small>{parking.description}</small>
-                  <p>Price: {parking.price}$/hr</p>
-                  <Link to={`/parking/${parking._id}`}>Details </Link>
-                  <Link to={`/parking/${parking._id}/edit`}> Edit Parking </Link>
-                  <button onClick={() => this.handleParkingDeletion(index)}>Delete</button>
-                  {/* <form onSubmit={this.handleParkingDeletion}>
+              {(user.parkings.length && (
+                <>
+                  {user.parkings.map((parking, index) => (
+                    <div key={parking._id}>
+                      <h5>Location: {parking.location}</h5>
+                      <small>{parking.description}</small>
+                      <p>Price: {parking.price}$/hr</p>
+                      <Link to={`/parking/${parking._id}`}>Details </Link>
+                      <Link to={`/parking/${parking._id}/edit`}> Edit Parking </Link>
+                      <button onClick={() => this.handleParkingDeletion(index)}>Delete</button>
+                      {/* <form onSubmit={this.handleParkingDeletion}>
                     <button>Delete</button>
                   </form> */}
-                </div>
-              ))}
-              <Link to="/">View list of spots</Link>
+                    </div>
+                  ))}
+                </>
+              )) || <p>You have no parking spots to rent.</p>}
             </div>
           </>
         )}

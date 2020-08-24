@@ -56,6 +56,11 @@ parkingRouter.post("/create", (req, res, next) => {
     price,
     user: req.user._id,
   })
+    .then((parking) => {
+      return User.findByIdAndUpdate(id, {
+        $push: { parkings: parking._id },
+      });
+    })
     .then((document) => {
       res.json(document);
     })
@@ -72,19 +77,17 @@ parkingRouter.delete("/:id", routeAuthenticationGuard, async (request, response,
       response.json({});
     })
     .catch((error) => {
+      console.log(error);
       next(error);
     });
 });
 
 parkingRouter.patch("/:id", routeAuthenticationGuard, (request, response, next) => {
   const id = request.params.id;
+  const { location, description, price } = request.body;
+  const data = { location, description, price };
 
-  Parking.findOneAndUpdate(
-    { _id: id, user: request.user._id },
-    { description: request.body.description },
-    { price: request.body.price },
-    { new: true }
-  )
+  Parking.findByIdAndUpdate(id, data)
     .then((spot) => {
       response.json({ spot });
     })
