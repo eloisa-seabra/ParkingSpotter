@@ -15,16 +15,21 @@ class ProfileView extends Component {
   }
 
   componentDidMount() {
-    this.loadProfile();
+    this.handleLoadProfile();
   }
 
-  loadProfile = () => {
+  handleLoadProfile = () => {
     loadProfile()
       .then(data => {
-        const user = data.user;
+        // console.log('this comes from backend: ', data);
+        // console.log('this comes from state: ', this.props.user);
+
+        const user = this.props.user;
+        const parkings = data.parking;
+
         this.setState({
           user,
-          ownParkings: user.parkings,
+          ownParkings: parkings,
           loaded: true
         });
       })
@@ -34,12 +39,11 @@ class ProfileView extends Component {
   };
 
   handleParkingDeletion = index => {
-    const id = this.state.user.parkings[index]._id;
-    // const parkingList = [...this.state.user.parkings];
+    const id = this.state.ownParkings[index]._id;
 
     deleteSingleParking(id)
       .then(() => {
-        this.loadProfile();
+        this.handleLoadProfile();
       })
       .catch(error => {
         console.log(error);
@@ -48,7 +52,8 @@ class ProfileView extends Component {
 
   render() {
     const user = this.state.user;
-    console.log(user);
+    const parkings = this.state.ownParkings;
+
     return (
       <div>
         {this.state.loaded && (
@@ -67,7 +72,7 @@ class ProfileView extends Component {
             <div className="own-parkings">
               <hr />
               <h4>My spots:</h4>
-              {(user.parkings.length && (
+              {(this.state.ownParkings.length && (
                 <>
                   {user.parkings.map((parking, index) => (
                     <ParkingSpot
@@ -87,17 +92,3 @@ class ProfileView extends Component {
 }
 
 export default ProfileView;
-
-// import React from 'react';
-
-// function ProfileView(props) {
-//   return (
-//     <div>
-//       {console.log(props.user)}
-//       <h1>Profile View</h1>
-//       <h4>name:</h4>
-//     </div>
-//   );
-// }
-
-// export default ProfileView;

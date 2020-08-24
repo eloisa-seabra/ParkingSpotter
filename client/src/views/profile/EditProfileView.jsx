@@ -14,8 +14,8 @@ class EditProfileView extends Component {
   componentDidMount() {
     loadProfile()
       .then(data => {
-        console.log(data.user);
-        const user = data.user;
+        console.log(data);
+        const user = this.props.user;
         this.setState({
           loaded: true,
           name: user.name,
@@ -31,11 +31,12 @@ class EditProfileView extends Component {
     event.preventDefault();
 
     const { name, email } = this.state;
-
-    const body = { name, email };
+    const id = this.props.user._id;
+    const body = { id, name, email };
 
     editProfile(body)
       .then(data => {
+        this.props.onUserUpdate(body);
         this.props.history.push('/profile');
       })
       .catch(error => {

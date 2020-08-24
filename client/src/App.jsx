@@ -13,6 +13,7 @@ import ParkingListView from './views/parking/ParkingListView';
 import ParkingCreateView from './views/parking/ParkingCreateView';
 import ParkingIdView from './views/parking/ParkingIdView';
 import ParkingEditView from './views/parking/ParkingEditView';
+import RentalView from './views/RentalView';
 import ErrorView from './views/ErrorView';
 
 import ProtectedRoute from './components/ProtectedRoute';
@@ -65,27 +66,17 @@ class App extends Component {
           {(this.state.loaded && (
             <Switch>
               <Route path="/" component={HomeView} exact />
-              <Route path="/profile" component={ProfileView} exact />
-              <Route path="/profile/edit" component={EditProfileView} />
+              <Route path="/profile" render={props => <ProfileView {...props} user={this.state.user} onUserUpdate={this.handleUserUpdate} />} exact />
+              <Route path="/profile/edit" render={props => <EditProfileView {...props} user={this.state.user} onUserUpdate={this.handleUserUpdate} />} />
               <ProtectedRoute
                 path="/authentication/sign-up"
-                render={props => (
-                  <AuthenticationSignUpView
-                    {...props}
-                    onUserUpdate={this.handleUserUpdate}
-                  />
-                )}
+                render={props => <AuthenticationSignUpView {...props} onUserUpdate={this.handleUserUpdate} />}
                 authorized={!this.state.user}
                 redirect="/"
               />
               <ProtectedRoute
                 path="/authentication/sign-in"
-                render={props => (
-                  <AuthenticationSignInView
-                    {...props}
-                    onUserUpdate={this.handleUserUpdate}
-                  />
-                )}
+                render={props => <AuthenticationSignInView {...props} onUserUpdate={this.handleUserUpdate} />}
                 authorized={!this.state.user}
                 redirect="/"
               />
@@ -94,9 +85,10 @@ class App extends Component {
               <Route path="/parking/:id/edit" component={ParkingEditView} />
               <Route path="/parking/:id" component={ParkingIdView} />
 
+              <Route path="/rental" component={RentalView} />
+
               <Route path="/error" component={ErrorView} />
               <Redirect from="/" to="/error" />
-              {/* <Route path="/authentication/sign-in" component={AuthenticationSignInView} /> */}
             </Switch>
           )) || (
             <div>
