@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Map from "../../components/Map/Index";
 import { createParking } from "../../services/parking";
+import { NotExtended } from "http-errors";
 
 export class ParkingCreateView extends Component {
   constructor() {
@@ -20,10 +21,16 @@ export class ParkingCreateView extends Component {
     const { location, description, lat, lng, photo } = this.state;
     const price = Number(this.state.price);
     const body = { location, description, lat, lng, price, photo };
-    createParking(body).then((document) => {
-      console.log(document);
-      //this.props.history.push("/parking/${}");
-    });
+    createParking(body)
+      .then((document) => {
+        console.dir(document);
+        const id = document.document._id;
+        console.log(id);
+        this.props.history.push(`/parking/${id}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   handleInputChange = (event) => {
     const name = event.target.name;

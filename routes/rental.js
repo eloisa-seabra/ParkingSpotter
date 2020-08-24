@@ -9,16 +9,18 @@ const routeAuthenticationGuard = require('./../middleware/route-authentication-g
 const rentalRouter = new express.Router();
 
 rentalRouter.post('/rental', (request, response, next) => {
-  console.log(request.body);
-  const body = request.body;
+  console.log(request.data);
+  //const body = request.body;
 
-  // const { }
-  // Rental.create({
+  const { parkingId, ownerId, renterId } = request.data;
 
-  // })
-  response.json({ type: 'success' });
-
-  // Rental.create({});
+  Rental.create({
+    parking: parkingId,
+    owner: ownerId,
+    renter: renterId
+  }).then(document => {
+    response.json({ document });
+  });
 });
 
 module.exports = rentalRouter;

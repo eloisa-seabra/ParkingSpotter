@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { loadSingleParking, deleteSingleParking } from '../../services/parking';
+import { createNewRental } from '../../services/rental';
 import './ParkingIdView.css';
 import { Link } from 'react-router-dom';
 
@@ -15,11 +16,11 @@ export class ParkingIdView extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
+    console.log(this.props.user);
     loadSingleParking(id)
       .then(data => {
-        console.log(data);
         const spot = data.spot;
-        if (data.spot.user.parkings.includes(data.spot._id)) {
+        if (spot.user._id === this.props.user._id) {
           this.setState({
             spot,
             ownSpot: true,
@@ -51,7 +52,19 @@ export class ParkingIdView extends Component {
   };
 
   triggerRental = () => {
-    // createNewRental();
+    const parkingId = this.props.match.params.id;
+    const ownerId = this.state.spot.user._id;
+    const renterId = this.props.user._id;
+
+    const data = { parkingId, ownerId, renterId };
+
+    createNewRental(data)
+      .then(document => {
+        console.dir(document);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   render() {
@@ -63,18 +76,17 @@ export class ParkingIdView extends Component {
             <div className="details">
               <h2 className="details-info">{spot.location}</h2>
               <h3 className="details-info">{spot.price}</h3>
-              <button onClick={this.triggerRental}>Reserve</button>
             </div>
             <div className="description">
               <p>{spot.description}</p>
-              {this.state.ownSpot && (
+              {(this.state.ownSpot && (
                 <>
                   <Link to={`/parking/${this.props.match.params.id}/edit`}>Edit Parking</Link>
                   <form onSubmit={this.handlePostDeletion}>
                     <button>Delete Post</button>
                   </form>
                 </>
-              )}
+              )) || <button onClick={this.triggerRental}>Reserve</button>}
             </div>
           </>
         )) || <p>Loading...</p>}
