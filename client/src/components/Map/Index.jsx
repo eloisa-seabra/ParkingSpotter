@@ -19,10 +19,10 @@ class Map extends Component {
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
+          onClick={this.props.handleClick}
         >
-          {this.props.markers.map((marker) => (
-            <Marker lat={marker.lat} lng={marker.lng} text={marker.text} />
-          ))}
+          {this.props.markers &&
+            this.props.markers.map((marker) => <Marker lat={marker.lat} lng={marker.lng} text={marker.text} />)}
         </GoogleMapReact>
       </div>
     );

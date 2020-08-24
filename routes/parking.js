@@ -42,18 +42,20 @@ parkingRouter.get('/:id', async (request, response, next) => {
   }
 });
 
-parkingRouter.post('/create', (req, res, next) => {
-  // let url;
-  // if (request.file) {
-  //   url = request.file.path;
-  // }
-  const { location, description, price } = req.body;
+parkingRouter.post('/create', upload.single('photo'), (req, res, next) => {
+  let url;
+  if (req.file) {
+    url = req.file.path;
+  }
+  const { location, description, price, coordinates } = req.body;
   const id = req.user._id;
   Parking.create({
-    location: location,
-    description: description,
-    price: price,
-    user: req.user._id
+    location,
+    description,
+    coordinates,
+    price,
+    user: req.user._id,
+    photo: url
   })
     .then(parking => {
       return User.findByIdAndUpdate(id, {
@@ -68,11 +70,20 @@ parkingRouter.post('/create', (req, res, next) => {
     });
 });
 
+<<<<<<< HEAD
 parkingRouter.delete('/:id', routeAuthenticationGuard, async (request, response, next) => {
   const id = request.params.id;
   const userId = request.user._id;
 
   User.findByIdAndUpdate({ _id: userId }, { $pull: { parkings: id } }, { safe: true, upsert: true }).then(() => {
+=======
+parkingRouter.delete(
+  '/:id',
+  routeAuthenticationGuard,
+  async (request, response, next) => {
+    const id = request.params.id;
+
+>>>>>>> ee6052bd375ac57167ca555a9a43ddc846803bbb
     Parking.findOneAndDelete({ _id: id, user: request.user._id })
       .then(() => {
         response.json({});
@@ -81,21 +92,38 @@ parkingRouter.delete('/:id', routeAuthenticationGuard, async (request, response,
         console.log(error);
         next(error);
       });
+<<<<<<< HEAD
   });
 });
+=======
+  }
+);
+>>>>>>> ee6052bd375ac57167ca555a9a43ddc846803bbb
 
-parkingRouter.patch('/:id', routeAuthenticationGuard, (request, response, next) => {
-  const id = request.params.id;
-  const { location, description, price } = request.body;
-  const data = { location, description, price };
+parkingRouter.patch(
+  '/:id',
+  routeAuthenticationGuard,
+  upload.single('photo'),
+  (request, response, next) => {
+    const id = request.params.id;
+    const { location, description, price } = request.body;
+    let data;
 
-  Parking.findByIdAndUpdate(id, data)
-    .then(spot => {
-      response.json({ spot });
-    })
-    .catch(error => {
-      next(error);
-    });
-});
+    if (request.file) {
+      const photo = request.file.path;
+      data = { location, description, price, photo };
+    } else {
+      data = { location, description, price };
+    }
+
+    Parking.findByIdAndUpdate(id, data)
+      .then(spot => {
+        response.json({ spot });
+      })
+      .catch(error => {
+        next(error);
+      });
+  }
+);
 
 module.exports = parkingRouter;
