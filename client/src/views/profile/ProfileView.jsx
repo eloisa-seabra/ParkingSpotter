@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { loadProfile } from '../../services/profile';
 import { deleteSingleParking } from '../../services/parking';
+import ParkingSpot from './../../components/ParkingSpot/Index';
 
 class ProfileView extends Component {
   constructor() {
@@ -69,17 +70,11 @@ class ProfileView extends Component {
               {(user.parkings.length && (
                 <>
                   {user.parkings.map((parking, index) => (
-                    <div key={parking._id}>
-                      <h5>Location: {parking.location}</h5>
-                      <small>{parking.description}</small>
-                      <p>Price: {parking.price}$/hr</p>
-                      <Link to={`/parking/${parking._id}`}>Details </Link>
-                      <Link to={`/parking/${parking._id}/edit`}> Edit Parking </Link>
-                      <button onClick={() => this.handleParkingDeletion(index)}>Delete</button>
-                      {/* <form onSubmit={this.handleParkingDeletion}>
-                    <button>Delete</button>
-                  </form> */}
-                    </div>
+                    <ParkingSpot
+                      key={parking._id}
+                      parking={parking}
+                      onClick={this.handleParkingDeletion(index)}
+                    />
                   ))}
                 </>
               )) || <p>You have no parking spots to rent.</p>}
