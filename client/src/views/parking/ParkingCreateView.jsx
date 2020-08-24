@@ -9,18 +9,20 @@ export class ParkingCreateView extends Component {
       location: "",
       description: "",
       price: 0,
-      coordinates: [],
+      lat: 0,
+      lng: 0,
       photo: null,
       markers: [],
     };
   }
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const { location, description, coordinates, photo } = this.state;
+    const { location, description, lat, lng, photo } = this.state;
     const price = Number(this.state.price);
-    const body = { location, description, coordinates, price, photo };
-    createParking(body).then((response) => {
-      const id = response.this.props.history.push("/parking/${}");
+    const body = { location, description, lat, lng, price, photo };
+    createParking(body).then((document) => {
+      console.log(document);
+      //this.props.history.push("/parking/${}");
     });
   };
   handleInputChange = (event) => {
@@ -38,13 +40,13 @@ export class ParkingCreateView extends Component {
   };
   handleMapClick = (event) => {
     const { lng, lat } = event;
-    const newCoordinates = [lng, lat];
     const marker = {
-      lng: newCoordinates[0],
-      lat: newCoordinates[1],
+      lng,
+      lat,
     };
     this.setState({
-      coordinates: newCoordinates,
+      lng,
+      lat,
       markers: [marker],
     });
   };

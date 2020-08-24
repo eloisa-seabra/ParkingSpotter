@@ -43,18 +43,20 @@ parkingRouter.get("/:id", async (request, response, next) => {
 });
 
 parkingRouter.post("/create", upload.single("photo"), (req, res, next) => {
-  console.log(req.body);
   let url;
   if (req.file) {
     url = req.file.path;
   }
-  const { location, description, price, coordinates } = req.body;
-  const userId = req.user._id;
-  //let document;
+  console.log("req.body", req.body);
+  const { location, description, price, lat, lng } = req.body;
+  const numLat = Number(lat);
+  const numLng = Number(lng);
+  console.log(numLat, numLng, typeof numLng, typeof numLat);
   Parking.create({
     location,
     description,
-    coordinates,
+    lng: numLng,
+    lat: numLat,
     price,
     user: req.user._id,
     photo: url,

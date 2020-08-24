@@ -14,7 +14,8 @@ export const createParking = (body) => {
   formBody.append("location", body.location);
   formBody.append("description", body.description);
   formBody.append("price", body.price);
-  formBody.append("coordinates", body.coordinates);
+  formBody.append("lat", body.lat);
+  formBody.append("lng", body.lng);
   formBody.append("photo", body.photo);
   // for (let property in body) formBody.append(property, body[property]);
   return api.post("/create", formBody).then((response) => response.data);
