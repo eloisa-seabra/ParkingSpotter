@@ -43,12 +43,14 @@ parkingRouter.get('/:id', async (request, response, next) => {
 });
 
 parkingRouter.post('/create', upload.single('photo'), (req, res, next) => {
+  console.log(req.body);
   let url;
   if (req.file) {
     url = req.file.path;
   }
   const { location, description, price, coordinates } = req.body;
-  const id = req.user._id;
+  const userId = req.user._id;
+  //let document;
   Parking.create({
     location,
     description,
@@ -57,15 +59,18 @@ parkingRouter.post('/create', upload.single('photo'), (req, res, next) => {
     user: req.user._id,
     photo: url
   })
-    .then(parking => {
-      return User.findByIdAndUpdate(id, {
-        $push: { parkings: parking._id }
-      });
-    })
+    // .then((parking) => {
+    //   document = parking;
+    //   return User.findByIdAndUpdate(userId, {
+    //     $push: { parkings: parking._id },
+    //   });
+    // })
     .then(document => {
-      res.json(document);
+      console.log('response');
+      res.json({ document });
     })
     .catch(error => {
+      console.log(error);
       next(error);
     });
 });
