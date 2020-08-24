@@ -70,35 +70,29 @@ parkingRouter.post('/create', upload.single('photo'), (req, res, next) => {
     });
 });
 
-<<<<<<< HEAD
-parkingRouter.delete('/:id', routeAuthenticationGuard, async (request, response, next) => {
-  const id = request.params.id;
-  const userId = request.user._id;
-
-  User.findByIdAndUpdate({ _id: userId }, { $pull: { parkings: id } }, { safe: true, upsert: true }).then(() => {
-=======
 parkingRouter.delete(
   '/:id',
   routeAuthenticationGuard,
   async (request, response, next) => {
     const id = request.params.id;
+    const userId = request.user._id;
 
->>>>>>> ee6052bd375ac57167ca555a9a43ddc846803bbb
-    Parking.findOneAndDelete({ _id: id, user: request.user._id })
-      .then(() => {
-        response.json({});
-      })
-      .catch(error => {
-        console.log(error);
-        next(error);
-      });
-<<<<<<< HEAD
-  });
-});
-=======
+    User.findByIdAndUpdate(
+      { _id: userId },
+      { $pull: { parkings: id } },
+      { safe: true, upsert: true }
+    ).then(() => {
+      Parking.findOneAndDelete({ _id: id, user: request.user._id })
+        .then(() => {
+          response.json({});
+        })
+        .catch(error => {
+          console.log(error);
+          next(error);
+        });
+    });
   }
 );
->>>>>>> ee6052bd375ac57167ca555a9a43ddc846803bbb
 
 parkingRouter.patch(
   '/:id',
