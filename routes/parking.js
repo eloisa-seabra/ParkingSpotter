@@ -47,11 +47,9 @@ parkingRouter.post("/create", upload.single("photo"), (req, res, next) => {
   if (req.file) {
     url = req.file.path;
   }
-  console.log("req.body", req.body);
   const { location, description, price, lat, lng } = req.body;
   const numLat = Number(lat);
   const numLng = Number(lng);
-  console.log(numLat, numLng, typeof numLng, typeof numLat);
   Parking.create({
     location,
     description,
@@ -61,14 +59,7 @@ parkingRouter.post("/create", upload.single("photo"), (req, res, next) => {
     user: req.user._id,
     photo: url,
   })
-    // .then((parking) => {
-    //   document = parking;
-    //   return User.findByIdAndUpdate(userId, {
-    //     $push: { parkings: parking._id },
-    //   });
-    // })
     .then((document) => {
-      console.log("response");
       res.json({ document });
     })
     .catch((error) => {
@@ -79,18 +70,15 @@ parkingRouter.post("/create", upload.single("photo"), (req, res, next) => {
 
 parkingRouter.delete("/:id", routeAuthenticationGuard, async (request, response, next) => {
   const id = request.params.id;
-  const userId = request.user._id;
 
-  User.findByIdAndUpdate({ _id: userId }, { $pull: { parkings: id } }, { safe: true, upsert: true }).then(() => {
-    Parking.findOneAndDelete({ _id: id, user: request.user._id })
-      .then(() => {
-        response.json({});
-      })
-      .catch((error) => {
-        console.log(error);
-        next(error);
-      });
-  });
+  Parking.findOneAndDelete({ _id: id, user: request.user._id })
+    .then(() => {
+      response.json({});
+    })
+    .catch((error) => {
+      console.log(error);
+      next(error);
+    });
 });
 
 parkingRouter.patch("/:id", routeAuthenticationGuard, upload.single("photo"), (request, response, next) => {

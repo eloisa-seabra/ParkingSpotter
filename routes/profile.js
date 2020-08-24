@@ -1,38 +1,38 @@
 // PROFILE
 
-const express = require("express");
-const User = require("./../models/user");
-const routeAuthenticationGuard = require("./../middleware/route-authentication-guard");
+const express = require('express');
+const User = require('./../models/user');
+const Parking = require('./../models/parking');
+const routeAuthenticationGuard = require('./../middleware/route-authentication-guard');
 
 const profileRouter = new express.Router();
 
-profileRouter.get("/profile", routeAuthenticationGuard, (request, response) => {
-  // const user = request.user;
+profileRouter.get('/profile', routeAuthenticationGuard, (request, response, next) => {
   const userId = request.user._id;
-  console.log(request.user);
-  User.find({ _id: userId })
-    .populate("parkings")
-    .then((user) => {
-      return user[0];
+
+  Parking.find({ user: userId })
+    .populate('user')
+    .then(parking => {
+      response.json({ parking });
     })
-    .then((user) => {
-      response.json({ user });
+    .catch(error => {
+      next(error);
     });
 });
 
-profileRouter.patch("/profile/edit", routeAuthenticationGuard, (request, response, next) => {
+profileRouter.patch('/profile/edit', routeAuthenticationGuard, (request, response, next) => {
   const id = request.user.id;
   const { name, email } = request.body;
-  const data = { name, email };
+  const data = { id, name, email };
 
   console.log(request.body);
   console.log(request.user);
 
   User.findByIdAndUpdate(id, data)
-    .then((user) => {
+    .then(user => {
       response.json({ user });
     })
-    .catch((error) => {
+    .catch(error => {
       next(error);
     });
 });
