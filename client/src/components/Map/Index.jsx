@@ -22,7 +22,9 @@ class Map extends Component {
           onClick={this.props.handleClick}
         >
           {this.props.markers &&
-            this.props.markers.map((marker) => <Marker lat={marker.lat} lng={marker.lng} text={marker.text} />)}
+            this.props.markers.map((marker) => (
+              <Marker key={marker.lat} lat={marker.lat} lng={marker.lng} text={marker.text} />
+            ))}
         </GoogleMapReact>
       </div>
     );

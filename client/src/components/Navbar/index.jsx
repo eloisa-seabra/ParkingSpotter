@@ -1,16 +1,17 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './style.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./style.scss";
 
-const Navbar = props => {
+const Navbar = (props) => {
   return (
     <nav>
       <Link to="/">
-        {' '}
+        {" "}
         <img
-          style={{ width: '40px' }}
+          style={{ width: "40px" }}
           src="https://res.cloudinary.com/isaseabra/image/upload/v1598217378/kissclipart-binocular-icon-clipart-computer-icons-clip-art-ceff16c01508c9b9_ujwlun.png"
-        />{' '}
+          alt="binoculars-logo"
+        />{" "}
         ParkingSpotter
       </Link>
       <Link to="/parking/create">Add a new slot</Link>
