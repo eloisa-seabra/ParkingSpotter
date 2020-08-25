@@ -92,16 +92,21 @@ parkingRouter.patch(
   upload.single('photo'),
   (request, response, next) => {
     const id = request.params.id;
-    const { location, description, lat, lng, price } = request.body;
+    const { location, description, lat, lng, price, oldPhoto } = request.body;
 
     let data;
+    let photo;
 
-    if (request.file) {
-      const photo = request.file.path;
+    if (!request.file) {
+      photo = oldPhoto;
       data = { location, description, lat, lng, price, photo };
     } else {
-      data = { location, description, lat, lng, price };
+      photo = request.file.path;
+      data = { location, description, lat, lng, price, photo };
     }
+
+    console.log('body', request.body);
+    console.log('data', data);
 
     Parking.findByIdAndUpdate(id, data)
       .then(spot => {

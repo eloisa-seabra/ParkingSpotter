@@ -31,8 +31,11 @@ export class ParkingEditView extends Component {
           price: spot.price,
           lat: spot.lat,
           lng: spot.lng,
-          loaded: true
+          photo: spot.photo,
+          loaded: true,
+          spot
         });
+        console.log(this.state.spot);
       })
       .catch(error => {
         console.log(error);
@@ -41,10 +44,11 @@ export class ParkingEditView extends Component {
 
   handlePostEdition = event => {
     event.preventDefault();
-    const id = this.props.match.params.id;
+    const id = this.state.spot._id;
+    const oldPhoto = this.state.spot.photo;
     const { location, description, lat, lng, photo } = this.state;
     const price = Number(this.state.price);
-    const body = { location, description, lat, lng, price, photo };
+    const body = { location, description, lat, lng, price, photo, oldPhoto };
     editSingleParking(id, body)
       .then(document => {
         this.props.history.push(`/parking/${id}`);
