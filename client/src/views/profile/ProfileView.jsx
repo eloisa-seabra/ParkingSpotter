@@ -45,6 +45,7 @@ class ProfileView extends Component {
 
   handleParkingDeletion = index => {
     const id = this.state.ownParkings[index]._id;
+
     deleteSingleParking(id)
       .then(() => {
         this.handleLoadProfile();
@@ -55,7 +56,10 @@ class ProfileView extends Component {
   };
 
   handleRentalFinish = index => {
-    const id = this.state.reservations[index]._id;
+    const activeRentals = this.state.reservations.filter(function(rental) {
+      return rental.status === 'rented';
+    });
+    const id = activeRentals[index]._id;
     // console.log(id);
 
     endRental(id)
@@ -71,6 +75,9 @@ class ProfileView extends Component {
     const user = this.state.user;
     const parkings = this.state.ownParkings;
     const rentals = this.state.reservations;
+    const activeRentals = rentals.filter(function(rental) {
+      return rental.status === 'rented';
+    });
 
     return (
       <div>
@@ -83,20 +90,16 @@ class ProfileView extends Component {
             <Link to="/profile/edit">Edit Profile</Link>
             <hr />
             <h4>My reservations:</h4>
-            {(rentals.length && (
+            {(activeRentals.length && (
               <>
-                {rentals
-                  .filter(function(rental) {
-                    return rental.status === 'rented';
-                  })
-                  .map((rental, index) => (
-                    <div key={rental._id}>
-                      <img src={rental.parking.photo} alt={rental.parking.location} />
-                      <h5>Location: {rental.parking.location}</h5>
-                      <p>Price: {rental.parking.price}€/hr</p>
-                      <button onClick={() => this.handleRentalFinish(index)}>End Rental</button>
-                    </div>
-                  ))}
+                {activeRentals.map((rental, index) => (
+                  <div key={rental._id}>
+                    <img src={rental.parking.photo} alt={rental.parking.location} />
+                    <h5>Location: {rental.parking.location}</h5>
+                    <p>Price: {rental.parking.price}€/hr</p>
+                    <button onClick={() => this.handleRentalFinish(index)}>End Rental</button>
+                  </div>
+                ))}
               </>
             )) || <p>You have no parking spots to rent.</p>}
             <hr />
