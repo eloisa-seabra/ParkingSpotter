@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Map from "../../components/Map/Index";
 import List from "../../components/List/Index";
-import markers from "./markers.json";
+import { loadParking } from "../../services/parking";
 
 export class ParkingListView extends Component {
   constructor() {
@@ -12,17 +12,13 @@ export class ParkingListView extends Component {
     };
   }
   componentDidMount() {
-    // loadParking().then((data) => {
-    //   const parking = data.parking;
-    //   this.setState({
-    //     loaded: true,
-    //     parking,
-    //   });
-    // });
-    this.setState({
-      loaded: true,
-      mapView: true,
-      parking: markers,
+    const coordinates = this.props.location;
+    const body = { coordinates };
+    loadParking(coordinates).then((data) => {
+      this.setState({
+        loaded: true,
+        parking: data.spots,
+      });
     });
   }
   toggleView = () => {
@@ -35,7 +31,7 @@ export class ParkingListView extends Component {
       <div>
         {(this.state.loaded && this.state.mapView && (
           <>
-            <Map markers={this.state.parking} />
+            <Map markers={this.state.parking} location={this.props.location} />
             <button onClick={this.toggleView}>View List</button>
           </>
         )) || (

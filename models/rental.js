@@ -21,6 +21,11 @@ const schema = new mongoose.Schema(
       type: Number,
       required: true
     },
+    status: {
+      type: String,
+      enum: ['rented', 'ended'],
+      required: true
+    },
     start: {
       type: Date
       // required: true

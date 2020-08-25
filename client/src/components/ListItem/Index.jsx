@@ -1,12 +1,15 @@
 import React from "react";
+import "./style.scss";
 
 export const List = (props) => {
   return (
     <div>
+      <img src={props.photo} alt={props.location} />
       <div>
-        <h4>Address: 1234 {props.details}</h4>
-        <p>Price: 2$/hr</p>
-        <button>Reserve Spot</button>
+        <h4>Location: {props.location}</h4>
+        <p>Price: {props.price}/hr</p>
+        <p>Description: {props.description}</p>
+        <button>Purchase Spot</button>
       </div>
     </div>
   );
