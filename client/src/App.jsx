@@ -13,7 +13,7 @@ import ParkingListView from './views/parking/ParkingListView';
 import ParkingCreateView from './views/parking/ParkingCreateView';
 import ParkingIdView from './views/parking/ParkingIdView';
 import ParkingEditView from './views/parking/ParkingEditView';
-import RentalView from './views/RentalView';
+import RentalView from './views/rental/RentalView';
 import PaymentView from './views/rental/PaymentView';
 import ErrorView from './views/ErrorView';
 
@@ -163,9 +163,8 @@ class App extends Component {
                   />
                 )}
               />
-
-              <Route path="/rental" component={RentalView} />
               <Route path="/rental/:id" component={PaymentView} />
+              <Route path="/rental" component={RentalView} />
 
               <Route path="/error" component={ErrorView} />
               <Redirect from="/" to="/error" />

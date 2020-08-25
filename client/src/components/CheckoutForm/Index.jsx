@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import {
+  Elements,
+  ElementsConsumer,
+  CardElement
+} from '@stripe/react-stripe-js';
 const stripeApiPublicKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY;
 
 const cardOptions = {

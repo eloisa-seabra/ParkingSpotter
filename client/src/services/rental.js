@@ -5,6 +5,8 @@ const api = axios.create({
   withCredentials: true
 });
 
-export const createNewRental = body => api.post(`/`, body).then(response => response.data);
+export const createNewRental = body =>
+  api.post(`/`, body).then(response => response.data);
 
-export const endRental = id => api.patch(`/${id}`).then(response => response.data);
+export const endRental = id =>
+  api.patch(`/${id}`).then(response => response.data);
