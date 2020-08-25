@@ -15,10 +15,19 @@ rentalRouter.post('/rental', routeAuthenticationGuard, (request, response, next)
     parking: parkingId,
     owner: ownerId,
     renter: renterId,
-    price: parkingPrice
+    price: parkingPrice,
+    status: 'rented'
   })
     .then(document => {
       response.json({ document });
+    })
+    .then(() => {
+      // const id = document.req.body.parkingId;
+      // console.log(id);
+      console.log(parkingId);
+      Parking.findOneAndUpdate({ _id: parkingId }, { isRented: true }, { upsert: true }).then(data => {
+        console.log(data);
+      });
     })
     .catch(error => {
       console.log(error);
