@@ -9,8 +9,8 @@ export const List = props => {
         <h3>{props.location}</h3>
         <h3>{props.price}/hr</h3>
       </div>
-      <div>
-        <button className="reserve">Purchase Spot</button>
+      <div className="reserve">
+        <button className="reserve-details">Purchase Spot</button>
       </div>
     </div>
   );

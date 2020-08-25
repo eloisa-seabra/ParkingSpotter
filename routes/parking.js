@@ -95,10 +95,10 @@ parkingRouter.patch(
     const { location, description, lat, lng, price } = request.body;
 
     let data;
-    let url;
+
     if (request.file) {
-      url = request.file.path;
-      data = { location, description, lat, lng, price, url };
+      const photo = request.file.path;
+      data = { location, description, lat, lng, price, photo };
     } else {
       data = { location, description, lat, lng, price };
     }

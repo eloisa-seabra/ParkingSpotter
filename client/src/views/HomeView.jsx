@@ -118,7 +118,7 @@ class HomeView extends Component {
         <div>
           <img
             style={{ width: '1300px' }}
-            src="https://res.cloudinary.com/isaseabra/image/upload/v1598193410/252430-P4G84R-789__hc4lsf.jpg"
+            src="https://res.cloudinary.com/isaseabra/image/upload/v1598269174/lisbon-min_gsjvuc.jpg"
           />
         </div>
         <div className="about">

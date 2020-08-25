@@ -1,11 +1,14 @@
 .marker {
   position: absolute;
+  font-size: 14px;
+  line-height: 1.9em;
   top: 50%;
   left: 50%;
-  width: 18px;
-  height: 18px;
-  background-color: yellow;
-  border: 2px solid #fff;
+  width: 28px;
+  height: 28px;
+  background-color: #971897;
+  color: white;
+  border: 1px solid #fff;
   border-radius: 100%;
   user-select: none;
   transform: translate(-50%, -50%);
