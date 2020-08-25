@@ -1,15 +1,19 @@
 import React from "react";
 import "./style.scss";
+import { Link } from "react-router-dom";
 
 export const List = (props) => {
   return (
-    <div>
+    <div className="list-item">
       <img src={props.photo} alt={props.location} />
+      <div className="list-details">
+        <h3>{props.location}</h3>
+        <h3>{props.price}/hr</h3>
+      </div>
       <div>
-        <h4>Location: {props.location}</h4>
-        <p>Price: {props.price}/hr</p>
-        <p>Description: {props.description}</p>
-        <button>Purchase Spot</button>
+        <Link to={`/parking/${props.id}`} className="reserve">
+          Purchase Spot
+        </Link>
       </div>
     </div>
   );

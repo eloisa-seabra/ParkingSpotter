@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './HomeView.css';
 import { getCoordinates } from '../services/geocoder';
+import { Link } from 'react-router-dom';
 
 class HomeView extends Component {
   constructor(props) {

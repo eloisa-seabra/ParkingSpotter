@@ -13,6 +13,7 @@ export const List = (props) => {
           location={item.location}
           photo={item.photo}
           price={item.price}
+          id={item._id}
         />
       ))}
     </div>

@@ -24,7 +24,7 @@ class Map extends Component {
         >
           {this.props.markers &&
             this.props.markers.map((marker) => (
-              <Marker key={marker._id} lat={marker.lat} lng={marker.lng} price={marker.price} />
+              <Marker key={marker._id} id={marker._id} lat={marker.lat} lng={marker.lng} price={marker.price} />
             ))}
         </GoogleMapReact>
       </div>
