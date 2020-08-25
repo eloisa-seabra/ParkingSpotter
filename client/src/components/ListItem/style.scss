@@ -1,3 +1,33 @@
-img {
-  width: 12rem;
+.list-item {
+  max-width: 700px;
+  margin: 40px auto;
+  display: flex;
+  box-shadow: 3px 5px 5px 2px #c0c0c0;
+}
+.list-details {
+  margin: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.list-item img {
+  padding: 10px;
+  width: 6rem;
+  height: 6em;
+}
+
+button {
+  display: flex;
+  width: 7em;
+}
+
+.reserve {
+  font-size: 1.3em;
+  color: white;
+  background-color: #1277c0;
+  display: flex;
+  margin: 20px;
+  width: 9em;
+  padding: 8px 20px;
 }
