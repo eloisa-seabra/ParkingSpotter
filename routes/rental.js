@@ -35,4 +35,20 @@ rentalRouter.post('/rental', routeAuthenticationGuard, (request, response, next)
     });
 });
 
+rentalRouter.patch('/rental/:id', routeAuthenticationGuard, (request, response, next) => {
+  const id = request.params.id;
+  console.log('id', id);
+
+  Rental.findOneAndUpdate({ _id: id }, { status: 'ended' }).then(renting => {
+    console.log(renting);
+    const parkingId = renting.parking._id;
+    console.log('renting', renting);
+    console.log('parkingId', parkingId);
+    Parking.findOneAndUpdate({ _id: parkingId }, { isRented: false }).then(parking => {
+      console.log(parking);
+      response.json({ parking });
+    });
+  });
+});
+
 module.exports = rentalRouter;
