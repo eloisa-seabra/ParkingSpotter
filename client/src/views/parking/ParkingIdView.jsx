@@ -55,10 +55,12 @@ export class ParkingIdView extends Component {
     const parkingId = this.props.match.params.id;
     const ownerId = this.state.spot.user._id;
     const renterId = this.props.user._id;
+    const parkingPrice = this.state.spot.price;
 
-    const data = { parkingId, ownerId, renterId };
+    const body = { parkingId, ownerId, renterId, parkingPrice };
+    console.log(body);
 
-    createNewRental(data)
+    createNewRental(body)
       .then(document => {
         console.dir(document);
       })
@@ -76,6 +78,7 @@ export class ParkingIdView extends Component {
             <div className="details">
               <h2 className="details-info">{spot.location}</h2>
               <h3 className="details-info">{spot.price}</h3>
+              <h3 className="details-info">{spot.user.name}</h3>
             </div>
             <div className="description">
               <p>{spot.description}</p>
@@ -86,7 +89,11 @@ export class ParkingIdView extends Component {
                     <button>Delete Post</button>
                   </form>
                 </>
-              )) || <button onClick={this.triggerRental}>Reserve</button>}
+              )) || (
+                <>
+                  <button onClick={this.triggerRental}>Reserve</button>
+                </>
+              )}
             </div>
           </>
         )) || <p>Loading...</p>}

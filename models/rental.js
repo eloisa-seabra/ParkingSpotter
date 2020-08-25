@@ -17,21 +17,24 @@ const schema = new mongoose.Schema(
       ref: 'User',
       required: true
     },
-    totalPrice: {
+    price: {
       type: Number,
       required: true
     },
     start: {
-      type: Date,
-      required: true
+      type: Date
+      // required: true
     },
     end: {
-      type: Date,
-      required: true
+      type: Date
+      // required: true
     }
   },
   {
-    timestamps: true
+    timestamps: {
+      createdAt: 'startedAt',
+      updatedAt: 'changedAt'
+    }
   }
 );
 
