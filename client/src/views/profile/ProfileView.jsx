@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { loadProfile } from '../../services/profile';
 import { deleteSingleParking } from '../../services/parking';
-
 class ProfileView extends Component {
   constructor() {
     super();
@@ -12,18 +11,19 @@ class ProfileView extends Component {
       ownParkings: []
     };
   }
-
   componentDidMount() {
-    this.loadProfile();
+    this.handleLoadProfile();
   }
-
-  loadProfile = () => {
+  handleLoadProfile = () => {
     loadProfile()
       .then(data => {
-        const user = data.user;
+        // console.log('this comes from backend: ', data);
+        // console.log('this comes from state: ', this.props.user);
+        const user = this.props.user;
+        const parkings = data.parking;
         this.setState({
           user,
-          ownParkings: user.parkings,
+          ownParkings: parkings,
           loaded: true
         });
       })
@@ -31,20 +31,16 @@ class ProfileView extends Component {
         console.log(error);
       });
   };
-
   handleParkingDeletion = index => {
-    const id = this.state.user.parkings[index]._id;
-    // const parkingList = [...this.state.user.parkings];
-
+    const id = this.state.ownParkings[index]._id;
     deleteSingleParking(id)
       .then(() => {
-        this.loadProfile();
+        this.handleLoadProfile();
       })
       .catch(error => {
         console.log(error);
       });
   };
-
   render() {
     const user = this.state.user;
     const parkings = this.state.ownParkings;
@@ -66,7 +62,7 @@ class ProfileView extends Component {
             <div className="own-parkings">
               <hr />
               <h4>My spots:</h4>
-              {(parkings && (
+              {(this.state.ownParkings.length && (
                 <>
                   {parkings.map((parking, index) => (
                     <div key={parking._id}>
@@ -81,9 +77,6 @@ class ProfileView extends Component {
                       <button onClick={() => this.handleParkingDeletion(index)}>
                         Delete
                       </button>
-                      {/* <form onSubmit={this.handleParkingDeletion}>
-                    <button>Delete</button>
-                  </form> */}
                     </div>
                   ))}
                 </>
@@ -95,19 +88,4 @@ class ProfileView extends Component {
     );
   }
 }
-
 export default ProfileView;
-
-// import React from 'react';
-
-// function ProfileView(props) {
-//   return (
-//     <div>
-//       {console.log(props.user)}
-//       <h1>Profile View</h1>
-//       <h4>name:</h4>
-//     </div>
-//   );
-// }
-
-// export default ProfileView;
