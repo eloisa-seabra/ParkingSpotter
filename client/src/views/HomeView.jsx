@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { searchParking } from "../services/parking";
 import "./HomeView.css";
+import { getCoordinates } from "../services/geocoder";
 
 class HomeView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       city: "",
-      day: "2020-08-27",
-      time: "14:00",
+      //day: "2020-08-27",
+      //time: "14:00",
     };
   }
 
@@ -34,12 +34,17 @@ class HomeView extends Component {
     });
   }
 
-  handleParkSearch = (event) => {
+  handleFormSubmit = (event) => {
     event.preventDefault();
+    getCoordinates(this.state.city)
+      .then((response) => {
+        const coordinates = response.features[0].geometry.coordinates;
+        this.props.handleLocationChange(coordinates);
+      })
+      .then(() => {
+        this.props.history.push(`/parking/list`);
+      });
 
-    const body = this.state;
-
-    console.log(body);
     // searchParking(body)
     //   .then(data => {
     //     console.log(data);
@@ -81,7 +86,7 @@ class HomeView extends Component {
         <h2>No more waiting for parking spots</h2>
         <h1>Here are the parking spots waiting for you</h1>
 
-        <form onSubmit={this.handleParkSearch}>
+        <form onSubmit={this.handleFormSubmit}>
           <label htmlFor="city-input">City</label>
           <input type="text" name="city" placeholder="Park here..." id="city-input" onChange={this.handleInputChange} />
           <label htmlFor="date-input">Date:</label>
