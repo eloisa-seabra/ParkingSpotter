@@ -8,8 +8,8 @@ class HomeView extends Component {
     super(props);
     this.state = {
       city: ''
-      //day: "2020-08-27",
-      //time: "14:00",
+      // day: '2020-08-27',
+      // time: '14:00'
     };
   }
 

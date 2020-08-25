@@ -33,6 +33,10 @@ const schema = new mongoose.Schema(
     end: {
       type: Date
       // required: true
+    },
+    totalAmount: {
+      type: Number,
+      default: 0
     }
   },
   {

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { loadProfile } from '../../services/profile';
 import { deleteSingleParking } from '../../services/parking';
+import { endRental } from '../../services/rental';
+
 class ProfileView extends Component {
   constructor() {
     super();
@@ -12,9 +14,11 @@ class ProfileView extends Component {
       reservations: []
     };
   }
+
   componentDidMount() {
     this.handleLoadProfile();
   }
+
   handleLoadProfile = () => {
     loadProfile()
       .then(data => {
@@ -25,7 +29,7 @@ class ProfileView extends Component {
         const rentals = data.document.rental;
 
         // console.log('parkings', data.document.parking);
-        console.log('rentals', data.document.rental);
+        // console.log('rentals', data.document.rental);
         this.setState({
           user,
           ownParkings: parkings,
@@ -38,6 +42,7 @@ class ProfileView extends Component {
         console.log(error);
       });
   };
+
   handleParkingDeletion = index => {
     const id = this.state.ownParkings[index]._id;
     deleteSingleParking(id)
@@ -48,6 +53,20 @@ class ProfileView extends Component {
         console.log(error);
       });
   };
+
+  handleRentalFinish = index => {
+    const id = this.state.reservations[index]._id;
+    // console.log(id);
+
+    endRental(id)
+      .then(() => {
+        this.handleLoadProfile();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   render() {
     const user = this.state.user;
     const parkings = this.state.ownParkings;
@@ -66,19 +85,18 @@ class ProfileView extends Component {
             <h4>My reservations:</h4>
             {(rentals.length && (
               <>
-                {rentals.map((rental, index) => (
-                  <div key={rental._id}>
-                    <img
-                      src={rental.parking.photo}
-                      alt={rental.parking.location}
-                    />
-                    <h5>Location: {rental.parking.location}</h5>
-                    <p>Price: {rental.parking.price}€/hr</p>
-                    <button onClick={() => this.handleRentalFinish(index)}>
-                      End Rental
-                    </button>
-                  </div>
-                ))}
+                {rentals
+                  .filter(function(rental) {
+                    return rental.status === 'rented';
+                  })
+                  .map((rental, index) => (
+                    <div key={rental._id}>
+                      <img src={rental.parking.photo} alt={rental.parking.location} />
+                      <h5>Location: {rental.parking.location}</h5>
+                      <p>Price: {rental.parking.price}€/hr</p>
+                      <button onClick={() => this.handleRentalFinish(index)}>End Rental</button>
+                    </div>
+                  ))}
               </>
             )) || <p>You have no parking spots to rent.</p>}
             <hr />
@@ -95,13 +113,8 @@ class ProfileView extends Component {
                       <small>{parking.description}</small>
                       <p>Price: {parking.price}€/hr</p>
                       <Link to={`/parking/${parking._id}`}>Details </Link>
-                      <Link to={`/parking/${parking._id}/edit`}>
-                        {' '}
-                        Edit Parking{' '}
-                      </Link>
-                      <button onClick={() => this.handleParkingDeletion(index)}>
-                        Delete
-                      </button>
+                      <Link to={`/parking/${parking._id}/edit`}> Edit Parking </Link>
+                      <button onClick={() => this.handleParkingDeletion(index)}>Delete</button>
                     </div>
                   ))}
                 </>
