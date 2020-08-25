@@ -12,24 +12,22 @@ class Map extends Component {
     zoom: 13,
   };
   render() {
-    const center = { lng: this.props.location[0], lat: this.props.location[1] };
+    const center = { lng: this.props.coordinates[0], lat: this.props.coordinates[1] };
     return (
-      this.props.location && (
-        // Important! Always set the container height explicitly
-        <div style={{ height: "60vh", width: "60vh" }}>
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
-            defaultCenter={center}
-            defaultZoom={this.props.zoom}
-            onClick={this.props.handleClick}
-          >
-            {this.props.markers &&
-              this.props.markers.map((marker) => (
-                <Marker key={marker._id} lat={marker.lat} lng={marker.lng} price={marker.price} />
-              ))}
-          </GoogleMapReact>
-        </div>
-      )
+      // Important! Always set the container height explicitly
+      <div style={{ height: "60vh", width: "60vh" }}>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
+          defaultCenter={center}
+          defaultZoom={this.props.zoom}
+          onClick={this.props.handleClick}
+        >
+          {this.props.markers &&
+            this.props.markers.map((marker) => (
+              <Marker key={marker._id} lat={marker.lat} lng={marker.lng} price={marker.price} />
+            ))}
+        </GoogleMapReact>
+      </div>
     );
   }
 }

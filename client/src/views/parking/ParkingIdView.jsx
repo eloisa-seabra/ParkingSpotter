@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { loadSingleParking, deleteSingleParking } from '../../services/parking';
-import { createNewRental } from '../../services/rental';
-import './ParkingIdView.css';
-import { Link } from 'react-router-dom';
-import Map from '../../components/Map/Index';
+import React, { Component } from "react";
+import { loadSingleParking, deleteSingleParking } from "../../services/parking";
+import { createNewRental } from "../../services/rental";
+import "./ParkingIdView.css";
+import { Link } from "react-router-dom";
+import Map from "../../components/Map/Index";
 
 export class ParkingIdView extends Component {
   constructor() {
@@ -11,7 +11,7 @@ export class ParkingIdView extends Component {
     this.state = {
       loaded: false,
       spot: null,
-      ownSpot: false
+      ownSpot: false,
     };
   }
 
@@ -19,37 +19,37 @@ export class ParkingIdView extends Component {
     const id = this.props.match.params.id;
     console.log(this.props.user);
     loadSingleParking(id)
-      .then(data => {
+      .then((data) => {
         const spot = data.spot;
         if (spot.user._id === this.props.user._id) {
           this.setState({
             mapView: true,
             spot,
             ownSpot: true,
-            loaded: true
+            loaded: true,
           });
         } else {
           this.setState({
             mapView: true,
             spot,
-            loaded: true
+            loaded: true,
           });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
 
-  handlePostDeletion = event => {
+  handlePostDeletion = (event) => {
     event.preventDefault();
     const id = this.props.match.params.id;
 
     deleteSingleParking(id)
       .then(() => {
-        this.props.history.push('/');
+        this.props.history.push("/");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -64,10 +64,10 @@ export class ParkingIdView extends Component {
     console.log(body);
 
     createNewRental(body)
-      .then(document => {
+      .then((document) => {
         console.dir(document);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -78,13 +78,9 @@ export class ParkingIdView extends Component {
       <div>
         {(this.state.loaded && this.state.mapView && (
           <>
-            <Map markers={[{ lng: spot.lng, lat: spot.lat }]} />
+            <Map coordinates={this.props.coordinates} markers={[{ lng: spot.lng, lat: spot.lat }]} />
 
-            <img
-              style={{ width: '300px' }}
-              src={spot.photo}
-              alt={spot.location}
-            />
+            <img style={{ width: "300px" }} src={spot.photo} alt={spot.location} />
 
             <div className="details">
               <h2 className="details-info">{spot.location}</h2>
@@ -95,9 +91,7 @@ export class ParkingIdView extends Component {
               <p>{spot.description}</p>
               {(this.state.ownSpot && (
                 <>
-                  <Link to={`/parking/${this.props.match.params.id}/edit`}>
-                    Edit Parking
-                  </Link>
+                  <Link to={`/parking/${this.props.match.params.id}/edit`}>Edit Parking</Link>
                   <form onSubmit={this.handlePostDeletion}>
                     <button>Delete Post</button>
                   </form>

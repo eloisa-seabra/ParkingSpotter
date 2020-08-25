@@ -8,6 +8,7 @@ export class ParkingListView extends Component {
     super();
     this.state = {
       loaded: false,
+      mapView: true,
       parking: [],
     };
   }
@@ -15,6 +16,7 @@ export class ParkingListView extends Component {
     const coordinates = this.props.location;
     const body = { coordinates };
     loadParking(coordinates).then((data) => {
+      console.log(data);
       this.setState({
         loaded: true,
         parking: data.spots,
@@ -31,13 +33,13 @@ export class ParkingListView extends Component {
       <div>
         {(this.state.loaded && this.state.mapView && (
           <>
-            <Map markers={this.state.parking} location={this.props.location} />
             <button onClick={this.toggleView}>View List</button>
+            <Map markers={this.state.parking} coordinates={this.props.coordinates} />
           </>
         )) || (
           <>
-            <List items={this.state.parking} />
             <button onClick={this.toggleView}>View Map</button>
+            <List items={this.state.parking} />
           </>
         )}
         ;
