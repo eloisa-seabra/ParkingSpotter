@@ -5,9 +5,17 @@ const api = axios.create({
   withCredentials: true
 });
 
-export const loadParking = body =>
-  api.get('/list').then(response => response.data);
-
+export const loadParking = param => {
+  return api
+    .get('/list', {
+      params: {
+        coordinates: param
+      }
+    })
+    .then(response => {
+      return response.data;
+    });
+};
 export const createParking = body => {
   const formBody = new window.FormData();
   for (let property in body) {

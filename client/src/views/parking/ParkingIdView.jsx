@@ -51,6 +51,7 @@ export class ParkingIdView extends Component {
     createNewRental(body)
       .then(document => {
         console.dir(document);
+        this.props.history.push('/profile');
       })
       .catch(error => {
         console.log(error);
