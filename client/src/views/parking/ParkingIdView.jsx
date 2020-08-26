@@ -46,7 +46,6 @@ export class ParkingIdView extends Component {
     const renterId = this.props.user._id;
     const parkingPrice = this.state.spot.price;
     const body = { parkingId, ownerId, renterId, parkingPrice };
-    console.log(body);
     createNewRental(body)
       .then((document) => {
         console.dir(document);
