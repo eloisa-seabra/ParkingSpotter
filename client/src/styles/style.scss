@@ -1,0 +1,94 @@
+@import 'homeview';
+@import 'config';
+
+@media (max-width: 685px) {
+  nav {
+    .logo {
+      display: inline-block;
+    }
+
+    .nav--link {
+      display: none;
+    }
+
+    .hamburguer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    .overlay {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.945);
+      overflow-x: hidden;
+      transition: 0.5s;
+    }
+
+    .overlay-content {
+      position: relative;
+      top: 25%;
+      width: 100%;
+      text-align: center;
+      margin-top: 30px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .overlay a,
+    .overlay button {
+      margin: 0;
+      text-decoration: none;
+      font-size: 36px;
+      color: darken($accent, 10%);
+      display: block;
+      transition: 0.3s;
+      padding: 0;
+    }
+
+    .overlay a:hover,
+    .overlay button:hover,
+    .overlay a:focus,
+    .overlay a:focus {
+      color: #f1f1f1;
+    }
+
+    .overlay .closebtn {
+      position: absolute;
+      top: 20px;
+      right: 45px;
+      font-size: 60px;
+    }
+  }
+}
+
+@media (min-width: 685px) {
+  nav {
+    .hamburguer {
+      display: none;
+    }
+  }
+
+  #myNav {
+    display: none;
+  }
+}
+
+@media (min-width: 400px) {
+  .sign-up-form,
+  .sign-in-form {
+    input {
+      margin: 0 auto;
+      max-width: 400px;
+    }
+  }
+}

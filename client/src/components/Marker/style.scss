@@ -1,15 +1,16 @@
 .marker {
+  background-image: url('https://res.cloudinary.com/isaseabra/image/upload/v1598450248/marker_kbr6zn.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-position-x: center;
+  width: 3em;
+  height: 3em;
   position: absolute;
   font-size: 14px;
   line-height: 1.9em;
-  top: 50%;
-  left: 50%;
-  width: 28px;
-  height: 28px;
-  background-color: #971897;
-  color: white;
-  border: 1px solid #fff;
-  border-radius: 100%;
+  top: 100%;
+  left: 100%;
   user-select: none;
-  transform: translate(-50%, -50%);
+  offset-position: bottom 10px right 20px;
 }

@@ -15,6 +15,7 @@ import ParkingEditView from './views/parking/ParkingEditView';
 import RentalView from './views/rental/RentalView';
 import PaymentView from './views/rental/PaymentView';
 import ErrorView from './views/ErrorView';
+import './styles/style.scss';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';

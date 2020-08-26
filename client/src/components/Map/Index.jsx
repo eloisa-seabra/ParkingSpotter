@@ -29,6 +29,10 @@ class Map extends Component {
             this.props.markers.map(marker => (
               <Marker
                 key={marker._id}
+                icon={{
+                  url:
+                    'https://res.cloudinary.com/isaseabra/image/upload/v1598450248/marker_kbr6zn.png'
+                }}
                 id={marker._id}
                 lat={marker.lat}
                 lng={marker.lng}
