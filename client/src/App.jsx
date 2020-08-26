@@ -13,12 +13,8 @@ import ParkingListView from './views/parking/ParkingListView';
 import ParkingCreateView from './views/parking/ParkingCreateView';
 import ParkingIdView from './views/parking/ParkingIdView';
 import ParkingEditView from './views/parking/ParkingEditView';
-<<<<<<< HEAD
-import CheckOutView from './views/CheckOutView';
-=======
 import RentalView from './views/rental/RentalView';
 import PaymentView from './views/rental/PaymentView';
->>>>>>> 8a673951aef5370e7b33fbc39674b9cb0204fe9d
 import ErrorView from './views/ErrorView';
 
 import ProtectedRoute from './components/ProtectedRoute';
@@ -95,24 +91,9 @@ class App extends Component {
               <Route path="/parking/create" render={props => <ParkingCreateView {...props} coordinates={this.state.coordinates} onUserUpdate={this.handleUserUpdate} />} />
               <Route path="/parking/:id/edit" render={props => <ParkingEditView {...props} coordinates={this.state.coordinates} onUserUpdate={this.handleUserUpdate} />} />
 
-<<<<<<< HEAD
               <Route path="/parking/:id" render={props => <ParkingIdView {...props} coordinates={this.state.coordinates} user={this.state.user} />} />
-
-              <Route path="/rental/:id" component={CheckOutView} />
-=======
-              <Route
-                path="/parking/:id"
-                render={props => (
-                  <ParkingIdView
-                    {...props}
-                    coordinates={this.state.coordinates}
-                    user={this.state.user}
-                  />
-                )}
-              />
               <Route path="/rental/:id" component={PaymentView} />
               <Route path="/rental" component={RentalView} />
->>>>>>> 8a673951aef5370e7b33fbc39674b9cb0204fe9d
 
               <Route path="/error" component={ErrorView} />
               <Redirect from="/" to="/error" />
