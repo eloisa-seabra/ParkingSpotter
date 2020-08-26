@@ -36,10 +36,26 @@ const Navbar = props => {
                 </Link>
               </li>
               <li className="nav-item dropdown">
-                <Link className="" to="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img src="./user.webp" className="user-image rounded-circle" alt="user profile" />
+                <Link
+                  className=""
+                  to="#"
+                  role="button"
+                  id="dropdownMenuLink"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <img
+                    src="./user.webp"
+                    className="user-image rounded-circle"
+                    alt="user profile"
+                  />
                 </Link>
-                <div className="dropdown-menu dropdown-menu-right" id="navbarSupportedContent" aria-labelledby="navbarDropdown">
+                <div
+                  className="dropdown-menu dropdown-menu-right"
+                  id="navbarSupportedContent"
+                  aria-labelledby="navbarDropdown"
+                >
                   <Link className="dropdown-item" to="/profile">
                     Your account
                   </Link>
@@ -50,7 +66,7 @@ const Navbar = props => {
                     View your past trades
                   </Link>
                   <div className="dropdown-divider"></div>
-                  <button className="nav-link" onClick={props.onSignOut}>
+                  <button className="nav-link " onClick={props.onSignOut}>
                     Sign Out
                   </button>
                 </div>
@@ -64,7 +80,11 @@ const Navbar = props => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link id="cta-button" className="nav-link" to="/authentication/sign-in">
+                <Link
+                  id="cta-button"
+                  className="nav-link"
+                  to="/authentication/sign-in"
+                >
                   Sign In
                 </Link>
               </li>

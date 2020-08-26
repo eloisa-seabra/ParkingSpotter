@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { signIn } from './../../services/authentication';
+import '../../styles/_signupView.scss';
 
 class AuthenticationSignInView extends Component {
   constructor() {
@@ -39,12 +40,33 @@ class AuthenticationSignInView extends Component {
     return (
       <div>
         <form onSubmit={this.handleFormSubmission}>
-          <label htmlFor="input-email">Email</label>
-          <input id="input-email" type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleInputChange} required />
-
-          <label htmlFor="input-password">Password</label>
-          <input id="input-password" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleInputChange} required minLength="6" />
-
+          <div className="form-group">
+            <label htmlFor="input-email">Email</label>
+            <input
+              className="form-control"
+              id="input-email"
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={this.state.email}
+              onChange={this.handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="input-password">Password</label>
+            <input
+              className="form-control"
+              id="input-password"
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={this.state.password}
+              onChange={this.handleInputChange}
+              required
+              minLength="6"
+            />
+          </div>
           {this.state.error && (
             <div className="error-block">
               <p>There was an error submiting the form:</p>
@@ -52,7 +74,7 @@ class AuthenticationSignInView extends Component {
             </div>
           )}
 
-          <button>Sign In</button>
+          <button className="blue-btn">Sign In</button>
         </form>
       </div>
     );

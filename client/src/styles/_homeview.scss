@@ -34,6 +34,9 @@
 }
 
 #about {
+  padding: 3em;
+  background-color: #00afcece;
+  border-radius: 30px;
   margin: 4em 10em;
   h2 {
     font-size: 2em;
@@ -47,6 +50,7 @@
     // width: auto;
     height: 100px;
     width: 100px;
+    margin: 1em;
   }
 }
 
@@ -63,5 +67,12 @@
     .col {
       padding: 0 4em;
     }
+  }
+}
+
+@media (min-width: 400px) {
+  #about {
+    display: flex;
+    align-items: center;
   }
 }

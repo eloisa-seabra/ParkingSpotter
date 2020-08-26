@@ -52,7 +52,13 @@ class HomeView extends Component {
         <h1>Here the parking spots are waiting for you</h1>
 
         <form onSubmit={this.handleFormSubmit}>
-          <input type="text" name="city" placeholder="Where do you want to park?" id="city-input" onChange={this.handleInputChange} />
+          <input
+            type="text"
+            name="city"
+            placeholder="Where do you want to park?"
+            id="city-input"
+            onChange={this.handleInputChange}
+          />
           <button>Search</button>
         </form>
         {/* <button className="near-me-button btn btn-primary" onClick={this.triggerMyLocation}>
@@ -65,16 +71,40 @@ class HomeView extends Component {
           <h2>About ParkingSpotter</h2>
           <div className="row">
             <div className="col col-lg">
-              <img className="about-icon" src="https://res.cloudinary.com/isaseabra/image/upload/v1598440828/hourglass_3805_ohs7jq.png" alt="timer" />
-              <p> Tired of spending time searching for a parking spot in the big city or of expensive private parking lot fees?</p>
+              <img
+                className="about-icon"
+                src="https://res.cloudinary.com/isaseabra/image/upload/v1598440828/hourglass_3805_ohs7jq.png"
+                alt="timer"
+              />
+              <p>
+                {' '}
+                Tired of spending time searching for a parking spot in the big
+                city or of expensive private parking lot fees?
+              </p>
             </div>
             <div className="col col-lg">
-              <img className="about-icon" src="https://res.cloudinary.com/isaseabra/image/upload/v1598440909/5872_rehcil.jpg" alt="piggy-bank" />
-              <p> With ParkingSpotter you can save time and money and reserve your spot from someone's available private parking spot </p>
+              <img
+                className="about-icon"
+                src="https://res.cloudinary.com/isaseabra/image/upload/v1598478227/piggybank_jfyhz0.png"
+                alt="piggy-bank"
+              />
+              <p>
+                {' '}
+                With ParkingSpotter you can save time and money and reserve your
+                spot from someone's available private parking spot{' '}
+              </p>
             </div>
             <div className="col col-lg">
-              <img className="about-icon" src="https://res.cloudinary.com/isaseabra/image/upload/v1598440988/10507_ikvf7i.jpg" alt="idea" />
-              <p> Choose your starting time and pay the time spent only when you leave the parking spot </p>
+              <img
+                className="about-icon"
+                src="https://res.cloudinary.com/isaseabra/image/upload/v1598440988/10507_ikvf7i.jpg"
+                alt="idea"
+              />
+              <p>
+                {' '}
+                Choose your starting time and pay the time spent only when you
+                leave the parking spot{' '}
+              </p>
             </div>
           </div>
         </section>
