@@ -17,14 +17,26 @@ const storage = new multerStorageCloudinary.CloudinaryStorage({
 const upload = multer({ storage });
 
 parkingRouter.get('/list', (request, response, next) => {
-  const { coordinates } = request.body;
-
-  Parking.find()
+  const coordinates = request.query.coordinates;
+  const stringLng = coordinates[0];
+  const lng = Number(stringLng);
+  const stringLat = coordinates[1];
+  const lat = Number(stringLat);
+  const maxLng = lng + 0.1;
+  const minLng = lng - 0.1;
+  const maxLat = lat + 0.1;
+  const minLat = lat - 0.1;
+  Parking.find({
+    lng: { $gt: minLng, $lt: maxLng },
+    lat: { $gt: minLat, $lt: maxLat }
+  })
+    .find({ isRented: false })
     .populate('user')
     .then(spots => {
       response.json({ spots });
     })
     .catch(error => {
+      console.log(error);
       next(error);
     });
 });
@@ -92,16 +104,21 @@ parkingRouter.patch(
   upload.single('photo'),
   (request, response, next) => {
     const id = request.params.id;
-    const { location, description, lat, lng, price } = request.body;
+    const { location, description, lat, lng, price, oldPhoto } = request.body;
 
     let data;
-    let url;
-    if (request.file) {
-      url = request.file.path;
-      data = { location, description, lat, lng, price, url };
+    let photo;
+
+    if (!request.file) {
+      photo = oldPhoto;
+      data = { location, description, lat, lng, price, photo };
     } else {
-      data = { location, description, lat, lng, price };
+      photo = request.file.path;
+      data = { location, description, lat, lng, price, photo };
     }
+
+    console.log('body', request.body);
+    console.log('data', data);
 
     Parking.findByIdAndUpdate(id, data)
       .then(spot => {

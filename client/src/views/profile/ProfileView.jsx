@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { loadProfile } from '../../services/profile';
 import { deleteSingleParking } from '../../services/parking';
 import { endRental } from '../../services/rental';
+import ListItemReservations from '../../components/ListItemReservations/Index';
+import ListMySpots from '../../components/ListMySpots/Index';
 
 class ProfileView extends Component {
   constructor() {
@@ -123,6 +125,7 @@ class ProfileView extends Component {
               <>
                 {activeRentals.map((rental, index) => (
                   <div key={rental._id}>
+<<<<<<< HEAD
                     <img src={rental.parking.photo} alt={rental.parking.location} />
                     <h5>Location: {rental.parking.location}</h5>
                     <p>Price: {rental.parking.price}€/hr</p>
@@ -134,6 +137,12 @@ class ProfileView extends Component {
                       End Rental
                     </Link>
                     <button onClick={() => this.handleRentalFinish(index)}>End Rental</button>
+=======
+                    <ListItemReservations rental={rental.parking} />
+                    <button onClick={() => this.handleRentalFinish(index)}>
+                      End Rental
+                    </button>
+>>>>>>> 8a673951aef5370e7b33fbc39674b9cb0204fe9d
                   </div>
                 ))}
               </>
@@ -148,12 +157,14 @@ class ProfileView extends Component {
                 <>
                   {parkings.map((parking, index) => (
                     <div key={parking._id}>
-                      <h5>Location: {parking.location}</h5>
-                      <small>{parking.description}</small>
-                      <p>Price: {parking.price}€/hr</p>
+                      <ListMySpots parking={parking} />
                       <Link to={`/parking/${parking._id}`}>Details </Link>
-                      <Link to={`/parking/${parking._id}/edit`}> Edit Parking </Link>
-                      <button onClick={() => this.handleParkingDeletion(index)}>Delete</button>
+                      <Link to={`/parking/${parking._id}/edit`}>
+                        Edit Parking
+                      </Link>
+                      <button onClick={() => this.handleParkingDeletion(index)}>
+                        Delete
+                      </button>
                     </div>
                   ))}
                 </>

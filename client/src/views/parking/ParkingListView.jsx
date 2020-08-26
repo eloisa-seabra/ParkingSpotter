@@ -13,10 +13,8 @@ export class ParkingListView extends Component {
     };
   }
   componentDidMount() {
-    const coordinates = this.props.location;
-    const body = { coordinates };
+    const coordinates = this.props.coordinates;
     loadParking(coordinates).then((data) => {
-      console.log(data);
       this.setState({
         loaded: true,
         parking: data.spots,

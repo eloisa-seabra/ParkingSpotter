@@ -62,9 +62,16 @@ export class ParkingIdView extends Component {
       <div>
         {(this.state.loaded && (
           <>
-            <Map coordinates={[this.state.spot.lng, this.state.spot.lat]} markers={[{ lng: this.state.spot.lng, lat: this.state.spot.lat }]} />
+            <Map
+              coordinates={[this.state.spot.lng, this.state.spot.lat]}
+              markers={[{ lng: this.state.spot.lng, lat: this.state.spot.lat }]}
+            />
 
-            <img style={{ width: '300px' }} src={this.state.spot.photo} alt={this.state.spot.location} />
+            <img
+              style={{ width: '300px' }}
+              src={this.state.spot.photo}
+              alt={this.state.spot.location}
+            />
 
             <div className="details">
               <h2 className="details-info">{this.state.spot.location}</h2>
@@ -75,7 +82,9 @@ export class ParkingIdView extends Component {
               <p>{this.state.spot.description}</p>
               {(this.state.ownSpot && (
                 <>
-                  <Link to={`/parking/${this.props.match.params.id}/edit`}>Edit Parking</Link>
+                  <Link to={`/parking/${this.props.match.params.id}/edit`}>
+                    Edit Parking
+                  </Link>
                   <form onSubmit={this.handlePostDeletion}>
                     <button>Delete Parking Spot</button>
                   </form>
