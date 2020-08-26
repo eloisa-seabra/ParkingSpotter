@@ -26,13 +26,9 @@ const schema = new mongoose.Schema(
       enum: ['rented', 'ended'],
       required: true
     },
-    start: {
-      type: Date
-      // required: true
-    },
-    end: {
-      type: Date
-      // required: true
+    duration: {
+      hours: Number,
+      minutes: Number
     },
     totalAmount: {
       type: Number,
@@ -42,7 +38,7 @@ const schema = new mongoose.Schema(
   {
     timestamps: {
       createdAt: 'startedAt',
-      updatedAt: 'changedAt'
+      updatedAt: 'endedAt'
     }
   }
 );

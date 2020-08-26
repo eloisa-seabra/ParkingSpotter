@@ -37,16 +37,38 @@ rentalRouter.post('/rental', routeAuthenticationGuard, (request, response, next)
 
 rentalRouter.patch('/rental/:id', routeAuthenticationGuard, (request, response, next) => {
   const id = request.params.id;
-  console.log('id', id);
+  let rental = request.body.rental;
+  let parking = request.body.rental.parking;
 
-  Rental.findOneAndUpdate({ _id: id }, { status: 'ended' }).then(renting => {
-    console.log(renting);
+  const rentalTime = time => {
+    const startingTime = Date.parse(time);
+    const nowTime = Date.now();
+
+    const durationTimeUnix = nowTime - startingTime;
+    const hours = durationTimeUnix / 1000 / 60 / 60;
+    const totalMinutes = durationTimeUnix / 1000 / 60;
+    const hoursAmount = Math.floor(durationTimeUnix / 1000 / 60 / 60);
+    const minutesAmount = Math.ceil((hours - hoursAmount) * 60);
+
+    return { hours: hoursAmount, minutes: minutesAmount, totalMinutes };
+  };
+
+  const hours = rentalTime(rental.startedAt).hours;
+  const minutes = rentalTime(rental.startedAt).minutes;
+  const duration = { hours, minutes };
+
+  const totalAmount = Math.round((rental.price / 4) * Math.ceil(rentalTime(rental.startedAt).totalMinutes / 15) * 100) / 100;
+
+  Rental.findOneAndUpdate({ _id: id }, { status: 'ended', duration, totalAmount }).then(renting => {
+    rental = renting;
     const parkingId = renting.parking._id;
-    console.log('renting', renting);
-    console.log('parkingId', parkingId);
-    Parking.findOneAndUpdate({ _id: parkingId }, { isRented: false }).then(parking => {
-      console.log(parking);
-      response.json({ parking });
+    // console.log('renting', renting);
+    // console.log('parkingId', parkingId);
+    Parking.findOneAndUpdate({ _id: parkingId }, { isRented: false }).then(spot => {
+      // console.log(parking);
+      parking = spot;
+      const body = { parking, rental };
+      response.json({ body });
     });
   });
 });

@@ -11,7 +11,8 @@ class ProfileView extends Component {
       loaded: false,
       user: null,
       ownParkings: [],
-      reservations: []
+      reservations: [],
+      rental: null
     };
   }
 
@@ -19,7 +20,7 @@ class ProfileView extends Component {
     this.handleLoadProfile();
   }
 
-  handleLoadProfile = () => {
+  handleLoadProfile = thing => {
     loadProfile()
       .then(data => {
         // console.log('this comes from backend: ', data);
@@ -34,13 +35,17 @@ class ProfileView extends Component {
           user,
           ownParkings: parkings,
           reservations: rentals,
+          rental: thing,
           loaded: true
         });
       })
-
       .catch(error => {
         console.log(error);
       });
+  };
+
+  handleCheckOut = index => {
+    // this.props.history.push('/');
   };
 
   handleParkingDeletion = index => {
@@ -59,17 +64,41 @@ class ProfileView extends Component {
     const activeRentals = this.state.reservations.filter(function(rental) {
       return rental.status === 'rented';
     });
-    const id = activeRentals[index]._id;
-    // console.log(id);
 
-    endRental(id)
-      .then(() => {
-        this.handleLoadProfile();
+    const rental = activeRentals[index];
+    const id = activeRentals[index]._id;
+    const start = activeRentals[index].startedAt;
+    const end = activeRentals[index].changedAt;
+    const body = { rental, start, end };
+    // console.log('id', id);
+
+    endRental(id, body)
+      .then(response => {
+        console.log(response.body.rental);
+        const rental = response.body.rental;
+        this.handleLoadProfile(rental);
       })
       .catch(error => {
         console.log(error);
       });
   };
+
+  rentalTime = (price, time) => {
+    const startingTime = Date.parse(time);
+    const nowTime = Date.now();
+
+    const durationTimeUnix = nowTime - startingTime;
+    const hours = durationTimeUnix / 1000 / 60 / 60;
+    const hoursAmount = Math.floor(durationTimeUnix / 1000 / 60 / 60);
+    const minutesAmount = Math.ceil((hours - hoursAmount) * 60);
+    const totalMinutes = Math.ceil(durationTimeUnix / 1000 / 60);
+
+    const totalAmount = Math.round((price / 4) * Math.ceil(totalMinutes / 15) * 100) / 100;
+
+    return { hours: hoursAmount, minutes: minutesAmount, totalMinutes, totalAmount };
+  };
+
+  rentalAMount = (price, time) => {};
 
   render() {
     const user = this.state.user;
@@ -97,6 +126,13 @@ class ProfileView extends Component {
                     <img src={rental.parking.photo} alt={rental.parking.location} />
                     <h5>Location: {rental.parking.location}</h5>
                     <p>Price: {rental.parking.price}€/hr</p>
+                    <p>
+                      Rented for: {this.rentalTime(0, rental.startedAt).hours} hours and {this.rentalTime(0, rental.startedAt).minutes} minutes
+                    </p>
+                    <p>Total Price: {this.rentalTime(rental.price, rental.startedAt).totalAmount} €</p>
+                    <Link to={`/rental/${rental._id}`} rental={this.state.rental}>
+                      End Rental
+                    </Link>
                     <button onClick={() => this.handleRentalFinish(index)}>End Rental</button>
                   </div>
                 ))}
