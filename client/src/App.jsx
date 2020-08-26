@@ -27,7 +27,8 @@ class App extends Component {
     this.state = {
       loaded: true,
       user: null,
-      ownParkings: [],
+      //ownParkings: [],
+      // working on it
       rentals: [],
       activeRentals: [],
       coordinates: [-9.140821, 38.717393]

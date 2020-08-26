@@ -1,31 +1,27 @@
-import React, { Component } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import {
-  Elements,
-  ElementsConsumer,
-  CardElement
-} from '@stripe/react-stripe-js';
+import React, { Component } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements, ElementsConsumer, CardElement } from "@stripe/react-stripe-js";
 const stripeApiPublicKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY;
 
 const cardOptions = {
   style: {
     base: {
-      fontSize: '16px',
-      color: '#424770',
-      fontFamily: 'sans-serif',
-      padding: '16px'
+      fontSize: "16px",
+      color: "#424770",
+      fontFamily: "sans-serif",
+      padding: "16px",
     },
     invalid: {
-      color: '#c23d4b'
-    }
-  }
+      color: "#c23d4b",
+    },
+  },
 };
 
 class CheckoutForm extends Component {
   constructor() {
     super();
     this.state = {
-      address: ''
+      address: "",
     };
   }
 
@@ -33,23 +29,23 @@ class CheckoutForm extends Component {
     event.preventDefault();
     stripe
       .createToken(elements.getElement(CardElement))
-      .then(data => {
+      .then((data) => {
         const token = data.token.id;
         const { address } = this.state;
         this.props.onCheckout({
           token,
-          address
+          address,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -59,11 +55,7 @@ class CheckoutForm extends Component {
         <Elements stripe={loadStripe(stripeApiPublicKey)}>
           <ElementsConsumer>
             {({ stripe, elements }) => (
-              <form
-                onSubmit={event =>
-                  this.handleFormSubmission(event, stripe, elements)
-                }
-              >
+              <form onSubmit={(event) => this.handleFormSubmission(event, stripe, elements)}>
                 <label htmlFor="input-address">Shipping Address</label>
                 <input
                   id="input-address"

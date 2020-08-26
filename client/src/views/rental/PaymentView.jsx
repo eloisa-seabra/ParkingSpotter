@@ -1,33 +1,28 @@
-import React, { Component } from 'react';
-import { loadRental, endRental } from '../../services/rental';
+import React, { Component } from "react";
+import { loadRental, endRental } from "../../services/rental";
 
-import CheckoutForm from '../../components/CheckoutForm/Index';
-import ListItemReservations from '../../components/ListItemReservations/Index';
+import CheckoutForm from "../../components/CheckoutForm/Index";
+import ListItemReservations from "../../components/ListItemReservations/Index";
 
 class PaymentView extends Component {
   constructor() {
     super();
     this.state = {
       loaded: false,
-      user: null,
       rental: null,
-      ownParkings: [],
-      reservations: []
     };
   }
 
   componentDidMount() {
-    loadRental().then(data => {
+    loadRental().then((data) => {
       const rentals = data.rentals;
       const rentalId = this.props.match.params.id;
-      const activeRentals = this.props.activeRentals;
-
       const rental = rentals.find(function(rent) {
         return rent._id === rentalId;
       });
       this.setState({
         rental,
-        loaded: true
+        loaded: true,
       });
     });
   }
@@ -39,17 +34,17 @@ class PaymentView extends Component {
     const body = { rental, start };
 
     endRental(id, body)
-      .then(response => {
+      .then((response) => {
         const rental = response.body.rental;
         this.setState({
-          rental
+          rental,
         });
         this.handleLoadProfile(rental);
       })
       .then(() => {
         this.props.history.push(`/profile`);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -77,7 +72,7 @@ class PaymentView extends Component {
         {this.state.loaded && (
           <>
             <h2>Your Reservation</h2>
-            <ListItemReservations rental={this.state.rental.parking} />
+            <ListItemReservations rentalTime={this.rentalTime} rental={this.state.rental} />
             <h4>Total: {this.rentalTime(rental.price, rental.startedAt).totalAmount} €</h4>
             <h2>Please insert your payment details</h2>
             <CheckoutForm onCheckout={this.handleCheckout} />

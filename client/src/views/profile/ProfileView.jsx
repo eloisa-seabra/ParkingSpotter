@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { loadProfile } from '../../services/profile';
-import { endRental } from '../../services/rental';
 import { deleteSingleParking } from '../../services/parking';
 import ListItemReservations from '../../components/ListItemReservations/Index';
 import ListMySpots from '../../components/ListMySpots/Index';
@@ -13,7 +12,7 @@ class ProfileView extends Component {
       loaded: false,
       user: null,
       ownParkings: [],
-      reservations: [],
+      activeRentals: [],
       rental: null
     };
   }
@@ -25,21 +24,19 @@ class ProfileView extends Component {
   handleLoadProfile = thing => {
     loadProfile()
       .then(data => {
-        // console.log('this comes from backend: ', data);
-        // console.log('this comes from state: ', this.props.user);
         const user = this.props.user;
         const parkings = data.document.parking;
         const rentals = data.document.rental;
 
-        // console.log('parkings', data.document.parking);
-        // console.log('rentals', data.document.rental);
         this.setState({
           user,
           ownParkings: parkings,
-          reservations: rentals,
+          activeRentals: rentals,
           rental: thing,
           loaded: true
         });
+
+        console.log(this.state.activeRentals);
       })
       .catch(error => {
         console.log(error);
@@ -58,45 +55,13 @@ class ProfileView extends Component {
       });
   };
 
-  // handleCheckOut = index => {
-  //   const rental = this.state.reservations[index];
-  //   this.setState({
-  //     rental
-  //   });
-  //   this.props.history.push(`/rental/${rental._id}`);
-  // };
-
   handleRentalFinish = index => {
-    const activeRentals = this.state.reservations.filter(function(rental) {
+    const activeRentals = this.state.activeRentals.filter(function(rental) {
       return rental.status === 'rented';
     });
 
     const rental = activeRentals[index];
-    const id = activeRentals[index]._id;
-    const start = activeRentals[index].startedAt;
-    const end = activeRentals[index].changedAt;
-    const body = { rental, start, end };
-    // console.log('id', id);
-
     this.props.history.push(`/rental/${rental._id}`);
-
-    // ENDING RENTAL
-    // endRental(id, body)
-    //   .then(response => {
-    //     // console.log(response.body.rental);
-    //     const rental = response.body.rental;
-    //     this.setState({
-    //       rental
-    //     });
-    //     this.handleLoadProfile(rental);
-    //   })
-    //   .then(() => {
-    //     console.log(this.state.rental);
-    //     // this.props.history.push(`/rental/${rental._id}`);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
   };
 
   rentalTime = (price, time) => {
@@ -109,8 +74,7 @@ class ProfileView extends Component {
     const minutesAmount = Math.ceil((hours - hoursAmount) * 60);
     const totalMinutes = Math.ceil(durationTimeUnix / 1000 / 60);
 
-    const totalAmount =
-      Math.round((price / 4) * Math.ceil(totalMinutes / 15) * 100) / 100;
+    const totalAmount = Math.round((price / 4) * Math.ceil(totalMinutes / 15) * 100) / 100;
 
     return {
       hours: hoursAmount,
@@ -123,12 +87,14 @@ class ProfileView extends Component {
   render() {
     const user = this.state.user;
     const parkings = this.state.ownParkings;
-    const rentals = this.state.reservations;
+    const rentals = this.state.activeRentals;
     const activeRentals = rentals.filter(function(rental) {
       return rental.status === 'rented';
     });
+    const endedRentals = rentals.filter(function(rental) {
+      return rental.status === 'ended';
+    });
 
-    console.log(this.state.rental);
     return (
       <div>
         {this.state.loaded && (
@@ -139,31 +105,29 @@ class ProfileView extends Component {
             <p>Email: {user.email}</p>
             <Link to="/profile/edit">Edit Profile</Link>
             <hr />
-            <h4>My reservations:</h4>
+            <h4>My Current Rentals:</h4>
             {(activeRentals.length && (
               <>
                 {activeRentals.map((rental, index) => (
                   <div key={rental._id}>
-                    <ListItemReservations
-                      rental={rental}
-                      rentalTime={this.rentalTime}
-                    />
-                    <Link
-                      to={`/rental/${rental._id}`}
-                      rental={this.state.rental}
-                    >
-                      End Rental
-                    </Link>
-                    <button onClick={() => this.handleRentalFinish(index)}>
-                      End Rental
-                    </button>
+                    <ListItemReservations rental={rental} rentalTime={this.rentalTime} />
+                    <button onClick={() => this.handleRentalFinish(index)}>End Rental</button>
                   </div>
                 ))}
               </>
             )) || <p>You have no parking spots to rent.</p>}
             <hr />
             <h4>My last rentals:</h4>
-            <p>array.map of past rentals</p>
+            {(endedRentals.length && (
+              <>
+                {endedRentals.map((rental, index) => (
+                  <div key={rental._id}>
+                    <ListItemReservations rental={rental} rentalTime={this.rentalTime} />
+                    <Link to={`/parking/${rental.parking._id}`}>Rent again</Link>
+                  </div>
+                ))}
+              </>
+            )) || <p>You have no parking spots to rent.</p>}
             <div className="own-parkings">
               <hr />
               <h4>My spots:</h4>
@@ -173,12 +137,8 @@ class ProfileView extends Component {
                     <div key={parking._id}>
                       <ListMySpots parking={parking} />
                       <Link to={`/parking/${parking._id}`}>Details </Link>
-                      <Link to={`/parking/${parking._id}/edit`}>
-                        Edit Parking
-                      </Link>
-                      <button onClick={() => this.handleParkingDeletion(index)}>
-                        Delete
-                      </button>
+                      <Link to={`/parking/${parking._id}/edit`}>Edit Parking</Link>
+                      <button onClick={() => this.handleParkingDeletion(index)}>Delete</button>
                     </div>
                   ))}
                 </>
