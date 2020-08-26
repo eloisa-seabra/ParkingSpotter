@@ -109,9 +109,15 @@ class ProfileView extends Component {
     const minutesAmount = Math.ceil((hours - hoursAmount) * 60);
     const totalMinutes = Math.ceil(durationTimeUnix / 1000 / 60);
 
-    const totalAmount = Math.round((price / 4) * Math.ceil(totalMinutes / 15) * 100) / 100;
+    const totalAmount =
+      Math.round((price / 4) * Math.ceil(totalMinutes / 15) * 100) / 100;
 
-    return { hours: hoursAmount, minutes: minutesAmount, totalMinutes, totalAmount };
+    return {
+      hours: hoursAmount,
+      minutes: minutesAmount,
+      totalMinutes,
+      totalAmount
+    };
   };
 
   render() {
@@ -138,17 +144,19 @@ class ProfileView extends Component {
               <>
                 {activeRentals.map((rental, index) => (
                   <div key={rental._id}>
-                    <img src={rental.parking.photo} alt={rental.parking.location} />
-                    <h5>Location: {rental.parking.location}</h5>
-                    <p>Price: {rental.parking.price}€/hr</p>
-                    <p>
-                      Rented for: {this.rentalTime(0, rental.startedAt).hours} hours and {this.rentalTime(0, rental.startedAt).minutes} minutes
-                    </p>
-                    <p>Total Price: {this.rentalTime(rental.price, rental.startedAt).totalAmount} €</p>
-                    <Link to={`/rental/${rental._id}`} rental={this.state.rental}>
+                    <ListItemReservations
+                      rental={rental}
+                      rentalTime={this.rentalTime}
+                    />
+                    <Link
+                      to={`/rental/${rental._id}`}
+                      rental={this.state.rental}
+                    >
                       End Rental
                     </Link>
-                    <button onClick={() => this.handleRentalFinish(index)}>End Rental</button>
+                    <button onClick={() => this.handleRentalFinish(index)}>
+                      End Rental
+                    </button>
                   </div>
                 ))}
               </>
@@ -165,8 +173,12 @@ class ProfileView extends Component {
                     <div key={parking._id}>
                       <ListMySpots parking={parking} />
                       <Link to={`/parking/${parking._id}`}>Details </Link>
-                      <Link to={`/parking/${parking._id}/edit`}>Edit Parking</Link>
-                      <button onClick={() => this.handleParkingDeletion(index)}>Delete</button>
+                      <Link to={`/parking/${parking._id}/edit`}>
+                        Edit Parking
+                      </Link>
+                      <button onClick={() => this.handleParkingDeletion(index)}>
+                        Delete
+                      </button>
                     </div>
                   ))}
                 </>

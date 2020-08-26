@@ -88,7 +88,7 @@ class App extends Component {
           <Navbar user={this.state.user} onSignOut={this.handleSignOut} />
           {(this.state.loaded && (
             <Switch>
-              <Route path="/" render={props => <HomeView {...props} handleLocationChange={this.handleLocationChange} />} exact />
+              <Route path="/" render={props => <HomeView {...props} handleLocationChange={this.handleLocationChange} user={this.state.user} />} exact />
               <Route path="/profile" render={props => <ProfileView {...props} user={this.state.user} onUserUpdate={this.handleUserUpdate} />} exact />
               <Route path="/profile/edit" render={props => <EditProfileView {...props} user={this.state.user} onUserUpdate={this.handleUserUpdate} />} />
               <ProtectedRoute
