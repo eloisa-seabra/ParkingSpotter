@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import './HomeView.css';
 import { getCoordinates } from '../services/geocoder';
-import { Link } from 'react-router-dom';
-/* import ListItemReservations from './../components/ListItemReservations/Index'; */
 
 class HomeView extends Component {
   constructor(props) {
@@ -14,27 +11,27 @@ class HomeView extends Component {
     };
   }
 
-  componentDidMount() {
-    const currentDate = new Date();
+  // componentDidMount() {
+  //   const currentDate = new Date();
 
-    let day = currentDate.getDate();
-    let month = currentDate.getMonth() + 1;
-    let year = currentDate.getFullYear();
-    if (day < 10) day = '0' + day;
-    if (month < 10) month = '0' + month;
-    const currentDay = year + '-' + month + '-' + day;
+  //   let day = currentDate.getDate();
+  //   let month = currentDate.getMonth() + 1;
+  //   let year = currentDate.getFullYear();
+  //   if (day < 10) day = "0" + day;
+  //   if (month < 10) month = "0" + month;
+  //   const currentDay = year + "-" + month + "-" + day;
 
-    let h = currentDate.getHours();
-    let m = currentDate.getMinutes();
-    if (h < 10) h = '0' + h;
-    if (m < 10) m = '0' + m;
-    const currentTime = h + ':' + m;
+  //   let h = currentDate.getHours();
+  //   let m = currentDate.getMinutes();
+  //   if (h < 10) h = "0" + h;
+  //   if (m < 10) m = "0" + m;
+  //   const currentTime = h + ":" + m;
 
-    this.setState({
-      day: currentDay,
-      time: currentTime
-    });
-  }
+  //   this.setState({
+  //     day: currentDay,
+  //     time: currentTime,
+  //   });
+  // }
 
   handleFormSubmit = event => {
     event.preventDefault();
@@ -45,19 +42,10 @@ class HomeView extends Component {
       })
       .then(() => {
         this.props.history.push(`/parking/list`);
+      })
+      .catch(error => {
+        console.log(error);
       });
-
-    // searchParking(body)
-    //   .then(data => {
-    //     console.log(data);
-    //     // const post = data.post;
-    //     // const id = post._id;
-    //     // Redirect user to single post view
-    //     this.props.history.push(`/parking/list`);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
   };
 
   handleInputChange = event => {
@@ -69,19 +57,17 @@ class HomeView extends Component {
     });
   };
 
-  triggerMyLocation() {
-    window.navigator.geolocation.getCurrentPosition(
-      position => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-
-        console.log(latitude, longitude);
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
+  // triggerMyLocation() {
+  //   window.navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       const latitude = position.coords.latitude;
+  //       const longitude = position.coords.longitude;
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
   render() {
     return (
       <div>
@@ -97,25 +83,13 @@ class HomeView extends Component {
             id="city-input"
             onChange={this.handleInputChange}
           />
-          <label htmlFor="date-input">Date:</label>
-          <input
-            type="date"
-            name="day"
-            id="date-input"
-            value={this.state.day}
-            onChange={this.handleInputChange}
-          />
+          {/* <label htmlFor="date-input">Date:</label>
+          <input type="date" name="day" id="date-input" value={this.state.day} onChange={this.handleInputChange} />
           <label htmlFor="time-input">Starting Time:</label>
-          <input
-            type="time"
-            name="time"
-            id="time-input"
-            value={this.state.time}
-            onChange={this.handleInputChange}
-          />
+          <input type="time" name="time" id="time-input" value={this.state.time} onChange={this.handleInputChange} /> */}
           <button>Search</button>
         </form>
-        <button onClick={this.triggerMyLocation}>Spots Near Me</button>
+        {/* <button onClick={this.triggerMyLocation}>Spots Near Me</button> */}
         <div>
           <img
             style={{ width: '1300px' }}

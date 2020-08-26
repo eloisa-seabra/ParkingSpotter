@@ -14,7 +14,7 @@ const Navbar = (props) => {
         />{" "}
         ParkingSpotter
       </Link>
-      <Link to="/parking/create">Add a new slot</Link>
+      <Link to="/parking/create">Add your parking spot</Link>
       {(props.user && (
         <>
           <Link to="/profile">{props.user.name}</Link>
