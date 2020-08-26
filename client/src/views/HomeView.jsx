@@ -96,6 +96,11 @@ class HomeView extends Component {
               Tired of spending time searching for a parking spot in the big city or of expensive private parking lot
               fees?
             </p>
+            <img
+              style={{ width: "200px" }}
+              src="https://res.cloudinary.com/isaseabra/image/upload/v1598440909/5872_rehcil.jpg"
+              alt="piggy-bank"
+            />
             <p>
               With ParkingSpotter you can save time and money and reserve your spot from someone's available private
               parking spot

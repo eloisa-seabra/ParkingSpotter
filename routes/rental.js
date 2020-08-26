@@ -73,4 +73,17 @@ rentalRouter.patch('/rental/:id', routeAuthenticationGuard, (request, response, 
   });
 });
 
+rentalRouter.get('/rental', (request, response) => {
+  const userId = request.user._id;
+
+  Rental.find({ renter: userId })
+    .populate('parking')
+    .populate('owner')
+    .populate('renter')
+    .then(rentals => {
+      console.log(rentals);
+      response.json({ rentals });
+    });
+});
+
 module.exports = rentalRouter;
