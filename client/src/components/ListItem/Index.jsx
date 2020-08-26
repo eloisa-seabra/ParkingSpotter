@@ -4,17 +4,20 @@ import { Link } from 'react-router-dom';
 
 export const List = props => {
   return (
-    <div className="list-item">
-      <img src={props.photo} alt={props.location} />
-      <div className="list-details">
-        <h3>{props.location}</h3>
-        <h3>{props.price}/hr</h3>
+    <div className="list-item row">
+      <div className="col-2">
+        <img src={props.photo} alt={props.location} />
       </div>
-      <div className="reserve">
-        <button className="reserve-details">Purchase Spot</button>
-        <div>
-          <Link to={`/parking/${props.id}`} className="reserve">
-            Purchase Spot
+      <div className="col-5 list-details">
+        <p>{props.location}</p>
+        <p>
+          <small>{props.price}€/hr</small>
+        </p>
+      </div>
+      <div>
+        <div className="col-5">
+          <Link to={`/parking/${props.id}`} className="reserve-details text-center">
+            Details
           </Link>
         </div>
       </div>

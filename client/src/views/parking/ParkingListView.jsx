@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import Map from "../../components/Map/Index";
-import List from "../../components/List/Index";
-import { loadParking } from "../../services/parking";
+import React, { Component } from 'react';
+import Map from '../../components/Map/Index';
+import List from '../../components/List/Index';
+import { loadParking } from '../../services/parking';
 
 export class ParkingListView extends Component {
   constructor() {
@@ -9,39 +9,39 @@ export class ParkingListView extends Component {
     this.state = {
       loaded: false,
       mapView: true,
-      parking: [],
+      parking: []
     };
   }
   componentDidMount() {
     const coordinates = this.props.coordinates;
-    loadParking(coordinates).then((data) => {
+    loadParking(coordinates).then(data => {
       this.setState({
         loaded: true,
-        parking: data.spots,
+        parking: data.spots
       });
     });
   }
   toggleView = () => {
     this.setState({
-      mapView: !this.state.mapView,
+      mapView: !this.state.mapView
     });
   };
   render() {
     return (
-      <div>
-        {(this.state.loaded && this.state.mapView && (
+      <section id="parking-list" className="container">
+        {this.state.loaded && (
           <>
-            <button onClick={this.toggleView}>View List</button>
-            <Map markers={this.state.parking} coordinates={this.props.coordinates} />
-          </>
-        )) || (
-          <>
-            <button onClick={this.toggleView}>View Map</button>
-            <List items={this.state.parking} />
+            <div className="row">
+              <div className="col-lg-6">
+                <Map markers={this.state.parking} coordinates={this.props.coordinates} />
+              </div>
+              <div className="col-lg-6">
+                <List items={this.state.parking} />
+              </div>
+            </div>
           </>
         )}
-        ;
-      </div>
+      </section>
     );
   }
 }

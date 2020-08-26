@@ -18,20 +18,14 @@ class Map extends Component {
     };
     return (
       // Important! Always set the container height explicitly
-      <div style={{ height: '60vh', width: '60vh' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
-          defaultCenter={center}
-          defaultZoom={this.props.zoom}
-          onClick={this.props.handleClick}
-        >
+      <div className="map-list">
+        <GoogleMapReact bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }} defaultCenter={center} defaultZoom={this.props.zoom} onClick={this.props.handleClick}>
           {this.props.markers &&
             this.props.markers.map(marker => (
               <Marker
                 key={marker._id}
                 icon={{
-                  url:
-                    'https://res.cloudinary.com/isaseabra/image/upload/v1598450248/marker_kbr6zn.png'
+                  url: 'https://res.cloudinary.com/isaseabra/image/upload/v1598450248/marker_kbr6zn.png'
                 }}
                 id={marker._id}
                 lat={marker.lat}
