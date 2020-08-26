@@ -19,6 +19,7 @@ import ErrorView from './views/ErrorView';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
+import { loadRental } from './services/rental';
 
 class App extends Component {
   constructor() {
@@ -26,6 +27,9 @@ class App extends Component {
     this.state = {
       loaded: true,
       user: null,
+      ownParkings: [],
+      rentals: [],
+      activeRentals: [],
       coordinates: [-9.140821, 38.717393]
     };
   }
@@ -42,6 +46,18 @@ class App extends Component {
       .catch(error => {
         console.log(error);
       });
+
+    loadRental().then(data => {
+      const rentals = data.rentals;
+      const activeRentals = rentals.filter(function(rental) {
+        return rental.status === 'rented';
+      });
+
+      this.setState({
+        rentals,
+        activeRentals
+      });
+    });
   }
 
   handleUserUpdate = user => {
@@ -92,7 +108,8 @@ class App extends Component {
               <Route path="/parking/:id/edit" render={props => <ParkingEditView {...props} coordinates={this.state.coordinates} onUserUpdate={this.handleUserUpdate} />} />
 
               <Route path="/parking/:id" render={props => <ParkingIdView {...props} coordinates={this.state.coordinates} user={this.state.user} />} />
-              <Route path="/rental/:id" component={PaymentView} />
+
+              <Route path="/rental/:id" render={props => <PaymentView {...props} activeRentals={this.state.activeRentals} />} />
               <Route path="/rental" component={RentalView} />
 
               <Route path="/error" component={ErrorView} />

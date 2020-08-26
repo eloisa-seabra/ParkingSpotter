@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { loadProfile } from '../../services/profile';
-import { deleteSingleParking } from '../../services/parking';
 import { endRental } from '../../services/rental';
+import { deleteSingleParking } from '../../services/parking';
 import ListItemReservations from '../../components/ListItemReservations/Index';
 import ListMySpots from '../../components/ListMySpots/Index';
 
@@ -46,10 +46,6 @@ class ProfileView extends Component {
       });
   };
 
-  handleCheckOut = index => {
-    // this.props.history.push('/');
-  };
-
   handleParkingDeletion = index => {
     const id = this.state.ownParkings[index]._id;
 
@@ -61,6 +57,14 @@ class ProfileView extends Component {
         console.log(error);
       });
   };
+
+  // handleCheckOut = index => {
+  //   const rental = this.state.reservations[index];
+  //   this.setState({
+  //     rental
+  //   });
+  //   this.props.history.push(`/rental/${rental._id}`);
+  // };
 
   handleRentalFinish = index => {
     const activeRentals = this.state.reservations.filter(function(rental) {
@@ -74,15 +78,25 @@ class ProfileView extends Component {
     const body = { rental, start, end };
     // console.log('id', id);
 
-    endRental(id, body)
-      .then(response => {
-        console.log(response.body.rental);
-        const rental = response.body.rental;
-        this.handleLoadProfile(rental);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.props.history.push(`/rental/${rental._id}`);
+
+    // ENDING RENTAL
+    // endRental(id, body)
+    //   .then(response => {
+    //     // console.log(response.body.rental);
+    //     const rental = response.body.rental;
+    //     this.setState({
+    //       rental
+    //     });
+    //     this.handleLoadProfile(rental);
+    //   })
+    //   .then(() => {
+    //     console.log(this.state.rental);
+    //     // this.props.history.push(`/rental/${rental._id}`);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   };
 
   rentalTime = (price, time) => {
@@ -100,8 +114,6 @@ class ProfileView extends Component {
     return { hours: hoursAmount, minutes: minutesAmount, totalMinutes, totalAmount };
   };
 
-  rentalAMount = (price, time) => {};
-
   render() {
     const user = this.state.user;
     const parkings = this.state.ownParkings;
@@ -110,6 +122,7 @@ class ProfileView extends Component {
       return rental.status === 'rented';
     });
 
+    console.log(this.state.rental);
     return (
       <div>
         {this.state.loaded && (
