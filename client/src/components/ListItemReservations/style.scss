@@ -5,7 +5,7 @@
   box-shadow: 3px 5px 5px 2px #c0c0c0;
 }
 .list-details {
-  margin: 0px 10px;
+  margin: 0px 0px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -16,19 +16,18 @@
   width: 6rem;
   height: 6em;
 }
-
-.reserve {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
+.price-hour {
+  color: #1277c0;
 }
-.reserve-details {
-  text-decoration: none;
+
+.total-price {
+  display: flex;
+  justify-content: center;
   font-size: 1.3em;
   color: white;
   background-color: #1277c0;
   display: flex;
-  margin: 20px;
-  width: 9em;
-  padding: 8px 20px;
+  margin: 5px;
+
+  padding: 5px;
 }

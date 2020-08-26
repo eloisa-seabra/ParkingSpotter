@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './HomeView.css';
 import { getCoordinates } from '../services/geocoder';
 import { Link } from 'react-router-dom';
+/* import ListItemReservations from './../components/ListItemReservations/Index'; */
 
 class HomeView extends Component {
   constructor(props) {
@@ -128,16 +129,33 @@ class HomeView extends Component {
               Tired of spending time searching for a parking spot in the big
               city or of expensive private parking lot fees?
             </p>
+            <img
+              style={{ width: '200px' }}
+              src="https://res.cloudinary.com/isaseabra/image/upload/v1598440828/hourglass_3805_ohs7jq.png"
+              alt=""
+            />
+
             <p>
               {' '}
               With ParkingSpotter you can save time and money and reserve your
               spot from someone's available private parking spot{' '}
             </p>
+            <img
+              style={{ width: '200px' }}
+              src="https://res.cloudinary.com/isaseabra/image/upload/v1598440909/5872_rehcil.jpg"
+              alt="piggy-bank"
+            />
             <p>
               {' '}
               Choose your starting time and pay the time spent only when you
               leave the parking spot{' '}
             </p>
+            <img
+              className="img-icons"
+              style={{ width: '200px' }}
+              src="https://res.cloudinary.com/isaseabra/image/upload/v1598440988/10507_ikvf7i.jpg"
+              alt="idea"
+            />
           </div>
         </div>
       </div>
