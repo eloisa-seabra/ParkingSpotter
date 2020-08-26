@@ -8,3 +8,5 @@ const api = axios.create({
 export const createNewRental = body => api.post(`/`, body).then(response => response.data);
 
 export const endRental = (id, body) => api.patch(`/${id}`, body).then(response => response.data);
+
+export const loadRental = () => api.get('/').then(response => response.data);
