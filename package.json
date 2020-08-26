@@ -12,6 +12,7 @@
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.9.0",
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^4.5.2",
     "cloudinary": "^1.22.0",
     "connect-mongo": "^3.2.0",
     "cors": "^2.8.5",

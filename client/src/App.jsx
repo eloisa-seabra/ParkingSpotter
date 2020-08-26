@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { loadMe, signOut } from './services/authentication';
+import 'bootstrap/dist/css/bootstrap.css';
 
 import './App.css';
 
