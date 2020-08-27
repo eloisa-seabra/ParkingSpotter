@@ -112,10 +112,10 @@ h4 {
     font-size: 1.1em;
     padding: 10px;
   }
-  col,
+  .col,
   col-lg,
   p {
-    font-size: 0.8em;
+    font-size: 1.4em;
   }
 }
 
@@ -129,7 +129,7 @@ h4 {
   }
   #about {
     background-color: #0095afb2;
-    height: 25rem;
+    height: 27rem;
     margin: 6rem auto;
     max-width: 80rem;
     border-radius: 30px;
@@ -137,5 +137,37 @@ h4 {
   img {
     width: 100%;
     height: auto;
+  }
+
+  h1 {
+    font-size: 4em;
+  }
+
+  h2 {
+    font-size: 2em;
+    padding: 5px 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    top: 40px;
+  }
+
+  .row img {
+    height: 120px;
+    width: 120px;
+  }
+  .col,
+  col-lg,
+  p {
+    font-size: 1.4em;
+  }
+}
+
+@media (min-width: 500px) {
+  .col,
+  col-lg,
+  p {
+    font-size: 1.1em;
   }
 }
