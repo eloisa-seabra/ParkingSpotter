@@ -1,10 +1,4 @@
-* {
-  box-sizing: border-box;
-}
-body {
-  margin: 0 0;
-  font-family: 'Open-sans';
-}
+@import 'config';
 
 .about-list {
   font-size: 1.4em;
@@ -79,6 +73,28 @@ h4 {
 .row img {
   height: 120px;
   width: 120px;
+}
+
+#homeview {
+  form {
+    margin-top: 4em;
+    text-align: center;
+    button {
+      color: white;
+      background-color: $dark-blue;
+      border: 1px solid $dark-blue;
+      border-radius: 0.4em;
+      padding: 1em 2em;
+      margin: 1em;
+    }
+  }
+  input {
+    width: 600px;
+    border: 1px $light-blue solid;
+    border-radius: 0.4em;
+    padding: 1em 1.8em;
+    overflow: hidden;
+  }
 }
 
 @media (min-width: 400px) {

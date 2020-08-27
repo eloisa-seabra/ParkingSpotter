@@ -5,6 +5,39 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
+    // justify-content: center;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+  .parking-title {
+    font-size: 3em;
+    padding: 0;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+  .parking-description {
+    margin-bottom: 0;
+  }
+  .parking-price {
+    margin-bottom: 2em;
+  }
+  a {
+    text-decoration: none;
+    margin-right: 3em;
+    color: #fff !important;
+    padding: 1em;
+    background-color: $dark-blue;
+    border: 1px solid $dark-blue;
+    border-radius: 0.4em;
+    :last-child {
+      background-color: #fff;
+      color: $dark-blue !important;
+    }
+  }
+  .delete-button {
+    //border-color: 1px solid red;
   }
 }

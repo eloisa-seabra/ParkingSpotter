@@ -1,6 +1,10 @@
 @import 'homeview';
 @import 'parkinglist';
 @import 'parkingsingle';
+@import 'parkingcreate';
+@import 'parkingedit';
+@import 'signupView';
+@import 'signinView';
 @import 'config';
 
 * {
@@ -10,7 +14,7 @@
 body {
   margin: 0;
   box-sizing: border-box;
-  margin-top: 8em;
+  margin-top: 10em;
   font-family: 'Alata';
 }
 

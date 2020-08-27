@@ -1,0 +1,27 @@
+@import 'config';
+
+#parking-create {
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3em;
+    padding-right: 10em;
+    color: #414141;
+    input {
+      margin-bottom: 2em;
+      border: 1px $light-blue solid;
+      border-radius: 0.4em;
+      padding: 1em 1.8em;
+      overflow: hidden;
+    }
+    button {
+      width: 150px;
+      color: white;
+      background-color: $dark-blue;
+      border: 1px solid $dark-blue;
+      border-radius: 0.4em;
+      padding: 1em 2em;
+      margin: 1em auto;
+    }
+  }
+}

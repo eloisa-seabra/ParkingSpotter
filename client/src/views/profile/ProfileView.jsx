@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { loadProfile } from '../../services/profile';
 import { deleteSingleParking } from '../../services/parking';
 import ListItemReservations from '../../components/ListItemReservations/Index';
+import LastReservations from '../../components/LastReservations/Index';
 import ListMySpots from '../../components/ListMySpots/Index';
 
 class ProfileView extends Component {
@@ -64,11 +65,11 @@ class ProfileView extends Component {
     this.props.history.push(`/rental/${rental._id}`);
   };
 
-  rentalTime = (price, time) => {
-    const startingTime = Date.parse(time);
-    const nowTime = Date.now();
+  rentedTime = (price, timeStart, timeEnd) => {
+    const startingTime = Date.parse(timeStart);
+    const endingTime = Date.parse(timeEnd);
+    const durationTimeUnix = endingTime - startingTime;
 
-    const durationTimeUnix = nowTime - startingTime;
     const hours = durationTimeUnix / 1000 / 60 / 60;
     const hoursAmount = Math.floor(durationTimeUnix / 1000 / 60 / 60);
     const minutesAmount = Math.ceil((hours - hoursAmount) * 60);
@@ -110,7 +111,7 @@ class ProfileView extends Component {
               <>
                 {activeRentals.map((rental, index) => (
                   <div key={rental._id}>
-                    <ListItemReservations rental={rental} rentalTime={this.rentalTime} />
+                    <ListItemReservations rental={rental} rentedTime={this.rentedTime} />
                     <button onClick={() => this.handleRentalFinish(index)}>End Rental</button>
                   </div>
                 ))}
@@ -122,12 +123,12 @@ class ProfileView extends Component {
               <>
                 {endedRentals.map((rental, index) => (
                   <div key={rental._id}>
-                    <ListItemReservations rental={rental} rentalTime={this.rentalTime} />
+                    <LastReservations rental={rental} rentedTime={this.rentedTime} />
                     <Link to={`/parking/${rental.parking._id}`}>Rent again</Link>
                   </div>
                 ))}
               </>
-            )) || <p>You have no parking spots to rent.</p>}
+            )) || <p>You haven't rented any parking spots.</p>}
             <div className="own-parkings">
               <hr />
               <h4>My spots:</h4>

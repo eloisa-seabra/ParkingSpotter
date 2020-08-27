@@ -64,23 +64,25 @@ export class ParkingIdView extends Component {
             <section id="parking-single" className="container">
               <div className="row my-5">
                 <div className="col">
-                  <img style={{ width: '100%' }} src={this.state.spot.photo} alt={this.state.spot.location} />
+                  <img src={this.state.spot.photo} alt={this.state.spot.location} />
                 </div>
                 <div className="col details">
-                  <h2 className="details-info">{this.state.spot.location.toUpperCase()}</h2>
-                  <p>{this.state.spot.description}</p>
-                  <p className="details-info">
+                  <h2 className="text-left parking-title">{this.state.spot.location.toUpperCase()}</h2>
+                  <p className="parking-description">{this.state.spot.description}</p>
+                  <p className="parking-owner">
                     <small>Owner: {this.state.spot.user.name}</small>
                   </p>
-                  <h3 className="details-info">{this.state.spot.price} €/hour</h3>
+                  <h3 className="parking-price">{this.state.spot.price} €/hour</h3>
                   {(this.state.ownSpot && (
                     <>
-                      <Link classname="delete-button btn btn-outline-primary" to={`/`} onSubmit={this.handlePostDeletion}>
-                        Delete
-                      </Link>
-                      <Link classname="edit-button btn btn-primary" to={`/parking/${this.props.match.params.id}/edit`}>
-                        Edit Parking
-                      </Link>
+                      <div className="parking-actions">
+                        <Link classname="delete-button btn btn-outline-primary" to={`/`} onSubmit={this.handlePostDeletion}>
+                          Delete
+                        </Link>
+                        <Link classname="edit-button btn btn-primary" to={`/parking/${this.props.match.params.id}/edit`}>
+                          Edit Parking
+                        </Link>
+                      </div>
                     </>
                   )) || (
                     <>

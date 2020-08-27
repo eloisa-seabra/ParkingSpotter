@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { signIn } from './../../services/authentication';
-import '../../styles/_signupView.scss';
+import '../../styles/_signinView.scss';
 
 class AuthenticationSignInView extends Component {
   constructor() {
@@ -38,20 +38,11 @@ class AuthenticationSignInView extends Component {
 
   render() {
     return (
-      <div>
+      <div id="sign-in">
         <form onSubmit={this.handleFormSubmission}>
           <div className="form-group">
             <label htmlFor="input-email">Email</label>
-            <input
-              className="form-control"
-              id="input-email"
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={this.state.email}
-              onChange={this.handleInputChange}
-              required
-            />
+            <input className="form-control" id="input-email" type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleInputChange} required />
           </div>
           <div className="form-group">
             <label htmlFor="input-password">Password</label>

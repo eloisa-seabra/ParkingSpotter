@@ -36,26 +36,15 @@ const Navbar = props => {
                 </Link>
               </li>
               <li className="nav-item dropdown">
-                <Link
-                  className=""
-                  to="#"
-                  role="button"
-                  id="dropdownMenuLink"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
+                <Link className="" to="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img
-                    src="./user.webp"
+                    // src="./user.webp"
+                    src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"
                     className="user-image rounded-circle"
                     alt="user profile"
                   />
                 </Link>
-                <div
-                  className="dropdown-menu dropdown-menu-right"
-                  id="navbarSupportedContent"
-                  aria-labelledby="navbarDropdown"
-                >
+                <div className="dropdown-menu dropdown-menu-right" id="navbarSupportedContent" aria-labelledby="navbarDropdown">
                   <Link className="dropdown-item" to="/profile">
                     Your account
                   </Link>
@@ -80,11 +69,7 @@ const Navbar = props => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  id="cta-button"
-                  className="nav-link"
-                  to="/authentication/sign-in"
-                >
+                <Link id="cta-button" className="nav-link" to="/authentication/sign-in">
                   Sign In
                 </Link>
               </li>
