@@ -1,14 +1,13 @@
-const express = require('express');
+const express = require("express");
 
-const Rental = require('../models/rental');
-const Parking = require('../models/parking');
-const User = require('../models/user');
+const Rental = require("../models/rental");
+const Parking = require("../models/parking");
 
-const routeAuthenticationGuard = require('./../middleware/route-authentication-guard');
+const routeAuthenticationGuard = require("./../middleware/route-authentication-guard");
 
 const rentalRouter = new express.Router();
 
-rentalRouter.post('/rental', routeAuthenticationGuard, (request, response, next) => {
+rentalRouter.post("/rental", routeAuthenticationGuard, (request, response, next) => {
   const { parkingId, ownerId, renterId, parkingPrice } = request.body;
 
   Rental.create({
@@ -16,31 +15,34 @@ rentalRouter.post('/rental', routeAuthenticationGuard, (request, response, next)
     owner: ownerId,
     renter: renterId,
     price: parkingPrice,
-    status: 'rented'
+    status: "rented",
   })
-    .then(document => {
+    .then((document) => {
       response.json({ document });
     })
     .then(() => {
-      // const id = document.req.body.parkingId;
-      // console.log(id);
       console.log(parkingId);
-      Parking.findOneAndUpdate({ _id: parkingId }, { isRented: true }, { upsert: true }).then(data => {
+      Parking.findOneAndUpdate({ _id: parkingId }, { isRented: true }, { upsert: true }).then((data) => {
         console.log(data);
       });
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
       next(error);
     });
 });
 
-rentalRouter.patch('/rental/:id', routeAuthenticationGuard, (request, response, next) => {
+rentalRouter.post("/rental/payment", routeAuthenticationGuard, (req, res) => {
+  console.log("getting to backend", req.body);
+  res.json({});
+});
+
+rentalRouter.patch("/rental/:id", routeAuthenticationGuard, (request, response) => {
   const id = request.params.id;
   let rental = request.body.rental;
   let parking = request.body.rental.parking;
 
-  const rentalTime = time => {
+  const rentalTime = (time) => {
     const startingTime = Date.parse(time);
     const nowTime = Date.now();
 
@@ -57,15 +59,13 @@ rentalRouter.patch('/rental/:id', routeAuthenticationGuard, (request, response, 
   const minutes = rentalTime(rental.startedAt).minutes;
   const duration = { hours, minutes };
 
-  const totalAmount = Math.round((rental.price / 4) * Math.ceil(rentalTime(rental.startedAt).totalMinutes / 15) * 100) / 100;
+  const totalAmount =
+    Math.round((rental.price / 4) * Math.ceil(rentalTime(rental.startedAt).totalMinutes / 15) * 100) / 100;
 
-  Rental.findOneAndUpdate({ _id: id }, { status: 'ended', duration, totalAmount }).then(renting => {
+  Rental.findOneAndUpdate({ _id: id }, { status: "ended", duration, totalAmount }).then((renting) => {
     rental = renting;
     const parkingId = renting.parking._id;
-    // console.log('renting', renting);
-    // console.log('parkingId', parkingId);
-    Parking.findOneAndUpdate({ _id: parkingId }, { isRented: false }).then(spot => {
-      // console.log(parking);
+    Parking.findOneAndUpdate({ _id: parkingId }, { isRented: false }).then((spot) => {
       parking = spot;
       const body = { parking, rental };
       response.json({ body });
@@ -73,14 +73,14 @@ rentalRouter.patch('/rental/:id', routeAuthenticationGuard, (request, response, 
   });
 });
 
-rentalRouter.get('/rental', (request, response) => {
+rentalRouter.get("/rental", (request, response) => {
   const userId = request.user._id;
 
   Rental.find({ renter: userId })
-    .populate('parking')
-    .populate('owner')
-    .populate('renter')
-    .then(rentals => {
+    .populate("parking")
+    .populate("owner")
+    .populate("renter")
+    .then((rentals) => {
       console.log(rentals);
       response.json({ rentals });
     });
