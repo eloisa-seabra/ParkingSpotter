@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getCoordinates } from '../services/geocoder';
+import './../styles/_homeview.scss';
 
 class HomeView extends Component {
   constructor(props) {

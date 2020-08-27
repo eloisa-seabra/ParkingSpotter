@@ -23,26 +23,22 @@
     color: white;
     transition-duration: 0.4s;
   }
-  .blue-btn :hover {
-    cursor: pointer;
-    background-color: #00d9e7;
-  }
-}
 
-@media (max-width: 685px) {
-  form {
-    max-width: 14em;
-    margin: 0 auto;
-    font-size: 1.2em;
-    text-align: center;
-  }
+  @media (max-width: 685px) {
+    form {
+      max-width: 14em;
+      margin: 0 auto;
+      font-size: 1.2em;
+      text-align: center;
+    }
 
-  .blue-btn {
-    max-width: 10em;
-    padding: 5px 60px;
-    margin: 30px auto;
-    background-color: #1277c0;
-    color: white;
-    transition-duration: 0.4s;
+    .blue-btn {
+      max-width: 10em;
+      padding: 5px 60px;
+      margin: 30px auto;
+      background-color: #1277c0;
+      color: white;
+      transition-duration: 0.4s;
+    }
   }
 }
