@@ -1,5 +1,7 @@
 const express = require("express");
 
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 const Rental = require("../models/rental");
 const Parking = require("../models/parking");
 
@@ -21,10 +23,7 @@ rentalRouter.post("/rental", routeAuthenticationGuard, (request, response, next)
       response.json({ document });
     })
     .then(() => {
-      console.log(parkingId);
-      Parking.findOneAndUpdate({ _id: parkingId }, { isRented: true }, { upsert: true }).then((data) => {
-        console.log(data);
-      });
+      Parking.findOneAndUpdate({ _id: parkingId }, { isRented: true }, { upsert: true });
     })
     .catch((error) => {
       console.log(error);
@@ -32,15 +31,11 @@ rentalRouter.post("/rental", routeAuthenticationGuard, (request, response, next)
     });
 });
 
-rentalRouter.post("/rental/payment", routeAuthenticationGuard, (req, res) => {
-  console.log("getting to backend", req.body);
-  res.json({});
-});
-
 rentalRouter.patch("/rental/:id", routeAuthenticationGuard, (request, response) => {
   const id = request.params.id;
   let rental = request.body.rental;
   let parking = request.body.rental.parking;
+  let body;
 
   const rentalTime = (time) => {
     const startingTime = Date.parse(time);
@@ -65,11 +60,29 @@ rentalRouter.patch("/rental/:id", routeAuthenticationGuard, (request, response) 
   Rental.findOneAndUpdate({ _id: id }, { status: "ended", duration, totalAmount }).then((renting) => {
     rental = renting;
     const parkingId = renting.parking._id;
-    Parking.findOneAndUpdate({ _id: parkingId }, { isRented: false }).then((spot) => {
-      parking = spot;
-      const body = { parking, rental };
-      response.json({ body });
-    });
+    Parking.findOneAndUpdate({ _id: parkingId }, { isRented: false })
+      .then((spot) => {
+        parking = spot;
+        body = { parking, rental };
+        const payId = request.body.id;
+        return Rental.findById(payId);
+      })
+      .then((payRental) => {
+        const { token } = request.body;
+        const amount = payRental.totalAmount * 100;
+        return stripe.charges.create({
+          amount: amount,
+          currency: "eur",
+          source: token,
+          description: `Parking spot rental ${id}`,
+        });
+      })
+      .then((charge) => {
+        response.json({ body });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   });
 });
 
@@ -81,7 +94,6 @@ rentalRouter.get("/rental", (request, response) => {
     .populate("owner")
     .populate("renter")
     .then((rentals) => {
-      console.log(rentals);
       response.json({ rentals });
     });
 });

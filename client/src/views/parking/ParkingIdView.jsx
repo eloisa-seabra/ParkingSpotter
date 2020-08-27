@@ -103,7 +103,6 @@ export class ParkingIdView extends Component {
                 </div>
               </div>
             </section>
-            id="parking-single"
           </>
         )) || <p>Loading...</p>}
       </div>
