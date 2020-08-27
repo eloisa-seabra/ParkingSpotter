@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { loadProfile } from '../../services/profile';
-import { deleteSingleParking } from '../../services/parking';
-import ListItemReservations from '../../components/ListItemReservations/Index';
-import ListMySpots from '../../components/ListMySpots/Index';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { loadProfile } from "../../services/profile";
+import { deleteSingleParking } from "../../services/parking";
+import ListItemReservations from "../../components/ListItemReservations/Index";
+import ListMySpots from "../../components/ListMySpots/Index";
 
 class ProfileView extends Component {
   constructor() {
@@ -13,7 +13,7 @@ class ProfileView extends Component {
       user: null,
       ownParkings: [],
       activeRentals: [],
-      rental: null
+      rental: null,
     };
   }
 
@@ -21,9 +21,9 @@ class ProfileView extends Component {
     this.handleLoadProfile();
   }
 
-  handleLoadProfile = thing => {
+  handleLoadProfile = (thing) => {
     loadProfile()
-      .then(data => {
+      .then((data) => {
         const user = this.props.user;
         const parkings = data.document.parking;
         const rentals = data.document.rental;
@@ -33,31 +33,29 @@ class ProfileView extends Component {
           ownParkings: parkings,
           activeRentals: rentals,
           rental: thing,
-          loaded: true
+          loaded: true,
         });
-
-        console.log(this.state.activeRentals);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
-  handleParkingDeletion = index => {
+  handleParkingDeletion = (index) => {
     const id = this.state.ownParkings[index]._id;
 
     deleteSingleParking(id)
       .then(() => {
         this.handleLoadProfile();
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
-  handleRentalFinish = index => {
+  handleRentalFinish = (index) => {
     const activeRentals = this.state.activeRentals.filter(function(rental) {
-      return rental.status === 'rented';
+      return rental.status === "rented";
     });
 
     const rental = activeRentals[index];
@@ -80,7 +78,7 @@ class ProfileView extends Component {
       hours: hoursAmount,
       minutes: minutesAmount,
       totalMinutes,
-      totalAmount
+      totalAmount,
     };
   };
 
@@ -89,10 +87,10 @@ class ProfileView extends Component {
     const parkings = this.state.ownParkings;
     const rentals = this.state.activeRentals;
     const activeRentals = rentals.filter(function(rental) {
-      return rental.status === 'rented';
+      return rental.status === "rented";
     });
     const endedRentals = rentals.filter(function(rental) {
-      return rental.status === 'ended';
+      return rental.status === "ended";
     });
 
     return (

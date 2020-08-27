@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { loadRental, endRental } from "../../services/rental";
+import { loadRental, endRental, submitPayment } from "../../services/rental";
 
 import CheckoutForm from "../../components/CheckoutForm/Index";
 import ListItemReservations from "../../components/ListItemReservations/Index";
@@ -27,11 +27,12 @@ class PaymentView extends Component {
     });
   }
 
-  handleCheckout = () => {
+  handleCheckout = ({ token, address }) => {
     const id = this.props.match.params.id;
     const rental = this.state.rental;
     const start = rental.startedAt;
     const body = { rental, start };
+    const payment = { token, address };
 
     endRental(id, body)
       .then((response) => {
@@ -39,9 +40,12 @@ class PaymentView extends Component {
         this.setState({
           rental,
         });
-        this.handleLoadProfile(rental);
       })
       .then(() => {
+        return submitPayment(payment);
+      })
+      .then((response) => {
+        console.log("got to the very end", response);
         this.props.history.push(`/profile`);
       })
       .catch((error) => {
@@ -66,7 +70,6 @@ class PaymentView extends Component {
 
   render() {
     const rental = this.state.rental;
-    console.log(rental);
     return (
       <div>
         {this.state.loaded && (
@@ -76,8 +79,6 @@ class PaymentView extends Component {
             <h4>Total: {this.rentalTime(rental.price, rental.startedAt).totalAmount} €</h4>
             <h2>Please insert your payment details</h2>
             <CheckoutForm onCheckout={this.handleCheckout} />
-
-            <button onClick={() => this.handleCheckout()}>Complete Purchase</button>
           </>
         )}
       </div>
