@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { loadMe, signOut } from "./services/authentication";
-import "bootstrap/dist/css/bootstrap.css";
 
 import HomeView from "./views/HomeView";
 import AuthenticationSignUpView from "./views/authentication/SignUpView";
@@ -15,7 +14,11 @@ import ParkingEditView from "./views/parking/ParkingEditView";
 import RentalView from "./views/rental/RentalView";
 import PaymentView from "./views/rental/PaymentView";
 import ErrorView from "./views/ErrorView";
+
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.min.js";
 import "./styles/style.scss";
+import Popper from "popper.js";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";

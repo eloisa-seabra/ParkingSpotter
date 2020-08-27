@@ -1,15 +1,21 @@
 .list-item {
   max-width: 700px;
-  margin: 40px auto;
+  //margin: 40px auto;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   box-shadow: 3px 5px 5px 2px #c0c0c0;
 }
 .list-details {
-  margin: 0px 10px;
+  //margin: 0px 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   align-items: flex-start;
+  p {
+    margin: 0;
+  }
 }
 .list-item img {
   padding: 10px;
@@ -17,18 +23,12 @@
   height: 6em;
 }
 
-.reserve {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-}
 .reserve-details {
+  display: block;
+  text-align: center;
   text-decoration: none;
-  font-size: 1.3em;
+  font-size: 1em;
   color: white;
   background-color: #1277c0;
-  display: flex;
-  margin: 20px;
-  width: 9em;
-  padding: 8px 20px;
+  padding: 0.8em;
 }

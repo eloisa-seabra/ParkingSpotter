@@ -1,26 +1,42 @@
+@import './../../styles/config';
+
+#cta-button {
+  background-color: $light-blue;
+  color: white !important;
+  min-width: 6em;
+  text-align: center;
+  border-radius: 0.4em;
+}
+
 nav {
-  display: flex;
   border-bottom: 5px solid #00d9e7;
   box-shadow: 3px 5px 5px 2px #36c8f8;
-  // justify-content: space-between;
   a,
-  button,
   span {
-    color: #0bc4ff;
+    color: #0bc4ff !important;
     font-size: 1.1em;
     line-height: 2em;
     display: flex;
-    padding: 1em 0;
     margin: 0 1.5em;
-    &:first-child {
-      margin-right: auto;
+    :last-child {
+      color: white !important;
     }
   }
-  button {
-    border: 0;
+  .nav-text {
+    font-size: 1.8em;
+  }
+  .user-image {
+    max-width: 40px;
+    padding-top: 4px;
+  }
+  .cta-button {
+    background-color: $light-blue;
+    color: white !important;
   }
 }
 
-img {
-  margin: 0.1em;
+.dropdown-divider {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
 }

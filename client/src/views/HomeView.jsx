@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getCoordinates } from '../services/geocoder';
+import './../styles/_homeview.scss';
 
 class HomeView extends Component {
   constructor(props) {
@@ -47,36 +48,34 @@ class HomeView extends Component {
   }
   render() {
     return (
-      <div>
+      <section id="homeview">
         <h2>No more waiting for parking spots</h2>
-        <h1>Here are the parking spots waiting for you</h1>
+        <h1>Here the parking spots are waiting for you</h1>
 
         <form onSubmit={this.handleFormSubmit}>
-          <label htmlFor="city-input">City</label>
           <input
             type="text"
             name="city"
-            placeholder="Park here..."
+            placeholder="Where do you want to park?"
             id="city-input"
             onChange={this.handleInputChange}
           />
           <button>Search</button>
         </form>
-        <button onClick={this.triggerMyLocation}>Spots Near Me</button>
-        <div>
-          <img
-            style={{ width: '1300px' }}
-            src="https://res.cloudinary.com/isaseabra/image/upload/v1598269174/lisbon-min_gsjvuc.jpg"
-          />
+        {/* <button className="near-me-button btn btn-primary" onClick={this.triggerMyLocation}>
+          Spots Near Me
+        </button> */}
+        <div className="img-gradient">
+          <img src="https://res.cloudinary.com/isaseabra/image/upload/v1598269174/lisbon-min_gsjvuc.jpg" />
         </div>
-        <section className="about">
+        <section id="about" className="container">
           <h2>About ParkingSpotter</h2>
           <div className="row">
-            <div className="col">
+            <div className="col col-lg">
               <img
-                style={{ width: '100px', height: '100px' }}
+                className="about-icon"
                 src="https://res.cloudinary.com/isaseabra/image/upload/v1598440828/hourglass_3805_ohs7jq.png"
-                alt=""
+                alt="timer"
               />
               <p>
                 {' '}
@@ -84,10 +83,10 @@ class HomeView extends Component {
                 city or of expensive private parking lot fees?
               </p>
             </div>
-            <div className="col">
+            <div className="col col-lg">
               <img
-                style={{ width: '100px', height: '100px' }}
-                src="https://res.cloudinary.com/isaseabra/image/upload/v1598440909/5872_rehcil.jpg"
+                className="about-icon"
+                src="https://res.cloudinary.com/isaseabra/image/upload/v1598478227/piggybank_jfyhz0.png"
                 alt="piggy-bank"
               />
               <p>
@@ -96,10 +95,9 @@ class HomeView extends Component {
                 spot from someone's available private parking spot{' '}
               </p>
             </div>
-            <div className="col">
+            <div className="col col-lg">
               <img
-                className="img-icons"
-                style={{ width: '100px', height: '100px' }}
+                className="about-icon"
                 src="https://res.cloudinary.com/isaseabra/image/upload/v1598440988/10507_ikvf7i.jpg"
                 alt="idea"
               />
@@ -111,7 +109,7 @@ class HomeView extends Component {
             </div>
           </div>
         </section>
-      </div>
+      </section>
     );
   }
 }

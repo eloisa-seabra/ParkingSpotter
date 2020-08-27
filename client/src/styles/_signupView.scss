@@ -1,0 +1,44 @@
+@media (min-width: 400px) {
+  form {
+    display: flex;
+    flex-direction: column;
+    max-width: 20em;
+    margin: 0 auto;
+    font-size: 1.4em;
+    text-align: center;
+  }
+
+  .form-group {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blue-btn {
+    border-radius: 20px;
+    max-width: 20em;
+    padding: 5px 60px;
+    margin: 30px auto;
+    background-color: #1277c0;
+    color: white;
+    transition-duration: 0.4s;
+  }
+
+  @media (max-width: 685px) {
+    form {
+      max-width: 14em;
+      margin: 0 auto;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    .blue-btn {
+      max-width: 10em;
+      padding: 5px 60px;
+      margin: 30px auto;
+      background-color: #1277c0;
+      color: white;
+      transition-duration: 0.4s;
+    }
+  }
+}
