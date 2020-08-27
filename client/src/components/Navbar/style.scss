@@ -34,3 +34,9 @@ nav {
     color: white !important;
   }
 }
+
+.dropdown-divider {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}

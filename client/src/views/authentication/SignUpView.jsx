@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { signUp } from './../../services/authentication';
+import '../../styles/_signupView.scss';
 
 class AuthenticationSignUpView extends Component {
   constructor() {
@@ -36,16 +37,43 @@ class AuthenticationSignUpView extends Component {
     return (
       <div>
         <form onSubmit={this.handleFormSubmission}>
-          <label htmlFor="input-name">Full Name</label>
-          <input id="input-name" type="text" name="name" placeholder="Full Name" value={this.state.name} onChange={this.handleInputChange} />
-
-          <label htmlFor="input-email">Email</label>
-          <input id="input-email" type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleInputChange} />
-
-          <label htmlFor="input-password">Password</label>
-          <input id="input-password" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleInputChange} />
-
-          <button>Sign Up</button>
+          <div className="form-group">
+            <label htmlFor="input-name">Full Name</label>
+            <input
+              className="form-control"
+              id="input-name"
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={this.state.name}
+              onChange={this.handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="input-email">Email</label>
+            <input
+              className="form-control"
+              id="input-email"
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={this.state.email}
+              onChange={this.handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="input-password">Password</label>
+            <input
+              className="form-control"
+              id="input-password"
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={this.state.password}
+              onChange={this.handleInputChange}
+            />
+          </div>
+          <button className="blue-btn">Sign Up</button>
         </form>
       </div>
     );
