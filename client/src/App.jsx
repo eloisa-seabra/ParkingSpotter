@@ -18,7 +18,6 @@ import ErrorView from './views/ErrorView';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './styles/style.scss';
-import Popper from 'popper.js';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
@@ -28,7 +27,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      loaded: true,
+      loaded: false,
       user: null,
       //ownParkings: [],
       // working on it

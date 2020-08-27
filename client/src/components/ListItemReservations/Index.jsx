@@ -4,7 +4,7 @@ import './style.scss';
 export const ListItemReservations = props => {
   return (
     <div className="list-item">
-      <img src={props.rental.parking.photo} alt="image" />
+      <img src={props.rental.parking.photo} alt="garage" />
       <div className="list-details">
         <h3>{props.rental.parking.location}</h3>
         <p>

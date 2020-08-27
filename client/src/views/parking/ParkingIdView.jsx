@@ -18,6 +18,8 @@ export class ParkingIdView extends Component {
     loadSingleParking(id)
       .then(data => {
         const spot = data.spot;
+        console.log(spot.user._id);
+        console.log(this.props.user._id);
         const isOwner = spot.user._id === this.props.user._id ? true : false;
         this.setState({
           spot,

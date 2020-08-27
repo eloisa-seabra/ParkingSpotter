@@ -9,7 +9,6 @@ const cardOptions = {
       fontSize: "16px",
       color: "#424770",
       fontFamily: "sans-serif",
-      padding: "16px",
     },
     invalid: {
       color: "#c23d4b",
@@ -30,6 +29,7 @@ class CheckoutForm extends Component {
     stripe
       .createToken(elements.getElement(CardElement))
       .then((data) => {
+        console.log(data);
         const token = data.token.id;
         const { address } = this.state;
         this.props.onCheckout({
