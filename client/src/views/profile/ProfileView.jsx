@@ -1,9 +1,11 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { loadProfile } from "../../services/profile";
-import { deleteSingleParking } from "../../services/parking";
-import ListItemReservations from "../../components/ListItemReservations/Index";
-import ListMySpots from "../../components/ListMySpots/Index";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { loadProfile } from '../../services/profile';
+import { deleteSingleParking } from '../../services/parking';
+import ListItemReservations from '../../components/ListItemReservations/Index';
+import LastReservations from '../../components/LastReservations/Index';
+import ListMySpots from '../../components/ListMySpots/Index';
+import '../../styles/_profile.scss';
 
 class ProfileView extends Component {
   constructor() {
@@ -13,7 +15,7 @@ class ProfileView extends Component {
       user: null,
       ownParkings: [],
       activeRentals: [],
-      rental: null,
+      rental: null
     };
   }
 
@@ -21,9 +23,9 @@ class ProfileView extends Component {
     this.handleLoadProfile();
   }
 
-  handleLoadProfile = (thing) => {
+  handleLoadProfile = thing => {
     loadProfile()
-      .then((data) => {
+      .then(data => {
         const user = this.props.user;
         const parkings = data.document.parking;
         const rentals = data.document.rental;
@@ -33,40 +35,40 @@ class ProfileView extends Component {
           ownParkings: parkings,
           activeRentals: rentals,
           rental: thing,
-          loaded: true,
+          loaded: true
         });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 
-  handleParkingDeletion = (index) => {
+  handleParkingDeletion = index => {
     const id = this.state.ownParkings[index]._id;
 
     deleteSingleParking(id)
       .then(() => {
         this.handleLoadProfile();
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 
-  handleRentalFinish = (index) => {
+  handleRentalFinish = index => {
     const activeRentals = this.state.activeRentals.filter(function(rental) {
-      return rental.status === "rented";
+      return rental.status === 'rented';
     });
 
     const rental = activeRentals[index];
     this.props.history.push(`/rental/${rental._id}`);
   };
 
-  rentalTime = (price, time) => {
-    const startingTime = Date.parse(time);
-    const nowTime = Date.now();
+  rentedTime = (price, timeStart, timeEnd) => {
+    const startingTime = Date.parse(timeStart);
+    const endingTime = Date.parse(timeEnd);
+    const durationTimeUnix = endingTime - startingTime;
 
-    const durationTimeUnix = nowTime - startingTime;
     const hours = durationTimeUnix / 1000 / 60 / 60;
     const hoursAmount = Math.floor(durationTimeUnix / 1000 / 60 / 60);
     const minutesAmount = Math.ceil((hours - hoursAmount) * 60);
@@ -78,7 +80,7 @@ class ProfileView extends Component {
       hours: hoursAmount,
       minutes: minutesAmount,
       totalMinutes,
-      totalAmount,
+      totalAmount
     };
   };
 
@@ -87,56 +89,67 @@ class ProfileView extends Component {
     const parkings = this.state.ownParkings;
     const rentals = this.state.activeRentals;
     const activeRentals = rentals.filter(function(rental) {
-      return rental.status === "rented";
+      return rental.status === 'rented';
     });
     const endedRentals = rentals.filter(function(rental) {
-      return rental.status === "ended";
+      return rental.status === 'ended';
     });
 
     return (
       <div>
         {this.state.loaded && (
           <>
-            <p>
-              <strong>Welcome {user.name}!</strong>
-            </p>
-            <p>Email: {user.email}</p>
-            <Link to="/profile/edit">Edit Profile</Link>
-            <hr />
-            <h4>My Current Rentals:</h4>
+            <div className="profile-div">
+              <h2 className="h2-profile">
+                <strong>Welcome {user.name}!</strong>
+              </h2>
+              <h4>Email: {user.email}</h4>
+              <Link to="/profile/edit">Edit Profile</Link>
+              <hr />
+
+              <h3 className="h3-blue">My Current Rentals:</h3>
+            </div>
             {(activeRentals.length && (
               <>
                 {activeRentals.map((rental, index) => (
                   <div key={rental._id}>
-                    <ListItemReservations rental={rental} rentalTime={this.rentalTime} />
-                    <button onClick={() => this.handleRentalFinish(index)}>End Rental</button>
+                    <ListItemReservations rental={rental} rentedTime={this.rentedTime} />
+                    <button className="profie-div" onClick={() => this.handleRentalFinish(index)}>
+                      End Rental
+                    </button>
                   </div>
                 ))}
               </>
             )) || <p>You have no parking spots to rent.</p>}
             <hr />
-            <h4>My last rentals:</h4>
+            <h3 className="profile-div h3-blue">My last rentals:</h3>
             {(endedRentals.length && (
               <>
                 {endedRentals.map((rental, index) => (
                   <div key={rental._id}>
-                    <ListItemReservations rental={rental} rentalTime={this.rentalTime} />
-                    <Link to={`/parking/${rental.parking._id}`}>Rent again</Link>
+                    <LastReservations rental={rental} rentedTime={this.rentedTime} />
+                    <Link className="profie-div" to={`/parking/${rental.parking._id}`}>
+                      Rent again
+                    </Link>
                   </div>
                 ))}
               </>
-            )) || <p>You have no parking spots to rent.</p>}
+            )) || <p>You haven't rented any parking spots.</p>}
             <div className="own-parkings">
               <hr />
-              <h4>My spots:</h4>
+              <h3 className="profile-div h3-blue">My spots:</h3>
               {(this.state.ownParkings.length && (
                 <>
                   {parkings.map((parking, index) => (
                     <div key={parking._id}>
                       <ListMySpots parking={parking} />
-                      <Link to={`/parking/${parking._id}`}>Details </Link>
-                      <Link to={`/parking/${parking._id}/edit`}>Edit Parking</Link>
-                      <button onClick={() => this.handleParkingDeletion(index)}>Delete</button>
+                      <div className="profile-div">
+                        <Link to={`/parking/${parking._id}`}>Details </Link>
+                        <Link to={`/parking/${parking._id}/edit`}>Edit Parking</Link>
+                      </div>
+                      <button className="profile-div" onClick={() => this.handleParkingDeletion(index)}>
+                        Delete
+                      </button>
                     </div>
                   ))}
                 </>

@@ -1,0 +1,33 @@
+.profile-div {
+  display: flex;
+  flex-direction: column;
+  max-width: 18em;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+}
+.h2-profile {
+  margin-bottom: 1.1em;
+}
+
+.h3-blue {
+  background-color: #1277c0;
+  color: white;
+  padding: 0.3em 0.8em;
+  margin-top: 1.2em;
+}
+
+.profile-div {
+}
+button {
+  padding: 0.5em 3em;
+}
+.details-edit {
+  display: flex;
+  flex-direction: row;
+}
+
+a {
+  margin: 0.2em;
+  font-size: 1.2em;
+}

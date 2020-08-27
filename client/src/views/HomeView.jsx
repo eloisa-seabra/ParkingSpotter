@@ -66,7 +66,10 @@ class HomeView extends Component {
           Spots Near Me
         </button> */}
         <div className="img-gradient">
-          <img src="https://res.cloudinary.com/isaseabra/image/upload/v1598269174/lisbon-min_gsjvuc.jpg" />
+          <img
+            src="https://res.cloudinary.com/isaseabra/image/upload/v1598269174/lisbon-min_gsjvuc.jpg"
+            alt="lisbon-skyline"
+          />
         </div>
         <section id="about" className="container">
           <h2>About ParkingSpotter</h2>

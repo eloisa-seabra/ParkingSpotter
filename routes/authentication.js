@@ -17,7 +17,9 @@ authenticationRouter.post('/sign-up', async (request, response, next) => {
       passwordHashAndSalt: hashAndSalt
     });
     request.session.userId = user._id;
-    response.json({ user: { _id: user._id, name: user.name, email: user.email } });
+    response.json({
+      user: { _id: user._id, name: user.name, email: user.email }
+    });
   } catch (error) {
     next(error);
   }
@@ -32,7 +34,9 @@ authenticationRouter.post('/sign-in', async (request, response, next) => {
     const comparison = await bcrypt.compare(password, passwordHashAndSalt);
     if (!comparison) throw new Error('Password did not match.');
     request.session.userId = user._id;
-    response.json({ user: { name: user.name, email: user.email } });
+    response.json({
+      user: { name: user.name, email: user.email, _id: user._id }
+    });
   } catch (error) {
     next(error);
   }

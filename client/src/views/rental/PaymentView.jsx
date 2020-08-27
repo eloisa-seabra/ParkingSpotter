@@ -48,11 +48,11 @@ class PaymentView extends Component {
       });
   };
 
-  rentalTime = (price, time) => {
-    const startingTime = Date.parse(time);
-    const nowTime = Date.now();
+  rentedTime = (price, timeStart, timeEnd) => {
+    const startingTime = Date.parse(timeStart);
+    const endingTime = Date.parse(timeEnd);
+    const durationTimeUnix = endingTime - startingTime;
 
-    const durationTimeUnix = nowTime - startingTime;
     const hours = durationTimeUnix / 1000 / 60 / 60;
     const hoursAmount = Math.floor(durationTimeUnix / 1000 / 60 / 60);
     const minutesAmount = Math.ceil((hours - hoursAmount) * 60);
@@ -60,7 +60,12 @@ class PaymentView extends Component {
 
     const totalAmount = Math.round((price / 4) * Math.ceil(totalMinutes / 15) * 100) / 100;
 
-    return { hours: hoursAmount, minutes: minutesAmount, totalMinutes, totalAmount };
+    return {
+      hours: hoursAmount,
+      minutes: minutesAmount,
+      totalMinutes,
+      totalAmount,
+    };
   };
 
   render() {
@@ -70,8 +75,8 @@ class PaymentView extends Component {
         {this.state.loaded && (
           <>
             <h2>Your Reservation</h2>
-            <ListItemReservations rentalTime={this.rentalTime} rental={this.state.rental} />
-            <h4>Total: {this.rentalTime(rental.price, rental.startedAt).totalAmount} €</h4>
+            <ListItemReservations rentedTime={this.rentedTime} rental={this.state.rental} />
+            <h4>Total: {this.rentedTime(rental.price, rental.startedAt, Date()).totalAmount} €</h4>
             <h2>Please insert your payment details</h2>
             <CheckoutForm onCheckout={this.handleCheckout} />
           </>

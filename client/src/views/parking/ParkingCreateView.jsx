@@ -56,40 +56,50 @@ export class ParkingCreateView extends Component {
   };
   render() {
     return (
-      <div>
-        <label htmlFor="create-map">Click on the map to place a marker of your parking spot</label>
-        <div id="create-map">
-          <Map markers={this.state.markers} coordinates={this.props.coordinates} handleClick={this.handleMapClick} />
+      <div id="parking-create" className="container">
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <Map
+                markers={this.state.markers}
+                coordinates={this.props.coordinates}
+                handleClick={this.handleMapClick}
+              />
+            </div>
+            <div className="col parking-form">
+              <form method="POST" onSubmit={this.handleFormSubmit}>
+                <label htmlFor="location">Place name or nearest address to parking spot:</label>
+                <input
+                  id="location-input"
+                  type="text"
+                  name="location"
+                  value={this.state.location}
+                  onChange={this.handleInputChange}
+                />
+                <label htmlFor="description-input">Describe any details that customers may need to know:</label>
+                <input
+                  id="description-input"
+                  type="text"
+                  name="description"
+                  value={this.state.description}
+                  onChange={this.handleInputChange}
+                />
+                <label htmlFor="price-input">The hourly rate you want to charge for the parking spot:</label>
+                <input
+                  id="price-input"
+                  type="number"
+                  name="price"
+                  value={this.state.price}
+                  onChange={this.handleInputChange}
+                />
+                <label htmlFor="photo-input">Upload a photo so that customers can find your parking spot:</label>
+                <input id="photo-input" type="file" name="photo" onChange={this.handlePhotoChange} />
+                <h4>Click on the map to place a marker of your parking spot</h4>
+                <button>Create!</button>
+              </form>
+            </div>
+          </div>
         </div>
-        <form method="POST" onSubmit={this.handleFormSubmit}>
-          <label htmlFor="location">Location name or nearest address to parking spot:</label>
-          <input
-            id="location-input"
-            type="text"
-            name="location"
-            value={this.state.location}
-            onChange={this.handleInputChange}
-          />
-          <label htmlFor="description-input">Describe any details that customers may need to know:</label>
-          <input
-            id="description-input"
-            type="text"
-            name="description"
-            value={this.state.description}
-            onChange={this.handleInputChange}
-          />
-          <label htmlFor="price-input">The hourly rate you want to charge for the parking spot:</label>
-          <input
-            id="price-input"
-            type="number"
-            name="price"
-            value={this.state.price}
-            onChange={this.handleInputChange}
-          />
-          <label htmlFor="photo-input">Upload a photo so that customers can find your parking spot:</label>
-          <input id="photo-input" type="file" name="photo" onChange={this.handlePhotoChange} />
-          <button>Create your parking spot!</button>
-        </form>
       </div>
     );
   }

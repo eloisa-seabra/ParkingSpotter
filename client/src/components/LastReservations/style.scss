@@ -1,0 +1,33 @@
+.list-item {
+  max-width: 700px;
+  margin: 40px auto;
+  display: flex;
+  box-shadow: 3px 5px 5px 2px #c0c0c0;
+}
+.list-details {
+  margin: 0px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.list-item img {
+  padding: 10px;
+  width: 6rem;
+  height: 6em;
+}
+.price-hour {
+  color: #1277c0;
+}
+
+.total-price {
+  display: flex;
+  justify-content: center;
+  font-size: 1.3em;
+  color: white;
+  background-color: #1277c0;
+  display: flex;
+  margin: 5px;
+
+  padding: 5px;
+}

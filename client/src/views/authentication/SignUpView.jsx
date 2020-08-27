@@ -35,43 +35,19 @@ class AuthenticationSignUpView extends Component {
 
   render() {
     return (
-      <div>
+      <div id="sign-up">
         <form onSubmit={this.handleFormSubmission}>
           <div className="form-group">
             <label htmlFor="input-name">Full Name</label>
-            <input
-              className="form-control"
-              id="input-name"
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={this.state.name}
-              onChange={this.handleInputChange}
-            />
+            <input className="form-control" id="input-name" type="text" name="name" placeholder="Full Name" value={this.state.name} onChange={this.handleInputChange} />
           </div>
           <div className="form-group">
             <label htmlFor="input-email">Email</label>
-            <input
-              className="form-control"
-              id="input-email"
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={this.state.email}
-              onChange={this.handleInputChange}
-            />
+            <input className="form-control" id="input-email" type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleInputChange} />
           </div>
           <div className="form-group">
             <label htmlFor="input-password">Password</label>
-            <input
-              className="form-control"
-              id="input-password"
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={this.state.password}
-              onChange={this.handleInputChange}
-            />
+            <input className="form-control" id="input-password" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleInputChange} />
           </div>
           <button className="blue-btn">Sign Up</button>
         </form>

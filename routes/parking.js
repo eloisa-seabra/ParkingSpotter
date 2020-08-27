@@ -69,7 +69,7 @@ parkingRouter.post('/create', upload.single('photo'), (req, res, next) => {
     lng: numLng,
     lat: numLat,
     price,
-    user: req.user._id,
+    user: req.session.userId,
     photo: url
   })
     .then(document => {
