@@ -18,6 +18,8 @@ export class ParkingIdView extends Component {
     loadSingleParking(id)
       .then(data => {
         const spot = data.spot;
+        console.log(spot.user._id);
+        console.log(this.props.user._id);
         const isOwner = spot.user._id === this.props.user._id ? true : false;
         this.setState({
           spot,
@@ -60,25 +62,43 @@ export class ParkingIdView extends Component {
       <div>
         {(this.state.loaded && (
           <>
-            <Map coordinates={[this.state.spot.lng, this.state.spot.lat]} markers={[{ lng: this.state.spot.lng, lat: this.state.spot.lat }]} />
+            <Map
+              coordinates={[this.state.spot.lng, this.state.spot.lat]}
+              markers={[{ lng: this.state.spot.lng, lat: this.state.spot.lat }]}
+            />
             <section id="parking-single" className="container">
               <div className="row my-5">
                 <div className="col">
-                  <img style={{ width: '100%' }} src={this.state.spot.photo} alt={this.state.spot.location} />
+                  <img
+                    style={{ width: '100%' }}
+                    src={this.state.spot.photo}
+                    alt={this.state.spot.location}
+                  />
                 </div>
                 <div className="col details">
-                  <h2 className="details-info">{this.state.spot.location.toUpperCase()}</h2>
+                  <h2 className="details-info">
+                    {this.state.spot.location.toUpperCase()}
+                  </h2>
                   <p>{this.state.spot.description}</p>
                   <p className="details-info">
                     <small>Owner: {this.state.spot.user.name}</small>
                   </p>
-                  <h3 className="details-info">{this.state.spot.price} €/hour</h3>
+                  <h3 className="details-info">
+                    {this.state.spot.price} €/hour
+                  </h3>
                   {(this.state.ownSpot && (
                     <>
-                      <Link classname="delete-button btn btn-outline-primary" to={`/`} onSubmit={this.handlePostDeletion}>
+                      <Link
+                        classname="delete-button btn btn-outline-primary"
+                        to={`/`}
+                        onSubmit={this.handlePostDeletion}
+                      >
                         Delete
                       </Link>
-                      <Link classname="edit-button btn btn-primary" to={`/parking/${this.props.match.params.id}/edit`}>
+                      <Link
+                        classname="edit-button btn btn-primary"
+                        to={`/parking/${this.props.match.params.id}/edit`}
+                      >
                         Edit Parking
                       </Link>
                     </>
