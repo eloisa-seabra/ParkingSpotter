@@ -88,12 +88,14 @@ h4 {
   #about {
     background-color: #0095afb2;
     height: 45rem;
-    margin: 6rem auto;
+    margin: 3rem auto;
     max-width: 80rem;
     border-radius: 30px;
   }
   .row img {
     margin-bottom: 20px;
+    height: 70px;
+    width: 70px;
   }
 
   img {
@@ -102,13 +104,18 @@ h4 {
   }
   h1 {
     margin-bottom: 30px;
-    font-size: 3em;
+    font-size: 1.6em;
     padding: 10px;
   }
   h2 {
     margin: 2px;
-    font-size: 1.5em;
+    font-size: 1.1em;
     padding: 10px;
+  }
+  col,
+  col-lg,
+  p {
+    font-size: 0.8em;
   }
 }
 

@@ -1,72 +1,72 @@
-import React, { Component } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { loadMe, signOut } from "./services/authentication";
+import React, { Component } from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { loadMe, signOut } from './services/authentication';
 
-import HomeView from "./views/HomeView";
-import AuthenticationSignUpView from "./views/authentication/SignUpView";
-import AuthenticationSignInView from "./views/authentication/SignInView";
-import ProfileView from "./views/profile/ProfileView";
-import EditProfileView from "./views/profile/EditProfileView";
-import ParkingListView from "./views/parking/ParkingListView";
-import ParkingCreateView from "./views/parking/ParkingCreateView";
-import ParkingIdView from "./views/parking/ParkingIdView";
-import ParkingEditView from "./views/parking/ParkingEditView";
-import RentalView from "./views/rental/RentalView";
-import PaymentView from "./views/rental/PaymentView";
-import ErrorView from "./views/ErrorView";
+import HomeView from './views/HomeView';
+import AuthenticationSignUpView from './views/authentication/SignUpView';
+import AuthenticationSignInView from './views/authentication/SignInView';
+import ProfileView from './views/profile/ProfileView';
+import EditProfileView from './views/profile/EditProfileView';
+import ParkingListView from './views/parking/ParkingListView';
+import ParkingCreateView from './views/parking/ParkingCreateView';
+import ParkingIdView from './views/parking/ParkingIdView';
+import ParkingEditView from './views/parking/ParkingEditView';
+import RentalView from './views/rental/RentalView';
+import PaymentView from './views/rental/PaymentView';
+import ErrorView from './views/ErrorView';
 
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/js/bootstrap.min.js";
-import "./styles/style.scss";
-import Popper from "popper.js";
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import './styles/style.scss';
+import Popper from 'popper.js';
 
-import ProtectedRoute from "./components/ProtectedRoute";
-import Navbar from "./components/Navbar";
-import { loadRental } from "./services/rental";
+import ProtectedRoute from './components/ProtectedRoute';
+import Navbar from './components/Navbar';
+import { loadRental } from './services/rental';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      loaded: true,
+      loaded: false,
       user: null,
       //ownParkings: [],
       // working on it
       rentals: [],
       activeRentals: [],
-      coordinates: [-9.140821, 38.717393],
+      coordinates: [-9.140821, 38.717393]
     };
   }
 
   componentDidMount() {
     loadMe()
-      .then((data) => {
+      .then(data => {
         const user = data.user;
         this.handleUserUpdate(user);
         this.setState({
-          loaded: true,
+          loaded: true
         });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
 
-    loadRental().then((data) => {
+    loadRental().then(data => {
       const rentals = data.rentals;
       const activeRentals = rentals.filter(function(rental) {
-        return rental.status === "rented";
+        return rental.status === 'rented';
       });
 
       this.setState({
         rentals,
-        activeRentals,
+        activeRentals
       });
     });
   }
 
-  handleUserUpdate = (user) => {
+  handleUserUpdate = user => {
     this.setState({
-      user,
+      user
     });
   };
 
@@ -75,14 +75,14 @@ class App extends Component {
       .then(() => {
         this.handleUserUpdate(null);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 
-  handleLocationChange = (coordinates) => {
+  handleLocationChange = coordinates => {
     this.setState({
-      coordinates,
+      coordinates
     });
   };
   render() {
@@ -94,43 +94,70 @@ class App extends Component {
             <Switch>
               <Route
                 path="/"
-                render={(props) => (
-                  <HomeView {...props} handleLocationChange={this.handleLocationChange} user={this.state.user} />
+                render={props => (
+                  <HomeView
+                    {...props}
+                    handleLocationChange={this.handleLocationChange}
+                    user={this.state.user}
+                  />
                 )}
                 exact
               />
               <Route
                 path="/profile"
-                render={(props) => (
-                  <ProfileView {...props} user={this.state.user} onUserUpdate={this.handleUserUpdate} />
+                render={props => (
+                  <ProfileView
+                    {...props}
+                    user={this.state.user}
+                    onUserUpdate={this.handleUserUpdate}
+                  />
                 )}
                 exact
               />
               <Route
                 path="/profile/edit"
-                render={(props) => (
-                  <EditProfileView {...props} user={this.state.user} onUserUpdate={this.handleUserUpdate} />
+                render={props => (
+                  <EditProfileView
+                    {...props}
+                    user={this.state.user}
+                    onUserUpdate={this.handleUserUpdate}
+                  />
                 )}
               />
               <ProtectedRoute
                 path="/authentication/sign-up"
-                render={(props) => <AuthenticationSignUpView {...props} onUserUpdate={this.handleUserUpdate} />}
+                render={props => (
+                  <AuthenticationSignUpView
+                    {...props}
+                    onUserUpdate={this.handleUserUpdate}
+                  />
+                )}
                 authorized={!this.state.user}
                 redirect="/"
               />
               <ProtectedRoute
                 path="/authentication/sign-in"
-                render={(props) => <AuthenticationSignInView {...props} onUserUpdate={this.handleUserUpdate} />}
+                render={props => (
+                  <AuthenticationSignInView
+                    {...props}
+                    onUserUpdate={this.handleUserUpdate}
+                  />
+                )}
                 authorized={!this.state.user}
                 redirect="/"
               />
               <Route
                 path="/parking/list"
-                render={(props) => <ParkingListView {...props} coordinates={this.state.coordinates} />}
+                render={props => (
+                  <ParkingListView
+                    {...props}
+                    coordinates={this.state.coordinates}
+                  />
+                )}
               />
               <Route
                 path="/parking/create"
-                render={(props) => (
+                render={props => (
                   <ParkingCreateView
                     {...props}
                     coordinates={this.state.coordinates}
@@ -140,7 +167,7 @@ class App extends Component {
               />
               <Route
                 path="/parking/:id/edit"
-                render={(props) => (
+                render={props => (
                   <ParkingEditView
                     {...props}
                     coordinates={this.state.coordinates}
@@ -151,14 +178,23 @@ class App extends Component {
 
               <Route
                 path="/parking/:id"
-                render={(props) => (
-                  <ParkingIdView {...props} coordinates={this.state.coordinates} user={this.state.user} />
+                render={props => (
+                  <ParkingIdView
+                    {...props}
+                    coordinates={this.state.coordinates}
+                    user={this.state.user}
+                  />
                 )}
               />
 
               <Route
                 path="/rental/:id"
-                render={(props) => <PaymentView {...props} activeRentals={this.state.activeRentals} />}
+                render={props => (
+                  <PaymentView
+                    {...props}
+                    activeRentals={this.state.activeRentals}
+                  />
+                )}
               />
               <Route path="/rental" component={RentalView} />
 
