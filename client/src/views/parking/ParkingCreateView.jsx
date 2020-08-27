@@ -88,6 +88,7 @@ export class ParkingCreateView extends Component {
                 <input
                   id="price-input"
                   type="number"
+                  step="0.1"
                   name="price"
                   value={this.state.price}
                   onChange={this.handleInputChange}
