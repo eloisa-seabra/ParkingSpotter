@@ -22,9 +22,7 @@ export class ParkingCreateView extends Component {
     const body = { location, description, lat, lng, price, photo };
     createParking(body)
       .then((document) => {
-        console.dir(document);
         const id = document.document._id;
-        console.log(id);
         this.props.history.push(`/parking/${id}`);
       })
       .catch((error) => {
@@ -64,7 +62,7 @@ export class ParkingCreateView extends Component {
           <Map markers={this.state.markers} coordinates={this.props.coordinates} handleClick={this.handleMapClick} />
         </div>
         <form method="POST" onSubmit={this.handleFormSubmit}>
-          <label htmlFor="location">Place name or nearest address to parking spot:</label>
+          <label htmlFor="location">Location name or nearest address to parking spot:</label>
           <input
             id="location-input"
             type="text"

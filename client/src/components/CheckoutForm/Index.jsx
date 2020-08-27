@@ -29,7 +29,6 @@ class CheckoutForm extends Component {
     stripe
       .createToken(elements.getElement(CardElement))
       .then((data) => {
-        console.log(data);
         const token = data.token.id;
         const { address } = this.state;
         this.props.onCheckout({

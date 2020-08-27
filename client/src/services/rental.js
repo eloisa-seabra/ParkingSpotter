@@ -9,6 +9,6 @@ export const createNewRental = (body) => api.post(`/`, body).then((response) => 
 
 export const endRental = (id, body) => api.patch(`/${id}`, body).then((response) => response.data);
 
-export const submitPayment = (payment) => api.post("/payment", payment).then((response) => response.data);
+//export const submitPayment = (payment) => api.post("/payment", payment).then((response) => response.data);
 
 export const loadRental = () => api.get("/").then((response) => response.data);

@@ -1,47 +1,47 @@
-import React, { Component } from 'react';
-import { getCoordinates } from '../services/geocoder';
-import './../styles/_homeview.scss';
+import React, { Component } from "react";
+import { getCoordinates } from "../services/geocoder";
+import "./../styles/_homeview.scss";
 
 class HomeView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      city: ''
+      city: "",
     };
   }
 
-  handleFormSubmit = event => {
+  handleFormSubmit = (event) => {
     event.preventDefault();
     getCoordinates(this.state.city)
-      .then(response => {
+      .then((response) => {
         const coordinates = response.features[0].geometry.coordinates;
         this.props.handleLocationChange(coordinates);
       })
       .then(() => {
         this.props.history.push(`/parking/list`);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const value = event.target.value;
     const property = event.target.name;
 
     this.setState({
-      [property]: value
+      [property]: value,
     });
   };
 
   triggerMyLocation() {
     window.navigator.geolocation.getCurrentPosition(
-      position => {
+      (position) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         console.log(latitude, longitude);
       },
-      error => {
+      (error) => {
         console.log(error);
       }
     );
@@ -78,9 +78,9 @@ class HomeView extends Component {
                 alt="timer"
               />
               <p>
-                {' '}
-                Tired of spending time searching for a parking spot in the big
-                city or of expensive private parking lot fees?
+                {" "}
+                Tired of spending time searching for a parking spot in crowded cities or of expensive private parking
+                lot fees?
               </p>
             </div>
             <div className="col col-lg">
@@ -89,11 +89,7 @@ class HomeView extends Component {
                 src="https://res.cloudinary.com/isaseabra/image/upload/v1598478227/piggybank_jfyhz0.png"
                 alt="piggy-bank"
               />
-              <p>
-                {' '}
-                With ParkingSpotter you can save time and money and reserve your
-                spot from someone's available private parking spot{' '}
-              </p>
+              <p> With ParkingSpotter you can save time and money by renting someone's private parking spot </p>
             </div>
             <div className="col col-lg">
               <img
@@ -101,11 +97,7 @@ class HomeView extends Component {
                 src="https://res.cloudinary.com/isaseabra/image/upload/v1598440988/10507_ikvf7i.jpg"
                 alt="idea"
               />
-              <p>
-                {' '}
-                Choose your starting time and pay the time spent only when you
-                leave the parking spot{' '}
-              </p>
+              <p> Rent the spot once you arrive and simply tap to end the rental once you leave </p>
             </div>
           </div>
         </section>

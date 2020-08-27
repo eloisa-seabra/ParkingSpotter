@@ -31,18 +31,13 @@ class PaymentView extends Component {
     const id = this.props.match.params.id;
     const rental = this.state.rental;
     const start = rental.startedAt;
-    const body = { rental, start };
-    const payment = { token, address };
-
+    const body = { rental, start, token, address, id };
     endRental(id, body)
       .then((response) => {
         const rental = response.body.rental;
         this.setState({
           rental,
         });
-      })
-      .then(() => {
-        return submitPayment(payment);
       })
       .then((response) => {
         console.log("got to the very end", response);
