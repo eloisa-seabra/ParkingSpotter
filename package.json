@@ -9,7 +9,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/react-stripe-js": "^1.16.5",
     "@stripe/stripe-js": "^1.9.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.5.2",
